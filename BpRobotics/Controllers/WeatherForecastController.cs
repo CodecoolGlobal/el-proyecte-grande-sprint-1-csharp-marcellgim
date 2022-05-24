@@ -30,10 +30,17 @@ namespace BpRobotics.Controllers
             .ToArray();
         }
 
+
         [HttpPost("/echo", Name = "EchoMessage")]
         public string Echo([FromBody] string message)
         {
             return message;
+        }
+        
+        [HttpGet, Route("hello-world")]
+        public string HelloWorld()
+        {
+            return "Hello World!";
         }
     }
 }
