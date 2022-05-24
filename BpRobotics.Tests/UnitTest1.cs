@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace BpRobotics.Tests
 {
     public class Tests
@@ -5,12 +7,15 @@ namespace BpRobotics.Tests
         [SetUp]
         public void Setup()
         {
+
         }
 
         [Test]
-        public void Test1()
+        public void TestGetRandomWeatherResults()
         {
-            Assert.Pass();
+            //Arrange
+            //Act
+            //Assert
         }
     }
 }
