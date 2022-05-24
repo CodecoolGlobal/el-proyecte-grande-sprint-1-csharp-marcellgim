@@ -29,5 +29,11 @@ namespace BpRobotics.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet, Route("hello-world")]
+        public string HelloWorld()
+        {
+            return "Hello World!";
+        }
     }
 }
