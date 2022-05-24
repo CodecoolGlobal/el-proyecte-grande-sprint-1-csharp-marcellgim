@@ -10,6 +10,6 @@ namespace BpRobotics
 
         public string? Summary { get; set; }
 
-        public string Location => "Here";
+        public string Location => "There";
     }
 }
