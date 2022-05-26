@@ -10,5 +10,7 @@ namespace BpRobotics.Data.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public UserRole Role { get; set; }
+        public Customer? Customer { get; set; }
+        public Partner? Partner { get; set; }
     }
 }
