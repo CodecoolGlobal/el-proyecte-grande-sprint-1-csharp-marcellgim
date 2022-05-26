@@ -2,7 +2,7 @@
 
 namespace BpRobotics.Data
 {
-    internal class BpRoboticsDataStorage : IBpRoboticsDataStorage
+    public class BpRoboticsDataStorage : IBpRoboticsDataStorage
     {
         public List<Customer> Customers { get; set; }
         public List<Device> Devices { get; set; }

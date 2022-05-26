@@ -2,7 +2,7 @@
 
 namespace BpRobotics.Data
 {
-    internal interface IBpRoboticsDataStorage
+    public interface IBpRoboticsDataStorage
     {
         List<Customer> Customers { get; set; }
         List<Device> Devices { get; set; }
