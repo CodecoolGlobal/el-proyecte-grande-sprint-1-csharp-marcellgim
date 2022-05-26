@@ -1,0 +1,91 @@
+﻿using BpRobotics.Data.Model;
+
+namespace BpRobotics.Data
+{
+    public class BpRoboticsDataStorage : IBpRoboticsDataStorage
+    {
+        public List<Customer> Customers { get; set; }
+        public List<Device> Devices { get; set; }
+        public List<Order> Orders { get; set; }
+        public List<Partner> Partners { get; set; }
+        public List<Service> Services { get; set; }
+        public List<Ticket> Tickets { get; set; }
+        public List<User> Users { get; set; }
+
+        public BpRoboticsDataStorage()
+        {
+            Customers = new List<Customer>
+            {
+                new()
+                {
+                    CompanyName = "TestCompany",
+                    BillingAddress = new Location
+                    {
+                        City = "TestCity",
+                        Address = "TestAddress",
+                        Country = "TestCountry",
+                        ZIP = 1000
+                    },
+                    ShippingAddress = new Location
+                    {
+                        City = "TestCity",
+                        Address = "TestAddress",
+                        Country = "TestCountry",
+                        ZIP = 1000
+                    },
+                    VatNumber = 123456,
+                },
+                new()
+                {
+                    CompanyName = "TestCompany2",
+                    BillingAddress = new Location
+                    {
+                        City = "TestCity2",
+                        Address = "TestAddress2",
+                        Country = "TestCountry2",
+                        ZIP = 1001
+                    },
+                    ShippingAddress = new Location
+                    {
+                        City = "TestCity2",
+                        Address = "TestAddress2",
+                        Country = "TestCountry2",
+                        ZIP = 1001
+                    },
+                    VatNumber = 654321,
+                }
+            };
+
+            Users = new List<User>
+            {
+                new() 
+                {
+                    FirstName = "Lajos",
+                    LastName = "Lakatos",
+                    Id = 1,
+                    UserName = "AdminLajos",
+                    HashedPassword = "1234",
+                    Role = UserRole.Admin
+                },
+                new() 
+                {
+                    FirstName = "Lajos",
+                    LastName = "Lakatos",
+                    Id = 2,
+                    UserName = "PartnerLajos",
+                    HashedPassword = "1234",
+                    Role = UserRole.Partner
+                },
+                new() 
+                {
+                    FirstName = "Lajos",
+                    LastName = "Lakatos",
+                    Id = 3,
+                    UserName = "CustomerLajos",
+                    HashedPassword = "1234",
+                    Role = UserRole.Customer
+                }
+            };
+        }
+    }
+}
