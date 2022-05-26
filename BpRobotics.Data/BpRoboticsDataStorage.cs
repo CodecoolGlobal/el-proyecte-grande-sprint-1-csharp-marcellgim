@@ -19,65 +19,78 @@ namespace BpRobotics.Data
 
         public BpRoboticsDataStorage()
         {
-            Customers = new List<Customer>() {
-                new Customer() {
-                CompanyName = "TestCompany",
-                BillingAddress = new Location() {
-                    City = "TestCity",
-                    Address = "TestAddress",
-                    Country = "TestCountry",
-                    ZIP = 1000
+            Customers = new List<Customer>
+            {
+                new()
+                {
+                    CompanyName = "TestCompany",
+                    BillingAddress = new Location
+                    {
+                        City = "TestCity",
+                        Address = "TestAddress",
+                        Country = "TestCountry",
+                        ZIP = 1000
+                    },
+                    ShippingAddress = new Location
+                    {
+                        City = "TestCity",
+                        Address = "TestAddress",
+                        Country = "TestCountry",
+                        ZIP = 1000
+                    },
+                    VatNumber = 123456,
                 },
-                ShippingAddress = new Location() {
-                    City = "TestCity",
-                    Address = "TestAddress",
-                    Country = "TestCountry",
-                    ZIP = 1000
-                },
-                VatNumber = 123456,
-                },
-                new Customer() {
-                CompanyName = "TestCompany2",
-                BillingAddress = new Location() {
-                    City = "TestCity2",
-                    Address = "TestAddress2",
-                    Country = "TestCountry2",
-                    ZIP = 1001
-                },
-                ShippingAddress = new Location() {
-                    City = "TestCity2",
-                    Address = "TestAddress2",
-                    Country = "TestCountry2",
-                    ZIP = 1001
-                },
-                VatNumber = 654321,
+                new()
+                {
+                    CompanyName = "TestCompany2",
+                    BillingAddress = new Location
+                    {
+                        City = "TestCity2",
+                        Address = "TestAddress2",
+                        Country = "TestCountry2",
+                        ZIP = 1001
+                    },
+                    ShippingAddress = new Location
+                    {
+                        City = "TestCity2",
+                        Address = "TestAddress2",
+                        Country = "TestCountry2",
+                        ZIP = 1001
+                    },
+                    VatNumber = 654321,
                 }
             };
-            Users = new List<User>() {
-                new User() {
+
+            Users = new List<User>
+            {
+                new() 
+                {
                     FirstName = "Lajos",
                     LastName = "Lakatos",
                     Id = 1,
                     UserName = "AdminLajos",
                     HashedPassword = "1234",
-                    Role = UserRole.Admin },
-                new User() {
+                    Role = UserRole.Admin
+                },
+                new() 
+                {
                     FirstName = "Lajos",
                     LastName = "Lakatos",
                     Id = 2,
                     UserName = "PartnerLajos",
                     HashedPassword = "1234",
-                    Role = UserRole.Partner },
-                new User() {
+                    Role = UserRole.Partner
+                },
+                new() 
+                {
                     FirstName = "Lajos",
                     LastName = "Lakatos",
                     Id = 3,
                     UserName = "CustomerLajos",
                     HashedPassword = "1234",
-                    Role = UserRole.Customer }
+                    Role = UserRole.Customer
+                }
             };
-            }
-
         }
     }
 }
