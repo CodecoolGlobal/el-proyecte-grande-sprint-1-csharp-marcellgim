@@ -7,7 +7,7 @@ public class UserService
 {
     private readonly IRepository<User> _userRepository;
 
-    public UserService(UserRepository userRepository)
+    public UserService(IRepository<User> userRepository)
     {
         _userRepository = userRepository;
     }
