@@ -23,11 +23,11 @@ namespace BpRobotics.Controllers
         {
             try
             {
-                return Ok(_customerRepository.GetAll());
+                return Ok(_customerRepository.GetAll().OrderBy(customer => customer.Id));
             }
             catch (Exception ex)
             {
-                _logger.LogCritical("Customers could not get", ex);
+                _logger.LogError("Customers could not get.", ex);
                 return StatusCode(500, "Something went wrong with your request.");
             }
         }
@@ -41,7 +41,7 @@ namespace BpRobotics.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Customers does not exists with id: {id}", ex);
+                _logger.LogError($"Customers does not exists with id: {id}.", ex);
                 return NotFound();
             }
         }
@@ -55,11 +55,46 @@ namespace BpRobotics.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"No customer found with id: {id}", ex);
+                _logger.LogError($"No customer found with id: {id}.", ex);
                 return NotFound();
             }
 
             return NoContent();
+        }
+
+        [HttpPut("customers/{id}")]
+        public ActionResult UpdateCustomerById([FromRoute] int id, [FromBody] Customer customer)
+        {
+            try
+            {
+                _customerRepository.Update(id, customer);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"No customer found with id: {id}.", ex);
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost("customers")]
+        public ActionResult<Customer> AddNewCustomer([FromBody] Customer customer)
+        {
+            var newId = _customerRepository.GetAll().Last().Id + 1;
+            customer.Id = newId;
+
+            try
+            {
+                _customerRepository.Add(customer);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Something went wrong with adding new customer.", ex);
+                return StatusCode(500, "Something went wrong with your request.");
+            }
+
+            return CreatedAtRoute(nameof(GetCustomerById), customer);
         }
     }
 }
