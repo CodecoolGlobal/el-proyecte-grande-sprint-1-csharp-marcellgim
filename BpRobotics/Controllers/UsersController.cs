@@ -21,5 +21,19 @@ namespace BpRobotics.Controllers
         {
             return _userService.ListUsers();
         }
+
+        [HttpPost]
+        public ActionResult NewUser([FromBody] User newUser)
+        {
+            try
+            {
+                _userService.NewUser(newUser);
+                return Created($"/user/{newUser.Id}", newUser);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }
