@@ -1,4 +1,6 @@
 using BpRobotics.Data;
+using BpRobotics.Data.Model;
+using BpRobotics.Data.Repositories;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -22,6 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IBpRoboticsDataStorage, BpRoboticsDataStorage>();
+builder.Services.AddSingleton<IRepository<Product>, ProductRepository>();
 
 var app = builder.Build();
 
