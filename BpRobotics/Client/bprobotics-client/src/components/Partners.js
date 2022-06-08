@@ -1,39 +1,35 @@
 import { useState, useEffect } from "react";
-
-function getPartners() {
-
-}
+import MaterialTable from 'material-table';
 
 
 
 function Partners() {
     const [partnerData, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_URL}partners`, {
-            mode: 'cors',
-            headers: {
-              'Access-Control-Allow-Origin':'*'
-            }
-          })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(
-                `This is an HTTP error: The status is ${response.status}`
-              );
-            }
-            return response.json();
-          })
-          .then((actualData) => console.log(actualData))
-          .catch((err) => {
-            console.log(err.message);
-          });
+        const fetchData = async () => {
+          const response = await fetch(`${process.env.REACT_APP_URL}partners`);
+          const newData = await response.json();
+          setData(newData);
+        };
+    
+        fetchData();
       }, []);
 
-    return ( <div>asd{process.env.REACT_APP_URL}</div> );
+
+
+    return ( 
+        <div style={{ maxWidth: '100%' }}>
+        <MaterialTable
+          columns={[
+            { title: 'Company name', field: 'CompanyName' },
+            { title: 'Mobile number', field: 'PhoneNumber' },
+          ]}
+          data={partnerData}
+          title="Partners"
+        />
+      </div>
+    );
 }
 
 export default Partners;
