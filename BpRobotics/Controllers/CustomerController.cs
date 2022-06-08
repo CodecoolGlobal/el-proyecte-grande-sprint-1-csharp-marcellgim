@@ -41,9 +41,25 @@ namespace BpRobotics.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogCritical($"Customers does not exists with id: {id}", ex);
+                _logger.LogError($"Customers does not exists with id: {id}", ex);
                 return NotFound();
             }
+        }
+
+        [HttpDelete("customers/{id}")]
+        public ActionResult DeleteCustomerById([FromRoute] int id)
+        {
+            try
+            {
+                _customerRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"No customer found with id: {id}", ex);
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }
