@@ -81,7 +81,7 @@ namespace BpRobotics.Controllers
         [HttpPost("customers")]
         public ActionResult<Customer> AddNewCustomer([FromBody] Customer customer)
         {
-            var newId = _customerRepository.GetAll().Last().Id + 1;
+            var newId = _customerRepository.GetAll().OrderBy(c => c.Id).Last().Id + 1;
             customer.Id = newId;
 
             try
