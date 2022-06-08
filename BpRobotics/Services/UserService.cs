@@ -1,19 +1,16 @@
-﻿using BpRobotics.Core.Model;
+﻿using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 
-namespace BpRobotics.Data.Services;
+namespace BpRobotics.Services;
 
 public class UserService
 {
-    private readonly UserRepository _userRepository;
+    private readonly IRepository<User> _userRepository;
 
-    public UserService(UserRepository userRepository)
+    public UserService(IRepository<User> userRepository)
     {
         _userRepository = userRepository;
     }
 
-    public List<UserModel> ListUsers()
-    {
-        throw new NotImplementedException();
-    }
+    public List<User> ListUsers() => _userRepository.GetAll();
 }
