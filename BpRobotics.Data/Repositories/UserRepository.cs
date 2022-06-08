@@ -22,7 +22,7 @@ public class UserRepository : IRepository<User>
 
     public void Add(User entity)
     {
-        entity.Id = _storage.Users.LastOrDefault()?.Id ?? 1;
+        entity.Id = (_storage.Users.LastOrDefault()?.Id  ?? 0) + 1;
         _storage.Users.Add(entity);
     }
 
