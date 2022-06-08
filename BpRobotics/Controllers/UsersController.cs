@@ -27,7 +27,7 @@ namespace BpRobotics.Controllers
             try
             {
                 _userService.NewUser(newUser);
-                return CreatedAtRoute("GetUser",newUser.Id, newUser);
+                return CreatedAtRoute("GetUser",new {userId = newUser.Id}, newUser);
             }
             catch (Exception e)
             {
