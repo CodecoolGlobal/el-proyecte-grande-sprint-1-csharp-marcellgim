@@ -1,6 +1,9 @@
 using BpRobotics.Data;
 using BpRobotics.Data.Model;
 using BpRobotics.Data.Repositories;
+using BpRobotics.Data.Entity;
+using BpRobotics.Data.Repositories;
+using BpRobotics.Services;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -23,8 +26,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add datastore service
 builder.Services.AddSingleton<IBpRoboticsDataStorage, BpRoboticsDataStorage>();
 builder.Services.AddSingleton<IRepository<Partner>, PartnerRepository>();
+
+// Add data repository services
+builder.Services.AddSingleton<IRepository<User>, UserRepository>();
+
+// Add data logic services
+builder.Services.AddSingleton<UserService>();
 
 var app = builder.Build();
 
