@@ -21,5 +21,22 @@ namespace BpRobotics.Controllers
         {
             return _partnerRepository.GetAll();
         }
+
+        [Route("partners/{id}")]
+        public Partner GetPartnerById(int id)
+        {
+            return _partnerRepository.Get(id);
+        }
+
+        [HttpPost]
+        [Route("partners/add")]
+        public ActionResult AddNewPartner()
+        {
+            var partner = new Partner();
+            partner.PhoneNumber = Request.Form["phone"];
+            partner.CompanyName = Request.Form["companyname"];
+            _partnerRepository.Add(partner);
+            return Ok();
+        }
     }
 }
