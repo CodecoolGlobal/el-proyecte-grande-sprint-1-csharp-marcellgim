@@ -5,27 +5,45 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BpRobotics.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
         private readonly IRepository<Customer> _customerRepository;
+        private readonly ILogger<CustomerController> _logger;
 
-        public CustomerController(IRepository<Customer> customerRepository)
+        public CustomerController(IRepository<Customer> customerRepository, ILogger<CustomerController> logger)
         {
             _customerRepository = customerRepository;
+            _logger = logger;
         }
 
         [HttpGet("customers")]
-        public List<Customer> GetAllCustomers()
+        public ActionResult<List<Customer>> GetAllCustomers()
         {
-            return _customerRepository.GetAll();
+            try
+            {
+                return Ok(_customerRepository.GetAll());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical("Customers could not get", ex);
+                return StatusCode(500, "Something went wrong with your request.");
+            }
         }
 
         [HttpGet("customers/{id}")]
-        public Customer GetCustomerById([FromRoute] int id)
+        public ActionResult<Customer> GetCustomerById([FromRoute] int id)
         {
-            return _customerRepository.Get(id);
+            try
+            {
+                return Ok(_customerRepository.Get(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Customers does not exists with id: {id}", ex);
+                return NotFound();
+            }
         }
     }
 }
