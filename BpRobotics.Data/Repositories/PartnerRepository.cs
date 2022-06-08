@@ -18,8 +18,7 @@ namespace BpRobotics.Data.Repositories
 
         public void Add(Partner entity)
         {
-            int maxId = _storage.Partners.Max(partner => partner.Id);
-            entity.Id = maxId++;
+            
             _storage.Partners.Add(entity);
         }
 
