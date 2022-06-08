@@ -27,7 +27,15 @@ public class OrderRepository : IRepository<Order>
 
     public void Update(int id, Order entity)
     {
-        // TODO override properties
-        var userToUpdate = Get(id);
+        var orderToUpdate = Get(id);
+
+        Delete(id);
+
+        if (_storage.Orders.Any(order => order.Id == entity.Id))
+        {
+            Add(orderToUpdate);
+            throw new Exception($"Attempting to update Order ID from {id} to {entity.Id}, but a Order with ID: {entity.Id} already exists!");
+        }
+        else Add(entity);
     }
 }
