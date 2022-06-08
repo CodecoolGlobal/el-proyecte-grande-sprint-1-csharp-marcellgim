@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BpRobotics.Data.Model;
+using BpRobotics.Data.Entity;
 
 namespace BpRobotics.Data.Repositories
 {
@@ -18,6 +18,8 @@ namespace BpRobotics.Data.Repositories
 
         public void Add(Partner entity)
         {
+            int maxId = _storage.Partners.Max(partner => partner.Id);
+            entity.Id = maxId++;
             _storage.Partners.Add(entity);
         }
 

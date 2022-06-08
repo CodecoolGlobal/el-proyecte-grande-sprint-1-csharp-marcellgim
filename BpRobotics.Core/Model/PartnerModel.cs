@@ -1,5 +1,4 @@
-﻿using BpRobotics.Data.Model;
-
+﻿
 namespace BpRobotics.Core.Model
 {
     public class PartnerModel
