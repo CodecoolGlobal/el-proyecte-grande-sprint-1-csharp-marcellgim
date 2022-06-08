@@ -15,9 +15,24 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet]
-        public List<Product> GetAll()
+        public ActionResult<List<Product>> GetAll()
         {
-            return _productRepository.GetAll();
+            return Ok(_productRepository.GetAll());
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<Product> GetProductById(int id)
+        {
+            try
+            {
+                var product = _productRepository.Get(id);
+                return Ok(product);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
     }
 }
