@@ -23,7 +23,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost]
-        public ActionResult NewUser([FromBody] User newUser)
+        public ActionResult<User> NewUser([FromBody] User newUser)
         {
             try
             {
@@ -33,6 +33,19 @@ namespace BpRobotics.Controllers
             catch (Exception e)
             {
                 return BadRequest(e);
+            }
+        }
+
+        [HttpGet("{userId}", Name = "GetUser")]
+        public ActionResult<User> GetUser(int userId)
+        {
+            try
+            {
+                return _userService.GetById(userId);
+            }
+            catch (Exception)
+            {
+                return NotFound();
             }
         }
     }
