@@ -3,7 +3,7 @@
 public class Device
 {
     public int Id { get; set; }
-    public int? Serial { get; set; }
+    public string? Serial { get; set; }
     public Product Product { get; set; }
     public List<Service> Services { get; set; } = new();
     public DateTime LastMaintenance { get; set; }

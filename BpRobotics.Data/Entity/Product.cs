@@ -1,6 +1,6 @@
 ﻿namespace BpRobotics.Data.Model;
 
-public struct Product
+public class Product
 {
     public int Id { get; set; }
     public string Name { get; set; }
