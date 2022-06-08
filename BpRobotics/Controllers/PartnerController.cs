@@ -23,6 +23,7 @@ namespace BpRobotics.Controllers
         {
             try
             {
+                return Ok(_partnerRepository.GetAll());
             }
             catch (Exception ex)
             {
@@ -30,23 +31,55 @@ namespace BpRobotics.Controllers
                     $"Exception while getting the list of partners.", ex);
                 return StatusCode(500, "A problem happened while handling your request.");
             }
-            return Ok(_partnerRepository.GetAll());
+            
         }
 
         [HttpGet("{id}")]
         public ActionResult<Partner> GetPartnerById(int id)
         {
-            return Ok(_partnerRepository.Get(id));
+            var partner = _partnerRepository.Get(id);
+            if (partner != null)
+            {
+                return Ok(_partnerRepository.Get(id));
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
-        public ActionResult AddNewPartner()
+        //the parameter will be Partner model
+        public ActionResult<Partner> AddNewPartner(Partner newPartner)
         {
-            var partner = new Partner();
-            partner.PhoneNumber = Request.Form["phone"];
-            partner.CompanyName = Request.Form["companyname"];
-            _partnerRepository.Add(partner);
-            return Ok();
+            int maxId = _partnerRepository.GetAll().Max(partner => partner.Id);
+            newPartner.Id = maxId++;
+            
+            _partnerRepository.Add(newPartner);
+            return CreatedAtRoute("AddNewPartner", newPartner);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdatePartner(Partner updatedPartner)
+        {
+            var partnerFromStore = _partnerRepository.Get(updatedPartner.Id);
+            if (partnerFromStore == null)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeletePartner(int id)
+        {
+            var partnerFromStore = _partnerRepository.Get(id);
+            if (partnerFromStore == null)
+            {
+                return NotFound();
+            }
+            _partnerRepository.Delete(id);
+            return NoContent();
         }
     }
 }
