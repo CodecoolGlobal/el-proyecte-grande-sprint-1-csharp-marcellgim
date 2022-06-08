@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useNavigate } from "react-router-dom";
 function Products() {
-    let url = "https://localhost:7166/api/products";
+    let url = `${process.env.REACT_APP_HOST_URL}/api/products`;
     const [productData, setProductData] = useState([]);
     let navigate = useNavigate(); 
   function routeChange(productId){ 
@@ -27,7 +27,7 @@ function Products() {
         columns={[
             { title: '',
             field: 'img',
-            render: item => <img onClick={() => routeChange(item.id)} src={item.img} alt="" height="100" width="100" />,
+            render: item => <img onClick={() => routeChange(item.id)} src={`${process.env.REACT_APP_HOST_URL}/StaticFiles/images/${item.img}`} alt="" height="100" width="100" />,
             filtering: false
         },
           { title: 'Name', field: 'name' },
