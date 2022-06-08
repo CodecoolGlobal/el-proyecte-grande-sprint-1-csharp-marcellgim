@@ -1,6 +1,5 @@
 ﻿using BpRobotics.Data.Entity;
 using BpRobotics.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BpRobotics.Controllers
@@ -28,7 +27,7 @@ namespace BpRobotics.Controllers
             try
             {
                 _userService.NewUser(newUser);
-                return Created($"/user/{newUser.Id}", newUser);
+                return CreatedAtRoute("GetUser",newUser.Id, newUser);
             }
             catch (Exception e)
             {
