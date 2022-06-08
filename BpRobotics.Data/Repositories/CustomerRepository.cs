@@ -36,7 +36,6 @@ namespace BpRobotics.Data.Repositories
         public void Update(int id, Customer entity)
         {
             var customerToUpdate = Get(id);
-            customerToUpdate.Id = id;
             customerToUpdate.BillingAddress = entity.BillingAddress;
             customerToUpdate.CompanyName = entity.CompanyName;
             customerToUpdate.ShippingAddress = entity.ShippingAddress;
