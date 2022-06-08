@@ -1,6 +1,4 @@
-﻿using System.Security.Principal;
-
-namespace BpRobotics.Data.Model
+﻿namespace BpRobotics.Data.Entity
 {
     public class User
     {

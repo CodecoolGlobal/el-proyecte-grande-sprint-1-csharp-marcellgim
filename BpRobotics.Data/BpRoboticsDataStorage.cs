@@ -1,4 +1,4 @@
-﻿using BpRobotics.Data.Model;
+﻿using BpRobotics.Data.Entity;
 
 namespace BpRobotics.Data
 {
