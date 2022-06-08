@@ -137,6 +137,30 @@ namespace BpRobotics.Data
 
             
 
+
+            Products = new List<Product>
+            {
+                new()
+                {
+            
+                    Id =1,
+                    Name = "Smart Air",
+                    ServiceInterval = TimeSpan.FromDays(180),
+                    Warranty = 730,
+                    ShortDescription = "Smart air-condition",
+                    LongDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                },
+                new()
+                {
+                    Id =2,
+                    Name = "Smart Fridge",
+                    ServiceInterval = TimeSpan.FromDays(365),
+                    Warranty = 1095,
+                    ShortDescription = "Smart fridge",
+                    LongDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                }
+            };
+
             Devices = new List<Device>
             {
                 new()
@@ -186,28 +210,6 @@ namespace BpRobotics.Data
                     WarrantyUntil = DateTime.Now,
                     Status = DeviceStatus.InstallPending,
                     Customer = Customers[1]
-                }
-            };
-
-            Products = new List<Product>
-            {
-                new()
-                {
-                    Id =1,
-                    Name = "Smart Air",
-                    ServiceInterval = TimeSpan.FromDays(180),
-                    Warranty = 730,
-                    ShortDescription = "Smart air-condition",
-                    LongDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                },
-                new()
-                {
-                    Id =2,
-                    Name = "Smart Fridge",
-                    ServiceInterval = TimeSpan.FromDays(365),
-                    Warranty = 1095,
-                    ShortDescription = "Smart fridge",
-                    LongDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 }
             };
 
