@@ -1,5 +1,4 @@
 using BpRobotics.Data;
-using BpRobotics.Data.Model;
 using BpRobotics.Data.Repositories;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
