@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BpRobotics.Core\BpRobotics.Core.csproj" />
     <ProjectReference Include="..\BpRobotics.Data\BpRobotics.Data.csproj" />
   </ItemGroup>
 

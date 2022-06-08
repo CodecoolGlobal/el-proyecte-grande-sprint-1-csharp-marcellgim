@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BpRobotics", "BpRobotics\Bp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BpRobotics.Tests", "BpRobotics.Tests\BpRobotics.Tests.csproj", "{8AFFD897-2779-40E8-A966-F3BB6F034493}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpRobotics.Data", "BpRobotics.Data\BpRobotics.Data.csproj", "{76DB0193-861C-486E-8023-ED10EC2D0CCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BpRobotics.Data", "BpRobotics.Data\BpRobotics.Data.csproj", "{76DB0193-861C-486E-8023-ED10EC2D0CCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpRobotics.Core", "BpRobotics.Core\BpRobotics.Core.csproj", "{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{76DB0193-861C-486E-8023-ED10EC2D0CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76DB0193-861C-486E-8023-ED10EC2D0CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76DB0193-861C-486E-8023-ED10EC2D0CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
