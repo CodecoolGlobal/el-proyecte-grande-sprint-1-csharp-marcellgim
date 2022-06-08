@@ -1,35 +1,45 @@
-﻿using BpRobotics.Data.Model;
+﻿
+using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
-using BpRobotics.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BpRobotics.Controllers
 {
     [ApiController]
-    [Route("")]
+    [Route("partners")]
     public class PartnerController : Controller
     {
         private readonly IRepository<Partner> _partnerRepository;
+        private readonly ILogger<PartnerController> _logger;
 
-        public PartnerController(IRepository<Partner> partnerRepository)
+        public PartnerController(IRepository<Partner> partnerRepository, ILogger<PartnerController> logger)
         {
-            _partnerRepository = partnerRepository;
+            _partnerRepository = partnerRepository ?? throw new ArgumentNullException(nameof(partnerRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [Route("partners")]
-        public List<Partner> ListPartners()
+        [HttpGet]
+        public ActionResult<List<Partner>> ListPartners()
         {
-            return _partnerRepository.GetAll();
+            try
+            {
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(
+                    $"Exception while getting the list of partners.", ex);
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
+            return Ok(_partnerRepository.GetAll());
         }
 
-        [Route("partners/{id}")]
-        public Partner GetPartnerById(int id)
+        [HttpGet("{id}")]
+        public ActionResult<Partner> GetPartnerById(int id)
         {
-            return _partnerRepository.Get(id);
+            return Ok(_partnerRepository.Get(id));
         }
 
         [HttpPost]
-        [Route("partners/add")]
         public ActionResult AddNewPartner()
         {
             var partner = new Partner();
