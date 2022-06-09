@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
+import UserForm from './UserForm';
 
 function Users() {
     const [userList, setUserList] = useState();
-
     const columns = [
         {title: "Username", field: "userName"},
         {title: "First Name", field: "firstName"},
@@ -26,17 +26,19 @@ function Users() {
         }
     ]
 
+    async function loadUsers() {
+        const response = await fetch(`${process.env.REACT_APP_HOST_URL}/users`);
+        const data = await response.json();
+        setUserList(data);
+    }
+
     useEffect(() => {
-        async function loadUsers() {
-            const response = await fetch(`${process.env.REACT_APP_HOST_URL}/users`);
-            const data = await response.json();
-            setUserList(data);
-        }
         loadUsers();
     }, [])
 
     return (
     <div>
+        <UserForm onCreate={loadUsers} />
         <MaterialTable
             title="List of users"
             data={userList} columns={columns}
