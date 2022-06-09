@@ -19,6 +19,7 @@ namespace BpRobotics.Data
             {
                 new()
                 {
+                    Id = 1,
                     CompanyName = "TestCompany",
                     BillingAddress = new Location
                     {
@@ -38,6 +39,7 @@ namespace BpRobotics.Data
                 },
                 new()
                 {
+                    Id = 2,
                     CompanyName = "TestCompany2",
                     BillingAddress = new Location
                     {
