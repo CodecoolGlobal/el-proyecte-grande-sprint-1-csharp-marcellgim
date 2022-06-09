@@ -34,5 +34,19 @@ namespace BpRobotics.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        public ActionResult<Product> CreateProduct([FromBody] Product newProduct)
+        {
+            try
+            {
+                _productRepository.Add(newProduct);
+                return Ok(newProduct);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
