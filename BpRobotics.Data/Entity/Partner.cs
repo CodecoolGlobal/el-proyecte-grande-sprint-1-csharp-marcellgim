@@ -1,4 +1,4 @@
-﻿namespace BpRobotics.Data.Model;
+﻿namespace BpRobotics.Data.Entity;
 
 public class Partner
 {

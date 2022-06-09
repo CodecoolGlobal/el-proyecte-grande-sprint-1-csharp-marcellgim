@@ -1,4 +1,4 @@
-﻿using BpRobotics.Data.Model;
+﻿using BpRobotics.Data.Entity;
 
 namespace BpRobotics.Data
 {
@@ -11,5 +11,6 @@ namespace BpRobotics.Data
         List<Service> Services { get; set; }
         List<Ticket> Tickets { get; set; }
         List<User> Users { get; set; }
+        List<Product> Products { get; set; }
     }
 }
