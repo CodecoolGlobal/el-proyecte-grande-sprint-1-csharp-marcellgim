@@ -39,7 +39,9 @@ namespace BpRobotics.Data.Repositories
 
         public void Update(int id, Partner entity)
         {
-            throw new NotImplementedException();
+            var partner = _storage.Partners.FirstOrDefault(x => x.Id == id);
+            partner.PhoneNumber = entity.PhoneNumber;
+            partner.CompanyName = entity.CompanyName;
         }
     }
 }
