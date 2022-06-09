@@ -27,7 +27,7 @@ function Products() {
         columns={[
             { title: '',
             field: 'img',
-            render: item => <img onClick={() => routeChange(item.id)} src={`${process.env.REACT_APP_HOST_URL}/StaticFiles/images/${item.img}`} alt="" height="100" width="100" />,
+            render: item => <img onClick={() => routeChange(item.id)} src={`${process.env.REACT_APP_HOST_URL}/StaticFiles/images/${item.img}`} alt="" width="100" />,
             filtering: false
         },
           { title: 'Name', field: 'name' },

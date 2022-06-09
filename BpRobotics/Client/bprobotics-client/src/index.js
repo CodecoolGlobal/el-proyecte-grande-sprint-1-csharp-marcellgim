@@ -8,7 +8,8 @@ import Products from './components/Products';
 import Partners from './components/Partners';
 import Customers from './components/Customers';
 import Users from './components/Users';
-import Orders from './components/Orders'
+import Orders from './components/Orders';
+import ProductDetails from './components/ProductDetails';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,6 +19,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="products" element={<Products />} />
+          <Route path="products/:id" element={<ProductDetails />} />
           <Route path="partners" element={<Partners />} />
           <Route path="customers" element={<Customers />} />
           <Route path="orders" element={<Orders />} />
