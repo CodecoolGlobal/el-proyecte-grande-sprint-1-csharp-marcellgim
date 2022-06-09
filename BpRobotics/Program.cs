@@ -18,7 +18,9 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://localhost:3000",
-                "https://icy-mushroom-0411fdf0f.1.azurestaticapps.net");
+                "https://icy-mushroom-0411fdf0f.1.azurestaticapps.net")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
 
