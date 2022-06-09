@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import MaterialTable from 'material-table';
 import '../App.css';
-import tableIcons from "./MaterialTableIcons";
+
 
 
 
@@ -20,7 +20,7 @@ function Partners() {
 
   //GET FETCH 
   useEffect(()=> {
-    fetch(`${process.env.REACT_APP_URL}/partners`)
+    fetch(`${process.env.REACT_APP_HOST_URL}/partners`)
     .then(response => response.json())
     .then(data=>{
     console.log(data);
@@ -35,7 +35,7 @@ function Partners() {
     console.log(companyName);
     console.log(phoneNumber);
     const newPartner = {companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_URL}/partners`, {
+    fetch(`${process.env.REACT_APP_HOST_URL}/partners`, {
       method: 'POST',
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(newPartner)
@@ -50,7 +50,7 @@ function Partners() {
     console.log(companyName);
     console.log(phoneNumber);
     const newPartner = { companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_URL}/partners/${currentId}`, {
+    fetch(`${process.env.REACT_APP_HOST_URL}/partners/${currentId}`, {
       method: 'PUT',
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(newPartner)
@@ -63,7 +63,7 @@ function Partners() {
   //DELETE FETCH 
   useEffect(()=> {
     const newPartner = {companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_URL}/partners/${currentId}`, {
+    fetch(`${process.env.REACT_APP_HOST_URL}/partners/${currentId}`, {
       method: 'DELETE',
     }).then(() => {
       console.log(`Partner with Id: ${currentId} deleted`);
@@ -130,7 +130,7 @@ function Partners() {
           filtering: true,
           sorting: true
         }}
-        icons={tableIcons}
+        
         columns={[
           { title: 'Id', field: 'id' },
           { title: 'Company name', field: 'companyName' },
