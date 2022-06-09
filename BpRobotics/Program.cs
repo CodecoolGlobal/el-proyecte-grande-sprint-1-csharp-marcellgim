@@ -4,6 +4,7 @@ using BpRobotics.Data.Repositories;
 using BpRobotics.Services;
 using Microsoft.Extensions.FileProviders;
 
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,9 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://localhost:3000",
-                "https://icy-mushroom-0411fdf0f.1.azurestaticapps.net");
+                "https://icy-mushroom-0411fdf0f.1.azurestaticapps.net")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
 
@@ -28,6 +31,7 @@ builder.Services.AddSwaggerGen();
 
 // Add datastore service
 builder.Services.AddSingleton<IBpRoboticsDataStorage, BpRoboticsDataStorage>();
+builder.Services.AddSingleton<IRepository<Order>, OrderRepository>();
 builder.Services.AddSingleton<IRepository<Product>, ProductRepository>();
 builder.Services.AddSingleton<IRepository<Customer>, CustomerRepository>();
 
@@ -36,6 +40,7 @@ builder.Services.AddSingleton<IRepository<User>, UserRepository>();
 
 // Add data logic services
 builder.Services.AddSingleton<UserService>();
+
 
 var app = builder.Build();
 
