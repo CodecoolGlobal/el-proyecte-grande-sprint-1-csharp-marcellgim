@@ -16,4 +16,8 @@
     <ProjectReference Include="..\BpRobotics.Data\BpRobotics.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MyStaticFiles\images\" />
+  </ItemGroup>
+
 </Project>
