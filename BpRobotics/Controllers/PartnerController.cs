@@ -53,16 +53,17 @@ namespace BpRobotics.Controllers
         public ActionResult<Partner> AddNewPartner(Partner newPartner)
         {
             int maxId = _partnerRepository.GetAll().Max(partner => partner.Id);
-            newPartner.Id = maxId++;
+            newPartner.Id = ++maxId;
             
             _partnerRepository.Add(newPartner);
             return CreatedAtRoute("AddNewPartner", newPartner);
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdatePartner(Partner updatedPartner)
+        public ActionResult UpdatePartner(Partner updatedPartner, int id)
         {
-            var partnerFromStore = _partnerRepository.Get(updatedPartner.Id);
+            var partnerFromStore = _partnerRepository.Get(id);
+            _partnerRepository.Update(id, updatedPartner);
             if (partnerFromStore == null)
             {
                 return NotFound();
