@@ -2,7 +2,7 @@ import MaterialTable from "material-table";
 import { useEffect, useState } from "react";
 
 function Customers() {
-  const url = `${process.env.REACT_APP_HOST_URL}/customers`;
+  const url = `${process.env.REACT_APP_HOST_URL}/api/customers`;
   const [customersData, setCustomersData] = useState([]);
   
   useEffect(() => {
