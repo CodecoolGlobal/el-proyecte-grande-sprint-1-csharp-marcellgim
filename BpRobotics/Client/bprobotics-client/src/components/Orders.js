@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import MaterialTable from "material-table";
-import { render } from "@testing-library/react";
 
 function Orders() {
     const url = `${process.env.REACT_APP_HOST_URL}/api/orders`;
@@ -15,7 +14,7 @@ function Orders() {
     }).catch( err=> {
       console.log("Error Reading data " + err);
     })
-    },[])
+    },[url])
 
     return ( 
         <div style={{ maxWidth: '100%' }}>
