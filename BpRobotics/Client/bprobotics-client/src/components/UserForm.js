@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function UserForm() {
+function UserForm({ onCreate }) {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -35,8 +35,7 @@ function UserForm() {
             setRole(0)
         }
 
-        dispatchEvent(new CustomEvent("create"))
-
+        onCreate();
     }
 
     return (
