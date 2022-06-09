@@ -1,5 +1,7 @@
 ﻿using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace BpRobotics.Services;
 
@@ -13,4 +15,11 @@ public class UserService
     }
 
     public List<User> ListUsers() => _userRepository.GetAll();
+
+    public void NewUser(User newUser)
+    {
+        _userRepository.Add(newUser);
+    }
+
+    public User GetById(int userId) => _userRepository.Get(userId);
 }
