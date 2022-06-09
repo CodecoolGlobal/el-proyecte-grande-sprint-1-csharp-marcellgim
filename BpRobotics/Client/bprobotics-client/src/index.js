@@ -10,7 +10,7 @@ import Customers from './components/Customers';
 import Users from './components/Users';
 import Orders from './components/Orders';
 import ProductDetails from './components/ProductDetails';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

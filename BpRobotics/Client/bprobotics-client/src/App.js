@@ -1,20 +1,45 @@
 import './App.css';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { Nav, Navbar, Container } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>BP Robotics</h1>
-        <nav>
-          <Link to="/customers">Customers</Link> |{" "}
-          <Link to="/orders">Orders</Link> |{" "}
-          <Link to="/partners">Partners</Link> |{" "}
-          <Link to="/products">Products</Link> |{" "}
-          <Link to="/users">users</Link>
-       </nav>
+        <Container>
+        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+          <Container>
+            <LinkContainer to="/">
+              <Navbar.Brand>BP Robotics</Navbar.Brand>
+            </LinkContainer>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <LinkContainer to="/customers">
+              <Nav.Link>Customers</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/orders">
+              <Nav.Link>Orders</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/partners">
+              <Nav.Link>Partners</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/products">
+              <Nav.Link>Products</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/users">
+              <Nav.Link>Users</Nav.Link>
+            </LinkContainer>
+          </Nav>
+          </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        </Container>
       </header>
-      <Outlet />
+      <div style={{width:"97%", margin:"auto"}}>
+          <Outlet />
+      </div>
     </div>
   );
 }
