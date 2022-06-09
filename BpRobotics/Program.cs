@@ -2,6 +2,7 @@ using BpRobotics.Data;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using BpRobotics.Services;
+using Microsoft.Extensions.FileProviders;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -27,6 +28,7 @@ builder.Services.AddSwaggerGen();
 
 // Add datastore service
 builder.Services.AddSingleton<IBpRoboticsDataStorage, BpRoboticsDataStorage>();
+builder.Services.AddSingleton<IRepository<Product>, ProductRepository>();
 
 // Add data repository services
 builder.Services.AddSingleton<IRepository<User>, UserRepository>();
@@ -44,6 +46,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "MyStaticFiles")),
+    RequestPath = "/StaticFiles"
+});
 
 app.UseCors(MyAllowSpecificOrigins);
 
