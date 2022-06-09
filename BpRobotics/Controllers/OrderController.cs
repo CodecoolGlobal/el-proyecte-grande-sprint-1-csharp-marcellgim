@@ -1,4 +1,4 @@
-﻿using BpRobotics.Data.Model;
+﻿using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
