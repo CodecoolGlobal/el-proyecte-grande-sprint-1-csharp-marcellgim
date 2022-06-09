@@ -30,19 +30,6 @@ root.render(
   </React.StrictMode>
 );
 
-window.addEventListener("load", () => {
-  const navbar = document.querySelector("#navbar");
-  setWidth();
-
-});
-
-function setWidth() {
-  const content = document.querySelector("#content");
-  const navbar = document.querySelector("#navbar");
-
-  content.style.width = navbar.offsetWidth + 'px';
-}
-
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
