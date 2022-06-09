@@ -20,4 +20,16 @@
     <Folder Include="MyStaticFiles\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="MyStaticFiles\images\smart_ac.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MyStaticFiles\images\smart_fridge.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MyStaticFiles\images\smart_oven.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
