@@ -1,71 +1,59 @@
 import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function UserForm({ onCreate }) {
+function UserForm({ handleSubmit }) {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [role, setRole] = useState(0);
+    const url = `${process.env.REACT_APP_HOST_URL}/api/users`
 
-    async function handleSubmit(event) {
-        event.preventDefault()
-        const response = await fetch(
-            `${process.env.REACT_APP_HOST_URL}/api/users`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: userName,
-                    hashedpassword: password,
-                    firstname: firstName,
-                    lastname: lastName,
-                    role: role
-                })
-            }
-        )
-
-        if (response.status === 200) {
-            setUserName("")
-            setFirstName("")
-            setLastName("")
-            setPassword("")
-            setRole(0)
-        }
-
-        onCreate();
+    const resetForm = () => {
+        setUserName("")
+        setFirstName("")
+        setLastName("")
+        setPassword("")
+        setRole(0)
     }
 
     return (
-    <form onSubmit={handleSubmit}>
-        <label>
+    <Form onSubmit={(e) => handleSubmit(url, {
+        username: userName,
+        hashedpassword: password,
+        firstname: firstName,
+        lastname: lastName,
+        role: role
+    }, resetForm, e)}>
+        <Form.Label>
             Username:
-            <input type="text" onChange={(e) => setUserName(e.target.value)}/>
-        </label>
-        <label>
+            <Form.Control type="text" onChange={(e) => setUserName(e.target.value)}/>
+        </Form.Label>
+        <Form.Label>
             Password:
-            <input type="password" onChange={(e) => setPassword(e.target.value)} />
-        </label>
-        <label>
+            <Form.Control type="password" onChange={(e) => setPassword(e.target.value)} />
+        </Form.Label>
+        <Form.Label>
             First Name:
-            <input type="text" onChange={(e) => setFirstName(e.target.value)}/>
-        </label>
-        <label>
+            <Form.Control type="text" onChange={(e) => setFirstName(e.target.value)}/>
+        </Form.Label>
+        <Form.Label>
             Last Name:
-            <input type="text" onChange={(e) => setLastName(e.target.value)} />
-        </label>
-        <label>
+            <Form.Control type="text" onChange={(e) => setLastName(e.target.value)} />
+        </Form.Label>
+        <Form.Label>
             Role:
-            <select value={role} onChange={(e) => setRole(parseInt(e.target.value))}>
+            <Form.Select value={role} onChange={(e) => setRole(parseInt(e.target.value))}>
                 <option value="0">Admin</option>
                 <option value="1">Partner</option>
                 <option value="2">Customer</option>
-            </select>
-        </label>
-        <input type="submit" value="Create user" />
-    </form>
+            </Form.Select>
+        </Form.Label>
+        <Button variant="primary" type="submit" value="Create user">Create User</Button>
+    </Form>
     );
 }
 
