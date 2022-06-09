@@ -3,7 +3,7 @@ import MaterialTable from "material-table";
 import { render } from "@testing-library/react";
 
 function Orders() {
-    const url = `${process.env.REACT_APP_URL}/api/orders`;
+    const url = `${process.env.REACT_APP_HOST_URL}/api/orders`;
     const [fetchData, setData] = useState([]);
 
     useEffect(()=> {
