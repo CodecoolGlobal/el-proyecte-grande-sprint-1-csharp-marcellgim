@@ -9,9 +9,11 @@ namespace BpRobotics.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IRepository<Product> _productRepository;
-        public ProductController(IRepository<Product> productRepository)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IRepository<Product> productRepository, IWebHostEnvironment hostEnvironment)
         {
             _productRepository = productRepository;
+            _webHostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
@@ -36,11 +38,18 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Product> CreateProduct([FromBody] Product newProduct)
+        public ActionResult<Product> CreateProduct([FromForm] Product newProduct)
         {
             try
             {
                 _productRepository.Add(newProduct);
+
+                string filePath = Path.Combine(_webHostEnvironment.ContentRootPath, $"MyStaticFiles/images/{newProduct.Img}");
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    newProduct.ProductImage.CopyTo(fileStream);
+                }
+
                 return Ok(newProduct);
             }
             catch (Exception)
