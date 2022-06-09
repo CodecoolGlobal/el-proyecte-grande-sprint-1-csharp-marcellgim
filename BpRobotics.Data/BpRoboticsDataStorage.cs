@@ -212,9 +212,6 @@ namespace BpRobotics.Data
                     Customer = Customers[1]
                 }
             };
-
-            
-
             Orders = new List<Order>()
             {
                 new()
@@ -231,7 +228,7 @@ namespace BpRobotics.Data
                 },
                 new()
                 {
-                    Id = 1,
+                    Id = 2,
                     Date = DateTime.Now,
                     Customer = Customers[1],
                     Address = Customers[1].ShippingAddress,
