@@ -10,7 +10,7 @@ import Customers from './components/Customers';
 import Users from './components/Users';
 import Orders from './components/Orders';
 import ProductDetails from './components/ProductDetails';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,6 +29,19 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+window.addEventListener("load", () => {
+  const navbar = document.querySelector("#navbar");
+  setWidth();
+
+});
+
+function setWidth() {
+  const content = document.querySelector("#content");
+  const navbar = document.querySelector("#navbar");
+
+  content.style.width = navbar.offsetWidth + 'px';
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
