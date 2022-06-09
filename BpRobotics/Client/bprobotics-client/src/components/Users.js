@@ -2,11 +2,18 @@ import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import UserForm from './UserForm';
 import CreateModal from './CreateModal';
+import { Link } from 'react-router-dom'
 
 function Users() {
     const [userList, setUserList] = useState();
     const columns = [
-        {title: "Username", field: "userName"},
+        {
+            title: "Username",
+            field: "userName",
+            render: rowData => {
+                return <Link to={`./${rowData.id}`}>{rowData.userName}</Link>
+            }
+        },
         {title: "First Name", field: "firstName"},
         {title: "Last Name", field: "lastName"},
         {
