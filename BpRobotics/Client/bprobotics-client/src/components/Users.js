@@ -27,7 +27,7 @@ function Users() {
     ]
 
     async function loadUsers() {
-        const response = await fetch(`${process.env.REACT_APP_HOST_URL}/users`);
+        const response = await fetch(`${process.env.REACT_APP_HOST_URL}/api/users`);
         const data = await response.json();
         setUserList(data);
     }

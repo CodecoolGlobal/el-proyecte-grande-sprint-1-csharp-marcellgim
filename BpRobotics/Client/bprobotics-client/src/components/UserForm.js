@@ -11,7 +11,7 @@ function UserForm() {
     async function handleSubmit(event) {
         event.preventDefault()
         const response = await fetch(
-            `${process.env.REACT_APP_HOST_URL}/users`,
+            `${process.env.REACT_APP_HOST_URL}/api/users`,
             {
                 method: "POST",
                 headers: {
