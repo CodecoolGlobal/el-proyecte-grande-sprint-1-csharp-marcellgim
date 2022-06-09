@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import MaterialTable from "material-table";
 import UserForm from './UserForm';
+import CreateModal from './CreateModal';
 
 function Users() {
     const [userList, setUserList] = useState();
@@ -38,7 +39,7 @@ function Users() {
 
     return (
     <div>
-        <UserForm onCreate={loadUsers} />
+        <CreateModal FormComponent={UserForm} onCreate={loadUsers} />
         <MaterialTable
             title="List of users"
             data={userList} columns={columns}
