@@ -90,7 +90,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Anna",
                     LastName = "Admin",
-                    Id = 1,
+                    Id = 2,
                     UserName = "AdminAnna",
                     HashedPassword = "1234",
                     Role = UserRole.Admin
@@ -99,7 +99,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Lajos",
                     LastName = "Partner",
-                    Id = 2,
+                    Id = 3,
                     UserName = "PartnerLajos",
                     HashedPassword = "1234",
                     Role = UserRole.Partner,
@@ -109,7 +109,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Anna",
                     LastName = "Partner",
-                    Id = 2,
+                    Id = 4,
                     UserName = "PartnerAnna",
                     HashedPassword = "1234",
                     Role = UserRole.Partner,
@@ -119,7 +119,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Lajos",
                     LastName = "Customer",
-                    Id = 3,
+                    Id = 5,
                     UserName = "CustomerLajos",
                     HashedPassword = "1234",
                     Role = UserRole.Customer,
@@ -129,7 +129,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Anna",
                     LastName = "Customer",
-                    Id = 3,
+                    Id = 6,
                     UserName = "CustomerAnna",
                     HashedPassword = "1234",
                     Role = UserRole.Customer,
