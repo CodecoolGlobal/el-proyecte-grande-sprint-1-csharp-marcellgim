@@ -1,8 +1,8 @@
 using BpRobotics.Data;
 using BpRobotics.Data.Repositories;
 using BpRobotics.Data.Entity;
-using BpRobotics.Data.Repositories;
 using BpRobotics.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
 
@@ -31,17 +31,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add datastore service
-builder.Services.AddSingleton<IBpRoboticsDataStorage, BpRoboticsDataStorage>();
-builder.Services.AddSingleton<IRepository<Order>, OrderRepository>();
-builder.Services.AddSingleton<IRepository<Product>, ProductRepository>();
-builder.Services.AddSingleton<IRepository<Customer>, CustomerRepository>();
-builder.Services.AddSingleton<IRepository<Partner>, PartnerRepository>();
+builder.Services.AddDbContext<BpRoboticsContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add data repository services
-builder.Services.AddSingleton<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
+builder.Services.AddTransient<IRepository<Product>, ProductRepository>();
+builder.Services.AddTransient<IRepository<Customer>, CustomerRepository>();
+builder.Services.AddTransient<IRepository<Partner>, PartnerRepository>();
 
 // Add data logic services
-builder.Services.AddSingleton<UserService>();
+builder.Services.AddTransient<UserService>();
 
 
 var app = builder.Build();
