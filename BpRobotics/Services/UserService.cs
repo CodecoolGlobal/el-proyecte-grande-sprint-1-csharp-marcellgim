@@ -14,12 +14,12 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public List<User> ListUsers() => _userRepository.GetAll();
+    public async Task<List<User>> ListUsers() => await _userRepository.GetAll();
 
-    public void NewUser(User newUser)
+    public async Task NewUser(User newUser)
     {
-        _userRepository.Add(newUser);
+        await _userRepository.Add(newUser);
     }
 
-    public User GetById(int userId) => _userRepository.Get(userId);
+    public async Task<User> GetById(int userId) => _userRepository.Get(userId);
 }
