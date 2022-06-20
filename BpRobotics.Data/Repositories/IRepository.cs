@@ -6,6 +6,6 @@ public interface IRepository<T>
     Task<T> Get(int id);
     Task Delete(int id);
     Task Add(T entity);
-    Task Update(int id, T entity);
+    Task<T> Update(T entity);
 
 }

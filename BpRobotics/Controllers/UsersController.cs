@@ -61,5 +61,18 @@ namespace BpRobotics.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPut("{userId}")]
+        public async Task<ActionResult<User>> UpdateUser(User updatedUser)
+        {
+            try
+            {
+                return await _userService.UpdateUser(updatedUser);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
     }
 }
