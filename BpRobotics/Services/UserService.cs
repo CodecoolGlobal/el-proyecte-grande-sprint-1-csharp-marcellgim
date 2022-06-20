@@ -21,5 +21,7 @@ public class UserService
         await _userRepository.Add(newUser);
     }
 
-    public async Task<User> GetById(int userId) => _userRepository.Get(userId);
+    public async Task<User> GetById(int userId) => await _userRepository.Get(userId);
+
+    public async Task DeleteById(int userId) => await _userRepository.Delete(userId);
 }

@@ -47,5 +47,19 @@ namespace BpRobotics.Controllers
                 return NotFound();
             }
         }
+
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            try
+            { 
+                await _userService.DeleteById(userId);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
     }
 }
