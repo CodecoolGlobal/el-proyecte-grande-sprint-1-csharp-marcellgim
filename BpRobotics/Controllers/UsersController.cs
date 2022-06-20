@@ -16,17 +16,17 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet]
-        public List<User> ListUsers()
+        public async Task<ActionResult<List<User>>> ListUsers()
         {
-            return _userService.ListUsers();
+            return await _userService.ListUsers();
         }
 
         [HttpPost]
-        public ActionResult<User> NewUser([FromBody] User newUser)
+        public async Task<ActionResult<User>> NewUser([FromBody] User newUser)
         {
             try
             {
-                _userService.NewUser(newUser);
+                await _userService.NewUser(newUser);
                 return CreatedAtRoute("GetUser",new {userId = newUser.Id}, newUser);
             }
             catch (Exception e)
@@ -36,11 +36,38 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet("{userId}", Name = "GetUser")]
-        public ActionResult<User> GetUser(int userId)
+        public async Task<ActionResult<User>> GetUser(int userId)
         {
             try
             {
-                return _userService.GetById(userId);
+                return await _userService.GetById(userId);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            try
+            { 
+                await _userService.DeleteById(userId);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPut("{userId}")]
+        public async Task<ActionResult<User>> UpdateUser(User updatedUser)
+        {
+            try
+            {
+                return await _userService.UpdateUser(updatedUser);
             }
             catch (Exception)
             {

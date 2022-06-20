@@ -2,10 +2,10 @@
 
 public interface IRepository<T>
 {
-    List<T> GetAll();
-    T Get(int id);
-    void Delete(int id);
-    void Add(T entity);
-    void Update(int id, T entity);
+    Task<List<T>> GetAll();
+    Task<T> Get(int id);
+    Task Delete(int id);
+    Task Add(T entity);
+    Task<T> Update(T entity);
 
 }
