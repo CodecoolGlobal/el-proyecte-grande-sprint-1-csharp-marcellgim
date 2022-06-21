@@ -4,44 +4,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BpRobotics.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace BpRobotics.Data.Repositories
 {
+    
     public class PartnerRepository : IRepository<Partner>
     {
-        private readonly IBpRoboticsDataStorage _storage;
+        public BpRoboticsContext Context { get; set; }
 
-        public PartnerRepository(IBpRoboticsDataStorage storage)
+        public PartnerRepository(BpRoboticsContext context)
         {
-            _storage = storage;
+            Context = context;
         }
 
-        public void Add(Partner entity)
+        public async Task<Partner> Add(Partner entity)
         {
+            Context.Add(entity);
+            await Context.SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task Delete(int id)
+        {
+            Partner partner = await Get(id);
+            if (partner != null)
+            {
+                Context.Partners.Remove(partner);
+                await Context.SaveChangesAsync();
+            }
             
-            _storage.Partners.Add(entity);
         }
 
-        public void Delete(int id)
+        public async Task<Partner> Get(int id)
         {
-            _storage.Partners.Remove(Get(id));
+            return await Context.Partners
+                .AsNoTracking()
+                .FirstAsync(partner => partner.Id == id);
         }
 
-        public Partner Get(int id)
+        public async Task<List<Partner>> GetAll()
         {
-            return _storage.Partners.Where(x => x.Id == id).First();
+            return await Context.Partners
+                .AsNoTracking()
+                .ToListAsync();
         }
 
-        public List<Partner> GetAll()
+        public async Task<Partner> Update(Partner entity)
         {
-            return _storage.Partners.ToList();
-        }
-
-        public void Update(int id, Partner entity)
-        {
-            var partner = _storage.Partners.FirstOrDefault(x => x.Id == id);
-            partner.PhoneNumber = entity.PhoneNumber;
-            partner.CompanyName = entity.CompanyName;
+            var partnerToUpdate = await Get(entity.Id);
+            partnerToUpdate.PhoneNumber = entity.PhoneNumber;
+            partnerToUpdate.CompanyName = entity.CompanyName;
+            return partnerToUpdate;
         }
     }
 }
