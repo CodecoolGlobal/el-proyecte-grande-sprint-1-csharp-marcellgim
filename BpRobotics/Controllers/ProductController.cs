@@ -38,7 +38,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Product> CreateProduct([FromForm] Product newProduct)
+        public ActionResult CreateProduct([FromForm] Product newProduct)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace BpRobotics.Controllers
                     newProduct.ProductImage.CopyTo(fileStream);
                 }
 
-                return Ok(newProduct);
+                return StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception)
             {
