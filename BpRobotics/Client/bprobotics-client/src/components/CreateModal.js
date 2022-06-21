@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function CreateModal({ FormComponent, onCreate }) {
+function CreateModal({ typeName, FormComponent, onCreate }) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -28,10 +28,10 @@ function CreateModal({ FormComponent, onCreate }) {
 
     return (
     <>
-        <Button variant="primary" onClick={handleShow}>New User</Button>
+        <Button variant="primary" onClick={handleShow}>New {typeName}</Button>
         <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Modal</Modal.Title>
+          <Modal.Title>Enter new {typeName} details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <FormComponent postData={postData} />
