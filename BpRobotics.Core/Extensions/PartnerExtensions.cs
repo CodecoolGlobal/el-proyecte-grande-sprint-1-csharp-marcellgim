@@ -47,5 +47,24 @@ namespace BpRobotics.Core.Extensions
                 PhoneNumber = partner.PhoneNumber,
             };
         }
+
+        public static Partner ToPartnerEntity(this PartnerCreateDto partner)
+        {
+            return new Partner()
+            {
+                CompanyName = partner.CompanyName,
+                PhoneNumber = partner.PhoneNumber,
+            };
+        }
+
+        public static Partner ToPartnerEntity(this PartnerUpdateDto partner)
+        {
+            return new Partner()
+            {
+                Id = partner.Id,
+                CompanyName = partner.CompanyName,
+                PhoneNumber = partner.PhoneNumber,
+            };
+        }
     }
 }
