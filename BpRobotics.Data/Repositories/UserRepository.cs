@@ -11,23 +11,27 @@ public class UserRepository : IRepository<User>
         _storage = storage;
     }
 
-    public List<User> GetAll() => _storage.Users.ToList();
+    public async Task<List<User>> GetAll() => _storage.Users.ToList();
 
-    public User Get(int id) => _storage.Users.First(user => user.Id == id);
+    public async Task<User> Get(int id) => _storage.Users.First(user => user.Id == id);
 
-    public void Delete(int id)
+    public async Task Delete(int id)
     {
-        _storage.Users.Remove(Get(id));
+        _storage.Users.Remove(await Get(id));
     }
 
-    public void Add(User entity)
+    public async Task Add(User entity)
     {
+        entity.Id = (_storage.Users.LastOrDefault()?.Id ?? 0) + 1;
         _storage.Users.Add(entity);
     }
 
-    public void Update(int id, User entity)
+    public async Task<User> Update(User entity)
     {
         // TODO override properties
-        var userToUpdate = Get(id);
+        var userToUpdate = await Get(entity.Id);
+        _storage.Users.Remove(userToUpdate);
+        _storage.Users.Add(entity);
+        return entity;
     }
 }

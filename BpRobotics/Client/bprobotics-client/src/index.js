@@ -8,9 +8,10 @@ import Products from './components/Products';
 import Partners from './components/Partners';
 import Customers from './components/Customers';
 import Users from './components/Users';
+import UserDetails from './components/UserDetails';
 import Orders from './components/Orders';
 import ProductDetails from './components/ProductDetails';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +25,7 @@ root.render(
           <Route path="customers" element={<Customers />} />
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
+          <Route path="users/:id" element={<UserDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>

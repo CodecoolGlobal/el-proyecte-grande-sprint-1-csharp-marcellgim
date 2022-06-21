@@ -1,25 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
 import { Outlet } from 'react-router-dom';
+import { Nav, Navbar, Container } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <Outlet />
+        <Container>
+        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+          <Container>
+            <LinkContainer to="/">
+              <Navbar.Brand>BP Robotics</Navbar.Brand>
+            </LinkContainer>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <LinkContainer to="/customers">
+              <Nav.Link>Customers</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/orders">
+              <Nav.Link>Orders</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/partners">
+              <Nav.Link>Partners</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/products">
+              <Nav.Link>Products</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/users">
+              <Nav.Link>Users</Nav.Link>
+            </LinkContainer>
+          </Nav>
+          </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        </Container>
       </header>
+      <div style={{width:"97%", margin:"auto"}}>
+          <Outlet />
+      </div>
     </div>
   );
 }

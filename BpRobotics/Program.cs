@@ -1,8 +1,10 @@
 using BpRobotics.Data;
-using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
+using BpRobotics.Data.Entity;
 using BpRobotics.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -17,7 +19,9 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://localhost:3000",
-                "https://icy-mushroom-0411fdf0f.1.azurestaticapps.net");
+                "https://icy-mushroom-0411fdf0f.1.azurestaticapps.net")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
 
@@ -27,14 +31,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add datastore service
-builder.Services.AddSingleton<IBpRoboticsDataStorage, BpRoboticsDataStorage>();
-builder.Services.AddSingleton<IRepository<Product>, ProductRepository>();
+builder.Services.AddDbContext<BpRoboticsContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add data repository services
-builder.Services.AddSingleton<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IRepository<User>, UserRepository>();
+builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
+builder.Services.AddTransient<IRepository<Product>, ProductRepository>();
+builder.Services.AddTransient<IRepository<Customer>, CustomerRepository>();
+builder.Services.AddTransient<IRepository<Partner>, PartnerRepository>();
 
 // Add data logic services
-builder.Services.AddSingleton<UserService>();
+builder.Services.AddTransient<UserService>();
+
 
 var app = builder.Build();
 

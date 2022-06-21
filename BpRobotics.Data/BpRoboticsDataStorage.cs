@@ -20,6 +20,7 @@ namespace BpRobotics.Data
             {
                 new()
                 {
+                    Id = 1,
                     CompanyName = "TestCompany",
                     BillingAddress = new Location
                     {
@@ -39,6 +40,7 @@ namespace BpRobotics.Data
                 },
                 new()
                 {
+                    Id = 2,
                     CompanyName = "TestCompany2",
                     BillingAddress = new Location
                     {
@@ -89,7 +91,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Anna",
                     LastName = "Admin",
-                    Id = 1,
+                    Id = 2,
                     UserName = "AdminAnna",
                     HashedPassword = "1234",
                     Role = UserRole.Admin
@@ -98,7 +100,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Lajos",
                     LastName = "Partner",
-                    Id = 2,
+                    Id = 3,
                     UserName = "PartnerLajos",
                     HashedPassword = "1234",
                     Role = UserRole.Partner,
@@ -108,7 +110,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Anna",
                     LastName = "Partner",
-                    Id = 2,
+                    Id = 4,
                     UserName = "PartnerAnna",
                     HashedPassword = "1234",
                     Role = UserRole.Partner,
@@ -118,7 +120,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Lajos",
                     LastName = "Customer",
-                    Id = 3,
+                    Id = 5,
                     UserName = "CustomerLajos",
                     HashedPassword = "1234",
                     Role = UserRole.Customer,
@@ -128,7 +130,7 @@ namespace BpRobotics.Data
                 {
                     FirstName = "Anna",
                     LastName = "Customer",
-                    Id = 3,
+                    Id = 6,
                     UserName = "CustomerAnna",
                     HashedPassword = "1234",
                     Role = UserRole.Customer,
@@ -209,9 +211,6 @@ namespace BpRobotics.Data
                     Customer = Customers[1]
                 }
             };
-
-            
-
             Orders = new List<Order>()
             {
                 new()
@@ -228,7 +227,7 @@ namespace BpRobotics.Data
                 },
                 new()
                 {
-                    Id = 1,
+                    Id = 2,
                     Date = DateTime.Now,
                     Customer = Customers[1],
                     Address = Customers[1].ShippingAddress,
