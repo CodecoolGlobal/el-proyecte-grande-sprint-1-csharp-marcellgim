@@ -12,7 +12,5 @@ namespace BpRobotics.Core.Model.User
         public string Password { get; set; }
         [Required]
         public string Role { get; set; }
-
-        public int? RelatedEntityId { get; set; }
     }
 }
