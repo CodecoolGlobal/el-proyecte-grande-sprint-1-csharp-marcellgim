@@ -2,6 +2,7 @@
 
 public struct Location
 {
+    public int Id { get; set; }
     public int ZIP { get; set; }
     public string Country { get; set; }
     public string City { get; set; }
