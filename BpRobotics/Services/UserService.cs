@@ -3,8 +3,6 @@ using BpRobotics.Core.Model.User;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.VisualBasic;
 
 namespace BpRobotics.Services;
 
@@ -35,8 +33,8 @@ public class UserService
 
     public async Task DeleteById(int userId) => await _userRepository.Delete(userId);
 
-    public async Task<UserViewDto> UpdateUser(User updatedUser)
+    public async Task<UserViewDto> UpdateUser(UserUpdateDto updatedUser)
     {
-        return (await _userRepository.Update(updatedUser)).ToUserView();
+        return (await _userRepository.Update(updatedUser.ToUserEntity())).ToUserView();
     }
 }
