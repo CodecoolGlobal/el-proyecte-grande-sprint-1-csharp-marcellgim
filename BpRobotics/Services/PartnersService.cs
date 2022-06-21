@@ -32,7 +32,7 @@ namespace BpRobotics.Services
         }
         public async Task DeleteById(int userId) => await _partnerRepository.Delete(userId);
 
-        public async Task<PartnerViewDto> UpdateUser(PartnerUpdateDto updatedUserDto)
+        public async Task<PartnerViewDto> UpdatePartner(PartnerUpdateDto updatedUserDto)
         {
             var entity = await _partnerRepository.Update(updatedUserDto.ToPartnerEntity());
             return entity.ToPartnerViewDto();

@@ -13,6 +13,6 @@ namespace BpRobotics.Services
 
         public Task DeleteById(int userId);
 
-        public Task<PartnerViewDto> UpdateUser(PartnerUpdateDto updatedUserDto);
+        public Task<PartnerViewDto> UpdatePartner(PartnerUpdateDto updatedUserDto);
     }
 }
