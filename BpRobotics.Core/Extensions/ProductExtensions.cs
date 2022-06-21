@@ -51,6 +51,16 @@ namespace BpRobotics.Core.Extensions
             };
         }
 
+        public static List<ProductViewDto> ToListProductViewDto(this List<Product> productEntities)
+        {
+            List<ProductViewDto> result = new List<ProductViewDto>();
+            foreach (var productEntity in productEntities)
+            {
+                result.Add(ToProductViewDto(productEntity));
+            }
+            return result;
+        }
+
         public static ProductCreateDto ToProductCreateDto(this Product productEntity)
         {
             return new ProductCreateDto
