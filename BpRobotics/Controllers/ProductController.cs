@@ -22,8 +22,7 @@ namespace BpRobotics.Controllers
             return Ok(_productRepository.GetAll());
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}", Name = "GetProductById")]
         public ActionResult<Product> GetProductById(int id)
         {
             try
@@ -38,19 +37,12 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateProduct([FromForm] Product newProduct)
+        public ActionResult CreateProduct([FromBody] Product newProduct)
         {
             try
             {
                 _productRepository.Add(newProduct);
-
-                string filePath = Path.Combine(_webHostEnvironment.ContentRootPath, $"MyStaticFiles/images/{newProduct.Img}");
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    newProduct.ProductImage.CopyTo(fileStream);
-                }
-
-                return StatusCode(StatusCodes.Status201Created);
+                return CreatedAtRoute("GetProductById", new { id = newProduct.ID }, newProduct);
             }
             catch (Exception)
             {
