@@ -25,7 +25,7 @@ public class OrderRepository : IRepository<Order>
     public async Task Delete(int id)
     {
         var order = await Get(id);
-        await Task.Run(() => _context.Orders.Remove(order));
+        _context.Orders.Remove(order);
         await _context.SaveChangesAsync();
     }
 
@@ -37,7 +37,7 @@ public class OrderRepository : IRepository<Order>
 
     public async Task<Order> Update(Order order)
     {
-        await Task.Run(() => _context.Orders.Update(order));
+        _context.Orders.Update(order);
         await _context.SaveChangesAsync();
         return order;
     }
