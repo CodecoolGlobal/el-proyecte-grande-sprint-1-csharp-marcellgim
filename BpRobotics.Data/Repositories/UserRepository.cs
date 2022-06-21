@@ -1,37 +1,37 @@
 ﻿using BpRobotics.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BpRobotics.Data.Repositories;
 
 public class UserRepository : IRepository<User>
 {
-    private readonly IBpRoboticsDataStorage _storage;
+    private readonly BpRoboticsContext _context;
 
-    public UserRepository(IBpRoboticsDataStorage storage)
+    public UserRepository(BpRoboticsContext context)
     {
-        _storage = storage;
+        _context = context;
     }
 
-    public async Task<List<User>> GetAll() => _storage.Users.ToList();
+    public async Task<List<User>> GetAll() => await _context.Users.AsNoTracking().ToListAsync();
 
-    public async Task<User> Get(int id) => _storage.Users.First(user => user.Id == id);
+    public async Task<User> Get(int id) => await _context.Users.AsNoTracking().FirstAsync(user => user.Id == id);
 
     public async Task Delete(int id)
     {
-        _storage.Users.Remove(await Get(id));
+        _context.Users.Remove(await Get(id));
+        await _context.SaveChangesAsync();
     }
 
     public async Task Add(User entity)
     {
-        entity.Id = (_storage.Users.LastOrDefault()?.Id ?? 0) + 1;
-        _storage.Users.Add(entity);
+        await _context.Users.AddAsync(entity);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<User> Update(User entity)
     {
-        // TODO override properties
-        var userToUpdate = await Get(entity.Id);
-        _storage.Users.Remove(userToUpdate);
-        _storage.Users.Add(entity);
+        _context.Users.Update(entity);
+        await _context.SaveChangesAsync();
         return entity;
     }
 }
