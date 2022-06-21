@@ -10,9 +10,7 @@ function CreateModal({ FormComponent, onCreate }) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleSubmit = async (url, data, reset, event) => {
-        event.preventDefault()
-        console.log(data)
+    const postData = async (url, data) => {
         const response = await fetch(url,
         {
             method: "POST",
@@ -23,7 +21,6 @@ function CreateModal({ FormComponent, onCreate }) {
         })
 
         if (response.status === 201) {
-            reset()
             handleClose()
             onCreate()
         }
@@ -37,7 +34,7 @@ function CreateModal({ FormComponent, onCreate }) {
           <Modal.Title>Modal</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <FormComponent handleSubmit={handleSubmit} onCreate={onCreate} />
+            <FormComponent postData={postData} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>

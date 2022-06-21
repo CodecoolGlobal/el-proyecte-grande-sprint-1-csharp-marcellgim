@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function UserForm({ handleSubmit }) {
+function UserForm({ postData }) {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -12,22 +12,21 @@ function UserForm({ handleSubmit }) {
     const [role, setRole] = useState(0);
     const url = `${process.env.REACT_APP_HOST_URL}/api/users`
 
-    const resetForm = () => {
-        setUserName("")
-        setFirstName("")
-        setLastName("")
-        setPassword("")
-        setRole(0)
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        postData(url, {
+            username: userName,
+            hashedpassword: password,
+            firstname: firstName,
+            lastname: lastName,
+            role: role
+        });
+
+        event.currentTarget.reset()
     }
 
     return (
-    <Form onSubmit={(e) => handleSubmit(url, {
-        username: userName,
-        hashedpassword: password,
-        firstname: firstName,
-        lastname: lastName,
-        role: role
-    }, resetForm, e)}>
+    <Form onSubmit={handleSubmit}>
         <Form.Label>
             Username:
             <Form.Control type="text" onChange={(e) => setUserName(e.target.value)}/>
@@ -47,9 +46,9 @@ function UserForm({ handleSubmit }) {
         <Form.Label>
             Role:
             <Form.Select value={role} onChange={(e) => setRole(parseInt(e.target.value))}>
-                <option value="0">Admin</option>
-                <option value="1">Partner</option>
-                <option value="2">Customer</option>
+                <option value="Admin">Admin</option>
+                <option value="Partner">Partner</option>
+                <option value="Customer">Customer</option>
             </Form.Select>
         </Form.Label>
         <Button variant="primary" type="submit" value="Create user">Create User</Button>
