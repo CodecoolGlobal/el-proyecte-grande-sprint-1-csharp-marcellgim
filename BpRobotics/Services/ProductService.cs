@@ -2,9 +2,6 @@
 using BpRobotics.Core.Model.Product;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.VisualBasic;
 
 namespace BpRobotics.Services;
 
