@@ -5,9 +5,9 @@ namespace BpRobotics.Core.Extensions
 {
     public static class CustomerExtensions
     {
-        public static CustomerDTO ToCustomerView(this Customer customer)
+        public static CustomerDto ToCustomerView(this Customer customer)
         {
-            return new CustomerDTO
+            return new CustomerDto
             {
                 Id = customer.Id,
                 CompanyName = customer.CompanyName,
@@ -15,52 +15,52 @@ namespace BpRobotics.Core.Extensions
             };
         }
 
-        public static List<CustomerDTO> ToCustomerView(this List<Customer> customers)
+        public static List<CustomerDto> ToCustomerView(this List<Customer> customers)
         {
             return customers.Select(ToCustomerView).ToList();
         }
 
-        public static CustomerDetailedDTO ToCustomerDetailedView(this Customer customer)
+        public static CustomerDetailedDto ToCustomerDetailedView(this Customer customer)
         {
-            return new CustomerDetailedDTO
+            return new CustomerDetailedDto
             {
                 Id = customer.Id,
                 CompanyName = customer.CompanyName,
                 VatNumber = customer.VatNumber,
-                BillingZIP = customer.BillingAddress.ZIP,
+                BillingZip = customer.BillingAddress.ZIP,
                 BillingCountry = customer.BillingAddress.Country,
                 BillingCity = customer.BillingAddress.City,
                 BillingAddress = customer.BillingAddress.Address,
-                ShippingZIP = customer.ShippingAddress.ZIP,
+                ShippingZip = customer.ShippingAddress.ZIP,
                 ShippingCountry = customer.ShippingAddress.Country,
                 ShippingCity = customer.ShippingAddress.City,
                 ShippingAddress = customer.ShippingAddress.Address
             };
         }
 
-        public static CustomerDetailedDTO ToCustomerDetailedView(this CustomerModel customer)
+        public static CustomerDetailedDto ToCustomerDetailedView(this CustomerModel customer)
         {
-            return new CustomerDetailedDTO
+            return new CustomerDetailedDto
             {
                 Id = customer.Id,
                 CompanyName = customer.CompanyName,
                 VatNumber = customer.VatNumber,
-                BillingZIP = customer.BillingAddress.ZIP,
+                BillingZip = customer.BillingAddress.ZIP,
                 BillingCountry = customer.BillingAddress.Country,
                 BillingCity = customer.BillingAddress.City,
                 BillingAddress = customer.BillingAddress.Address,
-                ShippingZIP = customer.ShippingAddress.ZIP,
+                ShippingZip = customer.ShippingAddress.ZIP,
                 ShippingCountry = customer.ShippingAddress.Country,
                 ShippingCity = customer.ShippingAddress.City,
                 ShippingAddress = customer.ShippingAddress.Address
             };
         }
 
-        public static Customer ToCustomerEntity(this CustomerDetailedDTO customer)
+        public static Customer ToCustomerEntity(this CustomerDetailedDto customer)
         {
             var billingLocation = new Location
             {
-                ZIP = customer.BillingZIP,
+                ZIP = customer.BillingZip,
                 Country = customer.BillingCountry,
                 City = customer.BillingCity,
                 Address = customer.BillingAddress
@@ -68,7 +68,7 @@ namespace BpRobotics.Core.Extensions
 
             var shippingLocation = new Location
             {
-                ZIP = customer.ShippingZIP,
+                ZIP = customer.ShippingZip,
                 Country = customer.ShippingCountry,
                 City = customer.ShippingCity,
                 Address = customer.ShippingAddress
@@ -95,7 +95,7 @@ namespace BpRobotics.Core.Extensions
             };
         }
 
-        public static CustomerModel ToCustomerModel(this CustomerUpdateDTO updateCustomerDto)
+        public static CustomerModel ToCustomerModel(this CustomerUpdateDto updateCustomerDto)
         {
             return new CustomerModel
             {

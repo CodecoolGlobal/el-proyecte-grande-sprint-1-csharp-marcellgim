@@ -17,24 +17,24 @@ namespace BpRobotics.Services
             _locationRepository = locationRepository;
         }
 
-        public async Task<List<CustomerDTO>> ListCustomers()
+        public async Task<List<CustomerDto>> ListCustomers()
         {
             var customers = await _customerRepository.GetAll();
             return customers.ToCustomerView();
         }
 
-        public async Task<CustomerDetailedDTO> GetById(int customerId)
+        public async Task<CustomerDetailedDto> GetById(int customerId)
         {
             var customer = await _customerRepository.Get(customerId);
             return customer.ToCustomerDetailedView();
         }
 
-        public async Task NewCustomer(CustomerDetailedDTO newCustomerDto)
+        public async Task NewCustomer(CustomerDetailedDto newCustomerDto)
         {
             await _customerRepository.Add(newCustomerDto.ToCustomerEntity());
         }
 
-        public async Task<CustomerDetailedDTO> UpdateUser(CustomerUpdateDTO updatedCustomerDto)
+        public async Task<CustomerDetailedDto> UpdateUser(CustomerUpdateDto updatedCustomerDto)
         {
             var customerModel = await CreateCustomerModelById(updatedCustomerDto);
 
@@ -45,7 +45,7 @@ namespace BpRobotics.Services
 
         public async Task DeleteById(int customerId) => await _customerRepository.Delete(customerId);
 
-        private async Task<CustomerModel> CreateCustomerModelById(CustomerUpdateDTO updatedCustomerDto)
+        private async Task<CustomerModel> CreateCustomerModelById(CustomerUpdateDto updatedCustomerDto)
         {
             var customerId = updatedCustomerDto.Id;
             var billingLocationId = updatedCustomerDto.BillingLocationId;

@@ -6,38 +6,38 @@ namespace BpRobotics.Core.Extensions
 {
     public static class LocationExtensions
     {
-        public static LocationDTO ToLocationView(this Location location)
+        public static LocationDto ToLocationView(this Location location)
         {
-            return new LocationDTO
+            return new LocationDto
             {
-                ZIP = location.ZIP,
+                Zip = location.ZIP,
                 Country = location.Country,
                 City = location.City,
                 Address = location.Address
             };
         }
-        public static List<LocationDTO> ToLocationView(this List<Location> locations)
+        public static List<LocationDto> ToLocationView(this List<Location> locations)
         {
             return locations.Select(ToLocationView).ToList();
         }
 
-        public static Location ToLocationEntity(this LocationDTO createLocationDto)
+        public static Location ToLocationEntity(this LocationDto createLocationDto)
         {
             return new Location
             {
-                ZIP = createLocationDto.ZIP,
+                ZIP = createLocationDto.Zip,
                 Country = createLocationDto.Country,
                 City = createLocationDto.City,
                 Address = createLocationDto.Address
             };
         }
 
-        public static Location ToUpdateLocationEntity(this LocationDTO updateLocationDto)
+        public static Location ToUpdateLocationEntity(this LocationDto updateLocationDto)
         {
             return new Location
             {
                 Id = updateLocationDto.Id,
-                ZIP = updateLocationDto.ZIP,
+                ZIP = updateLocationDto.Zip,
                 Country = updateLocationDto.Country,
                 City = updateLocationDto.City,
                 Address = updateLocationDto.Address

@@ -2,7 +2,7 @@
 
 namespace BpRobotics.Core.Model.CustomerDTOs
 {
-    public class CustomerUpdateDTO
+    public class CustomerUpdateDto
     {
         private const int MinZipValue = 1000;
         private const int MaxZipValue = 9999;
@@ -11,27 +11,27 @@ namespace BpRobotics.Core.Model.CustomerDTOs
         [Required]
         public int Id { get; set; }
         [StringLength(maximumLength:MaxStringLength)]
-        public string CompanyName { get; set; } = string.Empty;
+        public string? CompanyName { get; set; }
         public int VatNumber { get; set; }
         [Range(minimum: MinZipValue, maximum: MaxZipValue)]
-        public int BillingZIP { get; set; }
+        public int BillingZip { get; set; }
         [Required]
         public int BillingLocationId { get; set; }
         [StringLength(maximumLength:MaxStringLength)]
-        public string BillingCountry { get; set; }
+        public string? BillingCountry { get; set; }
         [StringLength(maximumLength:MaxStringLength)]
-        public string BillingCity { get; set; }
+        public string? BillingCity { get; set; }
         [StringLength(maximumLength:MaxStringLength)]
-        public string BillingAddress { get; set; }
+        public string? BillingAddress { get; set; }
         [Required]
         public int ShippingLocationId { get; set; }
         [Range(minimum: MinZipValue, maximum: MaxZipValue)]
-        public int ShippingZIP { get; set; }
+        public int ShippingZip { get; set; }
         [StringLength(maximumLength:MaxStringLength)]
-        public string ShippingCountry { get; set; }
+        public string? ShippingCountry { get; set; }
         [StringLength(maximumLength:MaxStringLength)]
-        public string ShippingCity { get; set; }
+        public string? ShippingCity { get; set; }
         [StringLength(maximumLength:MaxStringLength)]
-        public string ShippingAddress { get; set; }
+        public string? ShippingAddress { get; set; }
     }
 }

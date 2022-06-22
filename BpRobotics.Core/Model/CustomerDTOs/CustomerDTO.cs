@@ -2,10 +2,10 @@
 
 namespace BpRobotics.Core.Model.CustomerDTOs
 {
-    public class CustomerDTO
+    public class CustomerDto
     {
         public int Id { get; set; }
-        public string CompanyName { get; set; } = string.Empty;
+        public string? CompanyName { get; set; }
         public int VatNumber { get; set; }
     }
 }
