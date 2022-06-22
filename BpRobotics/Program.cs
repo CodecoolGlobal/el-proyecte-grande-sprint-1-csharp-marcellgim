@@ -44,6 +44,7 @@ builder.Services.AddTransient<IRepository<Location>, LocationRepository>();
 
 // Add data logic services
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<ProductService>();
 
 
 var app = builder.Build();
