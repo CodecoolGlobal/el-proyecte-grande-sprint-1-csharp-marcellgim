@@ -9,9 +9,11 @@ namespace BpRobotics.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IRepository<Product> _productRepository;
-        public ProductController(IRepository<Product> productRepository)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IRepository<Product> productRepository, IWebHostEnvironment hostEnvironment)
         {
             _productRepository = productRepository;
+            _webHostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
@@ -20,8 +22,7 @@ namespace BpRobotics.Controllers
             return Ok(_productRepository.GetAll());
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}", Name = "GetProductById")]
         public ActionResult<Product> GetProductById(int id)
         {
             try
@@ -32,6 +33,20 @@ namespace BpRobotics.Controllers
             catch (Exception)
             {
                 return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CreateProduct([FromBody] Product newProduct)
+        {
+            try
+            {
+                _productRepository.Add(newProduct);
+                return CreatedAtRoute("GetProductById", new { id = newProduct.ID }, newProduct);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
     }
