@@ -29,7 +29,7 @@ namespace BpRobotics.Controllers
             catch (Exception ex)
             {
                 _logger.LogError("Customers could not get.", ex);
-                return StatusCode(500, "Something went wrong with your request.");
+                return BadRequest();
             }
         }
 
@@ -81,19 +81,20 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost("customers")]
-        public async Task<ActionResult<Customer>> AddNewCustomer([FromBody] CustomerDetailedDto customer)
+        public async Task<ActionResult<CustomerDetailedDto>> AddNewCustomer([FromBody] CreateCustomerDto customer)
         {
             try
             {
-                await _customerService.NewCustomer(customer);
+                var newCustomer = await _customerService.NewCustomer(customer);
+                
+                return CreatedAtRoute(nameof(GetCustomerById), new { id = newCustomer.Id }, newCustomer);
             }
             catch (Exception ex)
             {
                 _logger.LogError("Something went wrong with adding new customer.", ex);
-                return StatusCode(500, "Something went wrong with your request.");
+                return BadRequest();
             }
 
-            return CreatedAtRoute(nameof(GetCustomerById), new { id = customer.Id }, customer);
         }
     }
 }

@@ -29,9 +29,12 @@ namespace BpRobotics.Services
             return customer.ToCustomerDetailedView();
         }
 
-        public async Task NewCustomer(CustomerDetailedDto newCustomerDto)
+        public async Task<CustomerDetailedDto> NewCustomer(CreateCustomerDto newCustomerDto)
         {
-            await _customerRepository.Add(newCustomerDto.ToCustomerEntity());
+            var customerEntity = newCustomerDto.ToCustomerEntity();
+            await _customerRepository.Add(customerEntity);
+
+            return customerEntity.ToCustomerDetailedView();
         }
 
         public async Task<CustomerDetailedDto> UpdateUser(CustomerUpdateDto updatedCustomerDto)

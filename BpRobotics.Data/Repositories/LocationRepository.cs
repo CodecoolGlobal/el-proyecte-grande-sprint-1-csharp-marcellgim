@@ -19,7 +19,7 @@ namespace BpRobotics.Data.Repositories
 
         public async Task<Location> Get(int id)
         {
-            return await _context.Locations.FirstAsync(location => location.Id == id);
+            return await _context.Locations.SingleAsync(location => location.Id == id);
         }
 
         public async Task Delete(int id)

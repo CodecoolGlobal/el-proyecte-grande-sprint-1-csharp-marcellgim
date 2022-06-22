@@ -56,7 +56,7 @@ namespace BpRobotics.Core.Extensions
             };
         }
 
-        public static Customer ToCustomerEntity(this CustomerDetailedDto customer)
+        public static Customer ToCustomerEntity(this CreateCustomerDto customer)
         {
             var billingLocation = new Location
             {

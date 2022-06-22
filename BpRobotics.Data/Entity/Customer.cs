@@ -3,7 +3,7 @@
 public class Customer
 {
     public int Id { get; set; }
-    public string? CompanyName { get; set; }
+    public string CompanyName { get; set; } = string.Empty;
     public int VatNumber { get; set; }
     public Location? BillingAddress { get; set; }
     public Location? ShippingAddress { get; set; }
