@@ -6,9 +6,9 @@ namespace BpRobotics.Core.Extensions
 {
     public static class LocationExtensions
     {
-        public static ReadLocationDTO ToLocationView(this Location location)
+        public static LocationDTO ToLocationView(this Location location)
         {
-            return new ReadLocationDTO
+            return new LocationDTO
             {
                 ZIP = location.ZIP,
                 Country = location.Country,
@@ -16,12 +16,12 @@ namespace BpRobotics.Core.Extensions
                 Address = location.Address
             };
         }
-        public static List<ReadLocationDTO> ToLocationView(this List<Location> locations)
+        public static List<LocationDTO> ToLocationView(this List<Location> locations)
         {
             return locations.Select(ToLocationView).ToList();
         }
 
-        public static Location ToLocationEntity(this CreateLocationDTO createLocationDto)
+        public static Location ToLocationEntity(this LocationDTO createLocationDto)
         {
             return new Location
             {
