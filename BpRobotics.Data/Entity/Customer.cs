@@ -7,4 +7,5 @@ public class Customer
     public int VatNumber { get; set; }
     public Location? BillingAddress { get; set; }
     public Location? ShippingAddress { get; set; }
+    public User? User { get; set; }
 }
