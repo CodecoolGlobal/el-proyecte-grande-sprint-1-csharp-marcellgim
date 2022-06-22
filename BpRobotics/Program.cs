@@ -40,6 +40,7 @@ builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
 builder.Services.AddTransient<IRepository<Product>, ProductRepository>();
 builder.Services.AddTransient<IRepository<Customer>, CustomerRepository>();
 builder.Services.AddTransient<IRepository<Partner>, PartnerRepository>();
+builder.Services.AddTransient<IRepository<Location>, LocationRepository>();
 
 // Add data logic services
 builder.Services.AddTransient<UserService>();
