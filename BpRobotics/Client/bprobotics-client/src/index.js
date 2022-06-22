@@ -5,7 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Products from './components/Products';
-import TestFetch from './components/TestFetch';
 import Partners from './components/Partners';
 import Customers from './components/Customers';
 import Users from './components/Users';
@@ -23,8 +22,7 @@ root.render(
         <Route path="/" element={<App />}>
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<ProductDetails />} />
-          <Route path="partners" element={<TestFetch />} />
-          {/* <Route path="partners" element={<Partners />} /> */}
+          <Route path="partners" element={<Partners />} />
           <Route path="customers" element={<Customers />} />
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
