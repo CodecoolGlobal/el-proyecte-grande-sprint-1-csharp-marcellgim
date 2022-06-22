@@ -1,8 +1,8 @@
-﻿using BpRobotics.Data.Entity;
+﻿using BpRobotics.Core.Extensions;
+using BpRobotics.Core.Model.User;
+using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.VisualBasic;
 
 namespace BpRobotics.Services;
 
@@ -15,19 +15,26 @@ public class UserService
         _userRepository = userRepository;
     }
 
-    public async Task<List<User>> ListUsers() => await _userRepository.GetAll();
-
-    public async Task NewUser(User newUser)
+    public async Task<List<UserViewDto>> ListUsers()
     {
-        await _userRepository.Add(newUser);
+        return (await _userRepository.GetAll())
+            .Select(user => user.ToUserView())
+            .ToList();
+    } 
+
+    public async Task<UserViewDto> NewUser(UserCreateDto newUser)
+    {
+        var userEntity = newUser.ToUserEntity();
+        await _userRepository.Add(userEntity);
+        return userEntity.ToUserView();
     }
 
-    public async Task<User> GetById(int userId) => await _userRepository.Get(userId);
+    public async Task<UserViewDto> GetById(int userId) => (await _userRepository.Get(userId)).ToUserView();
 
     public async Task DeleteById(int userId) => await _userRepository.Delete(userId);
 
-    public async Task<User> UpdateUser(User updatedUser)
+    public async Task<UserViewDto> UpdateUser(UserUpdateDto updatedUser)
     {
-        return await _userRepository.Update(updatedUser);
+        return (await _userRepository.Update(updatedUser.ToUserEntity())).ToUserView();
     }
 }
