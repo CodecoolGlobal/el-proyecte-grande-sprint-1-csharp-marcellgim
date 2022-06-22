@@ -22,6 +22,7 @@ public class ProductRepository : IRepository<Product>
 
     public void Add(Product entity)
     {
+        entity.Id = (_storage.Products.LastOrDefault()?.Id ?? 0) + 1;
         _storage.Products.Add(entity);
     }
 
