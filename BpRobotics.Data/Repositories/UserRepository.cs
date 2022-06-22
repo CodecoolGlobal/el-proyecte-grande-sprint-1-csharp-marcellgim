@@ -30,7 +30,10 @@ public class UserRepository : IRepository<User>
 
     public async Task<User> Update(User entity)
     {
-        _context.Users.Update(entity);
+        var userToUpdate = await _context.Users.SingleAsync(u => u.Id == entity.Id);
+        userToUpdate.HashedPassword = entity.HashedPassword;
+        userToUpdate.FirstName = entity.FirstName;
+        userToUpdate.LastName = entity.LastName;
         await _context.SaveChangesAsync();
         return entity;
     }
