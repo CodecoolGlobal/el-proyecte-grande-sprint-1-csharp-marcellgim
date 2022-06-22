@@ -2,12 +2,13 @@
 
 namespace BpRobotics.Core.Model.CustomerDTOs
 {
-    public class CreateCustomerDTO
+    public class CustomerDetailedDTO
     {
         private const int MinZipValue = 1000;
         private const int MaxZipValue = 9999;
         private const int MaxStringLength = 100;
 
+        public int Id { get; set; }
         [Required]
         [StringLength(maximumLength: MaxStringLength)]
         public string CompanyName { get; set; } = string.Empty;
