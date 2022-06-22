@@ -1,120 +1,160 @@
 import { useState, useEffect } from "react";
 import MaterialTable from 'material-table';
 import '../App.css';
-
+import axiosInstance from "../fetch/axiosInstance";
 
 
 
 function Partners() {
 
     const [partnerData, setData] = useState([]);
-    const [companyName, setCompanyName] = useState();
-    const [phoneNumber, setPhoneNumber] = useState();
-    //const [isPending, setIsPending] = useState(false);
+
+    const [postCompanyName, setPostCompanyName] = useState('');
+    const [postPhoneNumber, setPostPhoneNumber] = useState('');
+
+    const [editCompanyName, setEditCompanyName] = useState('');
+    const [editPhoneNumber, setEditPhoneNumber] = useState('');
+
+    const [idToDelete, setIdToDelete] = useState('');
+
+    const [idToUpdate, setIdToUpdate] = useState('');
+
+    //cosmetic
+    const [isPendingDelete, setIsPendingDelete] = useState(false);
+    const [isPendingAdd, setIsPendingAdd] = useState(false);
+    const [isPendingUpdate, setIsPendingUpdate] = useState(false);
     const [selectedRow, setSelectedRow] = useState();
-    const [dummy, setDummy] = useState();
-    const [dummy2, setDummy2] = useState();
-    const [dummy3, setDummy3] = useState();
-    const [dummy4, setDummy4] = useState();
-    const [currentId, setCurrentId] = useState();
 
-  //GET FETCH 
-  useEffect(()=> {
-    fetch(`${process.env.REACT_APP_HOST_URL}/partners`)
-    .then(response => response.json())
-    .then(data=>{
-    console.log(data);
-    setData(data);
-    }).catch( err=> {
-    console.log("Error Reading data " + err);
-  })
-  },[dummy])
-
-  //POST FETCH 
-  useEffect(()=> {
-    console.log(companyName);
-    console.log(phoneNumber);
-    const newPartner = {companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_HOST_URL}/partners`, {
-      method: 'POST',
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newPartner)
-    }).then(() => {
-      console.log('New partner added');
-      setDummy(dummy=>(dummy + "1"));
-  })
-  },[dummy2])
-
-  //PUT FETCH 
-  useEffect(()=> {
-    console.log(companyName);
-    console.log(phoneNumber);
-    const newPartner = { companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_HOST_URL}/partners/${currentId}`, {
-      method: 'PUT',
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newPartner)
-    }).then(() => {
-      console.log(`Partner with Id: ${currentId} updated`);
-      setDummy(dummy=>(dummy + "1"));
-  })
-  },[dummy4])
-
-  //DELETE FETCH 
-  useEffect(()=> {
-    const newPartner = {companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_HOST_URL}/partners/${currentId}`, {
-      method: 'DELETE',
-    }).then(() => {
-      console.log(`Partner with Id: ${currentId} deleted`);
-      setDummy(dummy=>(dummy + "1"));
-  })
-  },[dummy3])
-
-
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const newPartner = { companyName, phoneNumber };
     
-  //   setIsPending(true);
 
-  //   fetch(`${process.env.REACT_APP_URL}/partners`, {
-  //     method: 'POST',
-  //     headers: { "Content-type": "application/json" },
-  //     body: JSON.stringify(newPartner)
-  //   }).then(() => {
-  //     console.log('New partner added');
-  //     setIsPending(false);
-  //     setDummy(dummy=>(dummy + "1"));
-  //   })
-  // }
+
+  useEffect(() => {
+    const getFetch = async () => {
+      try {
+        const response = await axiosInstance.get("/partners");
+        if (response && response.data) setData(response.data);
+      } catch (err) {
+          console.log(`Error: ${err.message}`)
+      }
+    }
+    getFetch();
+  }, [])
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newPartner = { "CompanyName" : postCompanyName, "PhoneNumber" : postPhoneNumber };
+    setIsPendingAdd(true);
+    try {
+      const response = await axiosInstance.post('/partners', newPartner)
+      //response should send back the created object
+      const allPartners = [...partnerData, response.data]
+      setData(allPartners);
+      setPostCompanyName('');
+      setPostPhoneNumber('');
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+    setIsPendingAdd(false);
+  }
+
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const updatedPartner = { "CompanyName" : editCompanyName, "PhoneNumber" : editPhoneNumber };
+    setIsPendingUpdate(true);
+    try {
+      const response = await axiosInstance.put(`/partners/${idToUpdate}`, updatedPartner)
+      setData(partnerData.map(partner => partner.id === idToUpdate ? { ...response.data } : partner));
+      setEditCompanyName('');
+      setEditPhoneNumber('');
+      setIdToUpdate('');
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+    setIsPendingUpdate(false);
+  }
+
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    setIsPendingDelete(true);
+    try {
+      await axiosInstance.delete(`/partners/${idToDelete}`);
+      const allPartners = partnerData.filter(partner => partner.id !== idToDelete);
+      setData(allPartners);
+      setIdToDelete('');
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+    setIsPendingDelete(true);
+  }
 
 
 
   return (
       <>
-      {/* <div className="create">
+      <div className="create">
           <h2>Add new Partner</h2>
           <form onSubmit={handleSubmit}>
               <label>Company name:</label>
               <input 
                 type="text" 
                 required 
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
+                value={postCompanyName}
+                onChange={(e) => setPostCompanyName(e.target.value)}
               />
               <label>Phone number:</label>
               <input 
                 type="text" 
                 required
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)} />
-              { !isPending && <button>Add partner</button> }
-              { isPending && <button>Adding partner...</button> }
+                value={postPhoneNumber}
+                onChange={(e) => setPostPhoneNumber(e.target.value)} />
+              { !isPendingAdd && <button>Add partner</button> }
+              { isPendingAdd && <button>Adding partner...</button> }
           </form>
-          
-      </div> */}
+      </div>
+      <div className="create">
+          <h2>Update Partner</h2>
+          <form onSubmit={handleUpdate}>
+              <label>Id:</label>
+              <input 
+                type="text" 
+                required 
+                value={idToUpdate}
+                onChange={(e) => setIdToUpdate(e.target.value)}
+              />
+              <label>Company name:</label>
+              <input 
+                type="text" 
+                required 
+                value={editCompanyName}
+                onChange={(e) => setEditCompanyName(e.target.value)}
+              />
+              <label>Phone number:</label>
+              <input 
+                type="text" 
+                required
+                value={editPhoneNumber}
+                onChange={(e) => setEditPhoneNumber(e.target.value)} />
+              { !isPendingUpdate && <button>Update partner</button> }
+              { isPendingUpdate && <button>Updating partner...</button> }
+          </form>
+      </div>
+      <div className="create">
+          <h2>Delete Partner</h2>
+          <form onSubmit={handleDelete}>
+              <label>Id:</label>
+              <input 
+                type="text" 
+                required 
+                value={idToDelete}
+                onChange={(e) => setIdToDelete(e.target.value)}
+              />
+              { !isPendingDelete && <button>Delete partner</button> }
+              { isPendingDelete && <button>Deleting partner...</button> }
+          </form>
+      </div>
       <div style={{ maxWidth: '100%' }}>
       <MaterialTable
         onRowClick={(evt, selectedRow) =>
@@ -136,37 +176,6 @@ function Partners() {
           { title: 'Company name', field: 'companyName' },
           { title: 'Mobile number', field: 'phoneNumber' },
         ]}
-        editable={{
-          onRowAdd:(newRow)=> new Promise((resolve, reject) => {
-              
-              setCompanyName(newRow.companyName);
-              setPhoneNumber(`${newRow.phoneNumber}`);
-              
-              setTimeout(()=>{
-              resolve()
-              setDummy2(dummy=>(dummy + "1"));
-            }
-              , 1000)
-          }),
-          onRowUpdate:(newRow, oldRow)=> new Promise((resolve, reject) => {
-              setCompanyName(newRow.companyName);
-              setPhoneNumber(newRow.phoneNumber);
-              setCurrentId(oldRow.id);
-              setTimeout(()=>{
-                resolve()
-                setDummy4(dummy=>(dummy + "1"));
-              }
-                , 1000)
-          }),
-          onRowDelete:(selectedRow)=>new Promise((resolve, reject)=>{
-            setCurrentId(selectedRow.id);
-            setTimeout(()=>{
-              resolve()
-              setDummy3(dummy=>(dummy + "1"));
-            }
-              , 1000)
-        })
-        }}
         data={partnerData}
         title="Partners"
       />
@@ -176,3 +185,37 @@ function Partners() {
 }
 
 export default Partners;
+
+
+
+// editable={{
+//   onRowAdd:(newRow)=> new Promise((resolve, reject) => {
+      
+//       setPostCompanyName(newRow.companyName);
+//       setPostPhoneNumber(`${newRow.phoneNumber}`);
+      
+//       setTimeout(()=>{
+//       resolve()
+//       setDummy2(dummy=>(dummy + "1"));
+//     }
+//       , 1000)
+//   }),
+//   onRowUpdate:(newRow, oldRow)=> new Promise((resolve, reject) => {
+//       setPostCompanyName(newRow.companyName);
+//       setPostPhoneNumber(newRow.phoneNumber);
+//       setCurrentId(oldRow.id);
+//       setTimeout(()=>{
+//         resolve()
+//         setDummy4(dummy=>(dummy + "1"));
+//       }
+//         , 1000)
+//   }),
+//   onRowDelete:(selectedRow)=>new Promise((resolve, reject)=>{
+//     setCurrentId(selectedRow.id);
+//     setTimeout(()=>{
+//       resolve()
+//       setDummy3(dummy=>(dummy + "1"));
+//     }
+//       , 1000)
+// })
+// }}
