@@ -1,5 +1,7 @@
-﻿using BpRobotics.Data.Entity;
+﻿using BpRobotics.Core.Model.Orders;
+using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
+using BpRobotics.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,20 +11,20 @@ namespace BpRobotics.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IRepository<Order> _orderRepository;
+        private readonly IOrderService _orderService;
         private readonly ILogger<OrderController> _logger;
-        public OrderController(IRepository<Order> repository, ILogger<OrderController> logger)
+        public OrderController(IOrderService orderService, ILogger<OrderController> logger)
         {
-            _orderRepository = repository;
+            _orderService = orderService;
             _logger = logger;
         }
 
         [HttpGet("orders")]
-        public ActionResult<List<Order>> GetAllOrders()
+        public async Task<ActionResult<List<OrderViewDTO>>> GetAllOrders()
         {
             try
             {
-                return Ok(_orderRepository.GetAll());
+                return Ok(await _orderService.GetAll());
             }
             catch (Exception ex)
             {
@@ -33,11 +35,11 @@ namespace BpRobotics.Controllers
 
 
         [HttpGet("orders/{id}")]
-        public ActionResult<Order> GetOrderById([FromRoute] int id)
+        public async Task<ActionResult<Order>> GetOrderById([FromRoute] int id)
         {
             try
             {
-                return Ok(_orderRepository.Get(id));
+                return Ok(await _orderService.Get(id));
             }
             catch (Exception ex)
             {
@@ -47,11 +49,11 @@ namespace BpRobotics.Controllers
         }
 
         [HttpDelete("orders/{id}")]
-        public ActionResult DeleteOrderById([FromRoute]int id)
+        public async Task<ActionResult> DeleteOrderById([FromRoute]int id)
         {
             try
             {
-                _orderRepository.Delete(id);
+                await _orderService.Delete(id);
                 return NoContent();
             }
             catch (Exception ex)
@@ -62,30 +64,26 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost("orders")]
-        public ActionResult AddOrder([FromBody]Order order)
+        public async Task<ActionResult> AddOrder([FromBody]OrderCreateDTO order)
         {
-            var newId = _orderRepository.GetAll().OrderBy(order => order.Id).Last().Id + 1;
-            order.Id = newId;
-
             try
             {
-                _orderRepository.Add(order);
+                await _orderService.Add(order);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogCritical($"A problem happened while adding Order with id:{order.Id}", ex);
+                _logger.LogCritical("A problem happened while adding Order.", ex);
                 return StatusCode(500, "A problem happened while handling your request.");
             }
         }
 
-        [HttpPut("orders/{id}")]
-        public ActionResult UpdateOrderById([FromRoute]int id, [FromBody]Order order)
+        [HttpPut("orders/")]
+        public async Task<ActionResult<OrderViewDTO>> UpdateOrderById([FromBody]OrderUpdateDTO order)
         {
             try
             {
-                _orderRepository.Update(id, order);
-                return NoContent();
+                return await _orderService.Update(order);
             }
             catch (Exception ex)
             {
