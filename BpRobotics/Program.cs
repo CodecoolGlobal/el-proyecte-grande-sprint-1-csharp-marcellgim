@@ -43,6 +43,7 @@ builder.Services.AddTransient<IRepository<Partner>, PartnerRepository>();
 
 // Add data logic services
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<ProductService>();
 
 
 var app = builder.Build();

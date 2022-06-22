@@ -1,5 +1,8 @@
+using BpRobotics.Core.Extensions;
+using BpRobotics.Core.Model.Product;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
+using BpRobotics.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BpRobotics.Controllers
@@ -8,30 +11,44 @@ namespace BpRobotics.Controllers
     [Route("api/products")]
     public class ProductController : ControllerBase
     {
-        private readonly IRepository<Product> _productRepository;
-        public ProductController(IRepository<Product> productRepository)
+        private readonly ProductService _productService;
+        public ProductController(ProductService productService)
         {
-            _productRepository = productRepository;
+            _productService = productService;
         }
 
         [HttpGet]
-        public ActionResult<List<Product>> GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            return Ok(_productRepository.GetAll());
+            var products = await _productService.ListProducts();
+            return Ok(products);
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public ActionResult<Product> GetProductById(int id)
+        [HttpGet("{id}", Name = "GetProductById")]
+        public async Task<ActionResult> GetProductById(int id)
         {
             try
             {
-                var product = _productRepository.Get(id);
+                var product = await _productService.GetById(id);
                 return Ok(product);
             }
             catch (Exception)
             {
                 return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateProduct([FromBody] ProductCreateDto newProduct)
+        {
+            try
+            {
+                var createdProduct = await _productService.NewProduct(newProduct);
+                return CreatedAtRoute("GetProductById", new { id = createdProduct.ID }, newProduct);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
     }
