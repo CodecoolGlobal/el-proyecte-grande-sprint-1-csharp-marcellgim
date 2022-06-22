@@ -6,15 +6,23 @@ namespace BpRobotics.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IRepository<Order> _repository;
+        private readonly IRepository<Order> _orderRepository;
+        private readonly IRepository<Location> _locationRepository;
+        private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<Device> _deviceRepository;
 
-        public OrderService(IRepository<Order> repository)
+        public OrderService(IRepository<Order> orderRepository, IRepository<Location> locationRepository, IRepository<Customer> customerRepository, IRepository<Device> deviceRepository)
         {
-            _repository = repository;
+            _orderRepository = orderRepository;
+            _locationRepository = locationRepository;
+            _customerRepository = customerRepository;
+            _deviceRepository = deviceRepository;
         }
 
-        public Task Add(OrderCreateDTO order)
+        public async Task<OrderViewDTO> Add(OrderCreateDTO order)
         {
+            var location = await _locationRepository.Get(order.LocationId);
+            var customer = await _customerRepository.Get(order.CustomerId);
             throw new NotImplementedException();
         }
 

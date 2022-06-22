@@ -6,7 +6,7 @@ namespace BpRobotics.Services
     {
         Task<List<OrderViewDTO>> GetAll();
         Task<OrderViewDTO> Get(int id);
-        Task Add(OrderCreateDTO order);
+        Task<OrderViewDTO> Add(OrderCreateDTO order);
         Task Delete(int id);
         Task<OrderViewDTO> Update(OrderUpdateDTO order);
     }
