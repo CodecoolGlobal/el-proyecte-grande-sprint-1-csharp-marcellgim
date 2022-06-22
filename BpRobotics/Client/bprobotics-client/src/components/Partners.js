@@ -2,43 +2,49 @@ import { useState, useEffect } from "react";
 import MaterialTable from 'material-table';
 import '../App.css';
 import axiosInstance from "../fetch/axiosInstance";
-
+import useAxiosFetch from "../hooks/useAxiosFetch";
 
 
 function Partners() {
 
-    const [partnerData, setData] = useState([]);
+  const [partnerData, setPartnerData] = useState([]);
 
-    const [postCompanyName, setPostCompanyName] = useState('');
-    const [postPhoneNumber, setPostPhoneNumber] = useState('');
+  const [postCompanyName, setPostCompanyName] = useState('');
+  const [postPhoneNumber, setPostPhoneNumber] = useState('');
 
-    const [editCompanyName, setEditCompanyName] = useState('');
-    const [editPhoneNumber, setEditPhoneNumber] = useState('');
+  const [editCompanyName, setEditCompanyName] = useState('');
+  const [editPhoneNumber, setEditPhoneNumber] = useState('');
 
-    const [idToDelete, setIdToDelete] = useState('');
+  const [idToDelete, setIdToDelete] = useState('');
 
-    const [idToUpdate, setIdToUpdate] = useState('');
+  const [idToUpdate, setIdToUpdate] = useState('');
 
-    //cosmetic
-    const [isPendingDelete, setIsPendingDelete] = useState(false);
-    const [isPendingAdd, setIsPendingAdd] = useState(false);
-    const [isPendingUpdate, setIsPendingUpdate] = useState(false);
-    const [selectedRow, setSelectedRow] = useState();
+  //const { data, fetchError, isLoading } = useAxiosFetch(`${process.env.REACT_APP_HOST_URL}/partners`)
+  const { data, fetchError, isLoading } = useAxiosFetch('https://localhost:5001/potions');
 
-    
+  //cosmetic
+  const [isPendingDelete, setIsPendingDelete] = useState(false);
+  const [isPendingAdd, setIsPendingAdd] = useState(false);
+  const [isPendingUpdate, setIsPendingUpdate] = useState(false);
+  const [selectedRow, setSelectedRow] = useState();
 
-
+  //set data state
   useEffect(() => {
-    const getFetch = async () => {
-      try {
-        const response = await axiosInstance.get("/partners");
-        if (response && response.data) setData(response.data);
-      } catch (err) {
-          console.log(`Error: ${err.message}`)
-      }
-    }
-    getFetch();
-  }, [])
+    setPartnerData(data);
+  }, [data])
+
+
+  // useEffect(() => {
+  //   const getFetch = async () => {
+  //     try {
+  //       const response = await axiosInstance.get("/partners");
+  //       if (response && response.data) setData(response.data);
+  //     } catch (err) {
+  //         console.log(`Error: ${err.message}`)
+  //     }
+  //   }
+  //   getFetch();
+  // }, [])
 
 
   const handleSubmit = async (e) => {
@@ -49,7 +55,7 @@ function Partners() {
       const response = await axiosInstance.post('/partners', newPartner)
       //response should send back the created object
       const allPartners = [...partnerData, response.data]
-      setData(allPartners);
+      setPartnerData(allPartners);
       setPostCompanyName('');
       setPostPhoneNumber('');
     } catch (err) {
@@ -65,7 +71,7 @@ function Partners() {
     setIsPendingUpdate(true);
     try {
       const response = await axiosInstance.put(`/partners/${idToUpdate}`, updatedPartner)
-      setData(partnerData.map(partner => partner.id === idToUpdate ? { ...response.data } : partner));
+      setPartnerData(partnerData.map(partner => partner.id === idToUpdate ? { ...response.data } : partner));
       setEditCompanyName('');
       setEditPhoneNumber('');
       setIdToUpdate('');
@@ -82,7 +88,7 @@ function Partners() {
     try {
       await axiosInstance.delete(`/partners/${idToDelete}`);
       const allPartners = partnerData.filter(partner => partner.id !== idToDelete);
-      setData(allPartners);
+      setPartnerData(allPartners);
       setIdToDelete('');
     } catch (err) {
       console.log(`Error: ${err.message}`);
@@ -94,6 +100,7 @@ function Partners() {
 
   return (
       <>
+      
       <div className="create">
           <h2>Add new Partner</h2>
           <form onSubmit={handleSubmit}>
@@ -156,30 +163,34 @@ function Partners() {
           </form>
       </div>
       <div style={{ maxWidth: '100%' }}>
-      <MaterialTable
-        onRowClick={(evt, selectedRow) =>
-          setSelectedRow(selectedRow.tableData.id)
+        {isLoading && <h1>LOADING</h1>}
+        {fetchError && <p style={{color: "red"}}>{fetchError}</p>}
+        {!isLoading && !fetchError && 
+          <MaterialTable
+          onRowClick={(evt, selectedRow) =>
+            setSelectedRow(selectedRow.tableData.id)
+          }
+          options={{
+            rowStyle: rowData => ({
+              backgroundColor:
+                selectedRow === rowData.tableData.id ? "#EEE" : "#FFF"
+            }),
+            tableLayout: "fixed",
+            selection: true,
+            filtering: true,
+            sorting: true
+          }}
+          
+          columns={[
+            { title: 'Id', field: 'id' },
+            { title: 'Company name', field: 'companyName' },
+            { title: 'Mobile number', field: 'phoneNumber' },
+          ]}
+          data={partnerData}
+          title="Partners"
+          />
         }
-        options={{
-          rowStyle: rowData => ({
-            backgroundColor:
-              selectedRow === rowData.tableData.id ? "#EEE" : "#FFF"
-          }),
-          tableLayout: "fixed",
-          selection: true,
-          filtering: true,
-          sorting: true
-        }}
-        
-        columns={[
-          { title: 'Id', field: 'id' },
-          { title: 'Company name', field: 'companyName' },
-          { title: 'Mobile number', field: 'phoneNumber' },
-        ]}
-        data={partnerData}
-        title="Partners"
-      />
-    </div>
+      </div>
     </>
   );
 }
