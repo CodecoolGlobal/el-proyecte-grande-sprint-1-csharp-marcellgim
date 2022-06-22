@@ -1,44 +1,47 @@
 ﻿using BpRobotics.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BpRobotics.Data.Repositories
 {
     public class CustomerRepository : IRepository<Customer>
     {
-        private readonly IBpRoboticsDataStorage _dataStorage;
+        private readonly BpRoboticsContext _context;
 
-        public CustomerRepository(IBpRoboticsDataStorage dataStorage)
+        public CustomerRepository(BpRoboticsContext context)
         {
-            _dataStorage = dataStorage;
+            _context = context;
         }
 
-        public List<Customer> GetAll()
+        public async Task<List<Customer>> GetAll()
         {
-            return _dataStorage.Customers;
+            return await _context.Customers.AsNoTracking().ToListAsync();
         }
 
-        public Customer Get(int id)
+        public async Task<Customer> Get(int id)
         {
-            return _dataStorage.Customers
-                .First(customer => customer.Id == id);
+            return await _context.Customers.FirstAsync(customer => customer.Id == id);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var customer = Get(id);
-            _dataStorage.Customers.Remove(customer);
+            var customer = await Get(id);
+            _context.Customers.Remove(customer);
+            await _context.SaveChangesAsync();
         }
 
-        public void Add(Customer entity)
+        public async Task Add(Customer customer)
         {
-            _dataStorage.Customers.Add(entity);
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(int id, Customer entity)
+        public async Task<Customer> Update(Customer customer)
         {
-            var customerToUpdate = Get(id);
-            customerToUpdate.BillingAddress = entity.BillingAddress;
-            customerToUpdate.CompanyName = entity.CompanyName;
-            customerToUpdate.ShippingAddress = entity.ShippingAddress;
+            _context.Customers.Update(customer);
+            await _context.SaveChangesAsync();
+
+            return customer;
         }
+
     }
 }
