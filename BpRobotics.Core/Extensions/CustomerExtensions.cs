@@ -5,31 +5,24 @@ namespace BpRobotics.Core.Extensions
 {
     public static class CustomerExtensions
     {
-        public static ReadCustomerDTO ToCustomerView(this Customer customer)
+        public static CustomerDTO ToCustomerView(this Customer customer)
         {
-            return new ReadCustomerDTO
+            return new CustomerDTO
             {
                 Id = customer.Id,
                 CompanyName = customer.CompanyName,
                 VatNumber = customer.VatNumber,
-                BillingZIP = customer.BillingAddress.ZIP,
-                BillingCountry = customer.BillingAddress.Country,
-                BillingCity = customer.BillingAddress.City,
-                BillingAddress = customer.BillingAddress.Address,
-                ShippingZIP = customer.ShippingAddress.ZIP,
-                ShippingCountry = customer.ShippingAddress.Country,
-                ShippingCity = customer.ShippingAddress.City,
-                ShippingAddress = customer.ShippingAddress.Address
             };
         }
-        public static List<ReadCustomerDTO> ToCustomerView(this List<Customer> customers)
+
+        public static List<CustomerDTO> ToCustomerView(this List<Customer> customers)
         {
             return customers.Select(ToCustomerView).ToList();
         }
 
-        public static UpdateCustomerDTO ToUpdateCustomerView(this Customer customer)
+        public static CustomerDetailedDTO ToCustomerDetailedView(this Customer customer)
         {
-            return new UpdateCustomerDTO
+            return new CustomerDetailedDTO
             {
                 Id = customer.Id,
                 CompanyName = customer.CompanyName,
@@ -44,15 +37,12 @@ namespace BpRobotics.Core.Extensions
                 ShippingAddress = customer.ShippingAddress.Address
             };
         }
-        public static List<UpdateCustomerDTO> ToUpdateCustomerView(this List<Customer> customers)
-        {
-            return customers.Select(ToUpdateCustomerView).ToList();
-        }
 
-        public static CreateCustomerDTO ToCreateCustomerView(this Customer customer)
+        public static CustomerDetailedDTO ToCustomerDetailedView(this CustomerModel customer)
         {
-            return new CreateCustomerDTO
+            return new CustomerDetailedDTO
             {
+                Id = customer.Id,
                 CompanyName = customer.CompanyName,
                 VatNumber = customer.VatNumber,
                 BillingZIP = customer.BillingAddress.ZIP,
@@ -65,12 +55,8 @@ namespace BpRobotics.Core.Extensions
                 ShippingAddress = customer.ShippingAddress.Address
             };
         }
-        public static List<CreateCustomerDTO> ToCreateCustomerView(this List<Customer> customers)
-        {
-            return customers.Select(ToCreateCustomerView).ToList();
-        }
 
-        public static Customer ToCustomerEntity(this CreateCustomerDTO customer)
+        public static Customer ToCustomerEntity(this CustomerDetailedDTO customer)
         {
             var billingLocation = new Location
             {
@@ -96,9 +82,27 @@ namespace BpRobotics.Core.Extensions
                 ShippingAddress = shippingLocation
             };
         }
-        public static List<Customer> ToCustomerEntity(this List<CreateCustomerDTO> customers)
+
+        public static Customer ToCustomerEntity(this CustomerModel customerModel)
         {
-            return customers.Select(ToCustomerEntity).ToList();
+            return new Customer
+            {
+                Id = customerModel.Id,
+                CompanyName = customerModel.CompanyName,
+                VatNumber = customerModel.VatNumber,
+                BillingAddress = customerModel.BillingAddress,
+                ShippingAddress = customerModel.ShippingAddress
+            };
+        }
+
+        public static CustomerModel ToCustomerModel(this CustomerUpdateDTO updateCustomerDto)
+        {
+            return new CustomerModel
+            {
+                Id = updateCustomerDto.Id,
+                CompanyName = updateCustomerDto.CompanyName,
+                VatNumber = updateCustomerDto.VatNumber
+            };
         }
     }
 }
