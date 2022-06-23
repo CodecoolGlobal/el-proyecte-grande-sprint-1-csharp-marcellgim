@@ -15,8 +15,6 @@ namespace BpRobotics.Core.Model.Orders
         [Required]
         public int CustomerId { get; set; }
         [Required]
-        public int LocationId { get; set; }
-        [Required]
-        public List<int> DeviceIds { get; set; }
+        public Dictionary<int, int> ProductIdsAndQuantity { get; set; }
     }
 }
