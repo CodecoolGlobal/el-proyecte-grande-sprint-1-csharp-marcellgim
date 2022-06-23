@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function CreateModal({ FormComponent, onCreate }) {
+function CreateModal({ FormComponent, onCreate }) {       
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
