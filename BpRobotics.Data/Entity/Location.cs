@@ -9,4 +9,9 @@ public class Location
     public string Country { get; set; }
     public string City { get; set; }
     public string Address { get; set; }
+
+    public override string ToString()
+    {
+        return $"{ZIP} {Country} {City} {Address}";
+    }
 }
