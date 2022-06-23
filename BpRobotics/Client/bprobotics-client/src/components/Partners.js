@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import MaterialTable from 'material-table';
 import '../App.css';
 import axiosInstance from "../fetch/axiosInstance";
-import useAxiosFetch from "../hooks/useAxiosFetch";
+import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
+import useAxiosFetchPost from "../hooks/useAxiosFetchPost";
 
 
 function Partners() {
@@ -20,7 +21,7 @@ function Partners() {
   const [idToUpdate, setIdToUpdate] = useState('');
 
   //const { data, fetchError, isLoading } = useAxiosFetch(`${process.env.REACT_APP_HOST_URL}/partners`)
-  const { data, fetchError, isLoading } = useAxiosFetch('https://localhost:5001/potions');
+  const { getData, fetchGetError, isLoading } = useAxiosFetchGet('https://localhost:5001/potions');
 
   //cosmetic
   const [isPendingDelete, setIsPendingDelete] = useState(false);
@@ -30,8 +31,8 @@ function Partners() {
 
   //set data state
   useEffect(() => {
-    setPartnerData(data);
-  }, [data])
+    setPartnerData(getData);
+  }, [getData])
 
 
   // useEffect(() => {
@@ -51,7 +52,9 @@ function Partners() {
     e.preventDefault();
     const newPartner = { "CompanyName" : postCompanyName, "PhoneNumber" : postPhoneNumber };
     setIsPendingAdd(true);
+
     try {
+      const { data, fetchError, isLoading } = useAxiosFetchGet('https://localhost:5001/potions');
       const response = await axiosInstance.post('/partners', newPartner)
       //response should send back the created object
       const allPartners = [...partnerData, response.data]
@@ -164,8 +167,8 @@ function Partners() {
       </div>
       <div style={{ maxWidth: '100%' }}>
         {isLoading && <h1>LOADING</h1>}
-        {fetchError && <p style={{color: "red"}}>{fetchError}</p>}
-        {!isLoading && !fetchError && 
+        {fetchGetError && <p style={{color: "red"}}>{fetchGetError}</p>}
+        {!isLoading && !fetchGetError && 
           <MaterialTable
           onRowClick={(evt, selectedRow) =>
             setSelectedRow(selectedRow.tableData.id)
