@@ -10,8 +10,9 @@ namespace BpRobotics.Core.Model.Orders
     public class OrderViewDTO
     {
         public DateTime Date { get; set; }
-        public Customer Customer { get; set; }
-        public Location Address { get; set; }
-        public List<Device> Devices { get; set; }
+        public int CustomerId { get; set; }
+        public string CustomerCompanyName { get; set; }
+        public string Address { get; set; }
+        public Dictionary<string, int> Devices { get; set; }
     }
 }
