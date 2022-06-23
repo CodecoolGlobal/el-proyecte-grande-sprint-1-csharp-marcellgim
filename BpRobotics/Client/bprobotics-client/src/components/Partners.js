@@ -19,7 +19,9 @@ function Partners() {
 
 	const [idToUpdate, setIdToUpdate] = useState('');
 
-	const { data, fetchError, isLoading } = useAxiosFetchGet(`${process.env.REACT_APP_HOST_URL}/partners`)
+	const url = `${process.env.REACT_APP_HOST_URL}/partners`;
+
+	const { data, fetchError, isLoading } = useAxiosFetchGet(url);
 
 	//cosmetic
 	const [isPendingDelete, setIsPendingDelete] = useState(false);
@@ -38,7 +40,7 @@ function Partners() {
 		const newPartner = { "CompanyName" : postCompanyName, "PhoneNumber" : postPhoneNumber };
 		setIsPendingAdd(true);
 		try {
-			const response = await axiosInstance.post('/potions/brew/1', newPartner)
+			const response = await axiosInstance.post(url, newPartner)
 			//response should send back the created object
 			const allPartners = [...partnerData, response.data]
 			setPartnerData(allPartners);
@@ -56,7 +58,7 @@ function Partners() {
 			const updatedPartner = { "CompanyName" : editCompanyName, "PhoneNumber" : editPhoneNumber };
 			setIsPendingUpdate(true);
 		try {
-			const response = await axiosInstance.put(`/partners/${idToUpdate}`, updatedPartner)
+			const response = await axiosInstance.put(`${url}/${idToUpdate}`, updatedPartner)
 			setPartnerData(partnerData.map(partner => partner.id === idToUpdate ? { ...response.data } : partner));
 			setEditCompanyName('');
 			setEditPhoneNumber('');
@@ -72,7 +74,7 @@ function Partners() {
 		e.preventDefault();
 		setIsPendingDelete(true);
 		try {
-			await axiosInstance.delete(`/partners/${idToDelete}`);
+			await axiosInstance.delete(`${url}/${idToDelete}`);
 			const allPartners = partnerData.filter(partner => partner.id !== idToDelete);
 			setPartnerData(allPartners);
 			setIdToDelete('');
