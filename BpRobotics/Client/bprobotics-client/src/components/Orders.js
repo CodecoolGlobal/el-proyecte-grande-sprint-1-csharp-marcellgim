@@ -18,9 +18,9 @@ function Orders() {
 			<MaterialTable
 			columns={[
 				{ title: 'Date', field: 'date' },
-				{ title: 'Company Name', field: 'customer.companyName' },
-				{ title: 'Address', render: (rowData) => rowData.address.country+","+rowData.address.city+","+rowData.address.address+","+rowData.address.zip },
-				{ title: 'Devices', render: (rowData) => <div>{(rowData.devices.map(device =><><div>{device.product.name},</div><br/></>))}</div>}
+				{ title: 'Company Name', field: 'customerCompanyName' },
+				{ title: 'Address', field: 'address' },
+					{ title: 'Devices', render: (rowData) => <div>{(rowData.devices.map(device => <><div>{device.product.name},</div><br /></>))}</div> }
 			]}
 			data={fetchData}
 			title="Orders"
