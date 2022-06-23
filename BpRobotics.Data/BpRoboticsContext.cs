@@ -18,7 +18,13 @@ namespace BpRobotics.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().ToTable("Customer");
+            modelBuilder.Entity<Customer>()
+                .ToTable("Customer")
+                .OwnsOne(e => e.BillingAddress);
+
+            modelBuilder.Entity<Customer>()
+                .OwnsOne(e => e.ShippingAddress);
+
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Order>().ToTable("Orders");
             modelBuilder.Entity<Partner>().ToTable("Partner");
