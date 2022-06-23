@@ -33,7 +33,7 @@ namespace BpRobotics.Controllers
             }
         }
 
-        [HttpGet("customers/{id}")]
+        [HttpGet("customers/{id}", Name = "GetCustomerById")]
         public async Task<ActionResult<CustomerDetailedDto>> GetCustomerById([FromRoute] int id)
         {
             try

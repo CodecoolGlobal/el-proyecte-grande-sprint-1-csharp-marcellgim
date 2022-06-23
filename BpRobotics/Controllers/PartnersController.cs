@@ -36,7 +36,7 @@ namespace BpRobotics.Controllers
             
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetPartnerById")]
         public async Task<ActionResult<PartnerViewDto>> GetPartnerById(int id)
         {
             var partner = await _partnerService.GetById(id);
@@ -52,7 +52,7 @@ namespace BpRobotics.Controllers
         public async Task<ActionResult<PartnerViewDto>> AddNewPartner(PartnerCreateDto newPartnerDto)
         {
             var newPartnerViewDto = await _partnerService.NewPartner(newPartnerDto);
-            return CreatedAtRoute("AddNewPartner", newPartnerViewDto);
+            return CreatedAtRoute("GetPartnerById", new { id = newPartnerViewDto.Id }, newPartnerViewDto);
         }
 
         [HttpPut("{id}")]

@@ -9,6 +9,7 @@ namespace BpRobotics.Core.Model.Orders
 {
     public class OrderViewDTO
     {
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public int CustomerId { get; set; }
         public string CustomerCompanyName { get; set; }
