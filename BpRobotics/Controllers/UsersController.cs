@@ -1,4 +1,5 @@
-﻿using BpRobotics.Data.Entity;
+﻿using BpRobotics.Core.Model.User;
+using BpRobotics.Data.Entity;
 using BpRobotics.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,18 +17,18 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<User>>> ListUsers()
+        public async Task<ActionResult<List<UserViewDto>>> ListUsers()
         {
             return await _userService.ListUsers();
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> NewUser([FromBody] User newUser)
+        public async Task<ActionResult<UserViewDto>> NewUser(UserCreateDto newUser)
         {
             try
             {
-                await _userService.NewUser(newUser);
-                return CreatedAtRoute("GetUser",new {userId = newUser.Id}, newUser);
+                var createdUser = await _userService.NewUser(newUser);
+                return CreatedAtRoute("GetUser",new {userId = createdUser.Id}, newUser);
             }
             catch (Exception e)
             {
@@ -36,7 +37,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet("{userId}", Name = "GetUser")]
-        public async Task<ActionResult<User>> GetUser(int userId)
+        public async Task<ActionResult<UserViewDto>> GetUser(int userId)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPut("{userId}")]
-        public async Task<ActionResult<User>> UpdateUser(User updatedUser)
+        public async Task<ActionResult<UserViewDto>> UpdateUser(UserUpdateDto updatedUser)
         {
             try
             {
