@@ -1,5 +1,5 @@
 ﻿using BpRobotics.Core.Extensions;
-using BpRobotics.Core.Model.User;
+using BpRobotics.Core.Model.UserDTOs;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BpRobotics.Core.Model.User
+namespace BpRobotics.Core.Model.UserDTOs
 {
     public class UserCreateDto
     {

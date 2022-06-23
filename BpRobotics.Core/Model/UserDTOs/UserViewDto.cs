@@ -1,6 +1,4 @@
-﻿using BpRobotics.Data.Entity;
-
-namespace BpRobotics.Core.Model.User;
+﻿namespace BpRobotics.Core.Model.UserDTOs;
 
 public class UserViewDto
 {

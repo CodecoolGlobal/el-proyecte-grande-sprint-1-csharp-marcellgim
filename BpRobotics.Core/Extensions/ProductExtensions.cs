@@ -1,10 +1,10 @@
-﻿using BpRobotics.Core.Model.Product;
-using BpRobotics.Data.Entity;
+﻿using BpRobotics.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BpRobotics.Core.Model.ProductDTOs;
 
 namespace BpRobotics.Core.Extensions
 {
