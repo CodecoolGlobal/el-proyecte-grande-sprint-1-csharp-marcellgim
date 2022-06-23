@@ -69,7 +69,7 @@ namespace BpRobotics.Controllers
             try
             {
                 customer.Id = id;
-                await _customerService.UpdateUser(customer);
+                await _customerService.UpdateCustomer(customer);
             }
             catch (Exception ex)
             {

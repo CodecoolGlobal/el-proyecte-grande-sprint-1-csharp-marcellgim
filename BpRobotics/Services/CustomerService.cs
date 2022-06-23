@@ -1,5 +1,4 @@
 ﻿using BpRobotics.Core.Extensions;
-using BpRobotics.Core.Model;
 using BpRobotics.Core.Model.CustomerDTOs;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
@@ -35,26 +34,13 @@ namespace BpRobotics.Services
             return customerEntity.ToCustomerDetailedView();
         }
 
-        public async Task<CustomerDetailedDto> UpdateUser(CustomerUpdateDto updatedCustomerDto)
+        public async Task<CustomerDetailedDto> UpdateCustomer(CustomerUpdateDto updatedCustomerDto)
         {
-            var customerModel = await CreateCustomerModelById(updatedCustomerDto);
+            await _customerRepository.Update(updatedCustomerDto.ToCustomerEntity());
 
-            await _customerRepository.Update(customerModel.ToCustomerEntity());
-
-            return customerModel.ToCustomerDetailedView();
+            return updatedCustomerDto.ToCustomerDetailedView();
         }
 
         public async Task DeleteById(int customerId) => await _customerRepository.Delete(customerId);
-
-        private async Task<CustomerModel> CreateCustomerModelById(CustomerUpdateDto updatedCustomerDto)
-        {
-            var customerId = updatedCustomerDto.Id;
-            var customerModel = updatedCustomerDto.ToCustomerModel();
-
-            var customerEntity = await _customerRepository.Get(customerId);
-            customerModel.User = customerEntity.User;
-
-            return customerModel;
-        }
     }
 }
