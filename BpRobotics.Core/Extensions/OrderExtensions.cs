@@ -31,6 +31,7 @@ namespace BpRobotics.Core.Extensions
 
             return new OrderViewDTO
             {
+                Id = order.Id,
                 Date = order.Date,
                 CustomerId = order.Customer.Id,
                 CustomerCompanyName = order.Customer.CompanyName,

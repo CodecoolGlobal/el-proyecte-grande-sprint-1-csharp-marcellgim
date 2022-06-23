@@ -34,7 +34,7 @@ namespace BpRobotics.Controllers
         }
 
 
-        [HttpGet("orders/{id}")]
+        [HttpGet("orders/{id}", Name = "GetOrderById")]
         public async Task<ActionResult<OrderViewDTO>> GetOrderById([FromRoute] int id)
         {
             try
@@ -68,8 +68,8 @@ namespace BpRobotics.Controllers
         {
             try
             {
-                await _orderService.Add(order);
-                return NoContent();
+                var newOrder = await _orderService.Add(order);
+                return CreatedAtRoute("GetOrderById", new {id = newOrder.Id}, newOrder);
             }
             catch (Exception ex)
             {
