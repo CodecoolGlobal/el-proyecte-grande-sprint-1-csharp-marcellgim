@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using BpRobotics.Core.Model.User;
+using BpRobotics.Core.Model.UserDTOs;
 using BpRobotics.Data.Entity;
 
 namespace BpRobotics.Core.Extensions
