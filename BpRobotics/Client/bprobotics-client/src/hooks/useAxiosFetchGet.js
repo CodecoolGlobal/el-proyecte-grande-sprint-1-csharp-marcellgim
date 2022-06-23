@@ -2,8 +2,8 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 
 const useAxiosFetchGet = (dataUrl) => {
-     const [getData, setGetData] = useState([]);
-     const [fetchGetError, setFetchGetError] = useState(null);
+     const [data, setData] = useState([]);
+     const [fetchError, setFetchError] = useState(null);
      const [isLoading, setIsLoading] = useState(false);
 
      useEffect(() => {
@@ -17,16 +17,16 @@ const useAxiosFetchGet = (dataUrl) => {
                     cancelToken: source.token
                 });
                 if (isMounted) {
-                    setGetData(response.data);
-                    setFetchGetError(null);
+                    setData(response.data);
+                    setFetchError(null);
                 }
             } catch (err) {
                 if (isMounted) {
-                    setFetchGetError(err.message);
-                    setGetData([]);
+                    setFetchError(err.message);
+                    setData([]);
                 }
             } finally {
-                isMounted && setTimeout(() => setIsLoading(false), 1000);
+                setIsLoading(false);
             }
         }
 
@@ -40,7 +40,7 @@ const useAxiosFetchGet = (dataUrl) => {
         return cleanUp;
      }, [dataUrl])
 
-     return { data: getData, fetchError: fetchGetError, isLoading };
+     return { data, fetchError, isLoading };
 }
 
 export default useAxiosFetchGet
