@@ -24,7 +24,7 @@ namespace BpRobotics.Services
         {
             var orderEntity = order.ToOrderEntity();
 
-            var costumer = _customerRepository.Get(order.CustomerId);
+            var customer = await _customerRepository.Get(order.CustomerId);
             foreach (var productIDandQuant in order.ProductIdsAndQuantity)
             {
                 var product = await _productRepository.Get(productIDandQuant.Key);
@@ -36,6 +36,7 @@ namespace BpRobotics.Services
                 }
             }
 
+            orderEntity.Customer = customer;
             await _orderRepository.Add(orderEntity);
 
             return orderEntity.ToOrderView();
