@@ -21,11 +21,11 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<PartnerViewDto>> ListPartners()
+        public async Task<ActionResult<List<PartnerViewDto>>> ListPartners()
         {
             try
             {
-                return Ok(_partnerService.ListPartners());
+                return Ok(await _partnerService.ListPartners());
             }
             catch (Exception ex)
             {
@@ -37,9 +37,9 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<PartnerViewDto> GetPartnerById(int id)
+        public async Task<ActionResult<PartnerViewDto>> GetPartnerById(int id)
         {
-            var partner = _partnerService.GetById(id);
+            var partner = await _partnerService.GetById(id);
             if (partner != null)
             {
                 return Ok(partner);
@@ -49,33 +49,33 @@ namespace BpRobotics.Controllers
 
         [HttpPost]
         //the parameter will be Partner model
-        public ActionResult<PartnerViewDto> AddNewPartner(PartnerCreateDto newPartnerDto)
+        public async Task<ActionResult<PartnerViewDto>> AddNewPartner(PartnerCreateDto newPartnerDto)
         {
-            var newPartnerViewDto = _partnerService.NewPartner(newPartnerDto);
+            var newPartnerViewDto = await _partnerService.NewPartner(newPartnerDto);
             return CreatedAtRoute("AddNewPartner", newPartnerViewDto);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<PartnerViewDto> UpdatePartner(PartnerUpdateDto updatedPartnerDto, int id)
+        public async Task<ActionResult<PartnerViewDto>> UpdatePartner(PartnerUpdateDto updatedPartnerDto, int id)
         {
-            var partnerFromStore = _partnerService.GetById(id);
+            var partnerFromStore = await _partnerService.GetById(id);
             
             if (partnerFromStore != null)
             {
-                var updatedPartnerViewDto = _partnerService.UpdatePartner(updatedPartnerDto);
+                var updatedPartnerViewDto = await _partnerService.UpdatePartner(updatedPartnerDto);
                 return Ok(updatedPartnerViewDto);
             }
             return NotFound();
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeletePartner(int id)
+        public async Task<ActionResult> DeletePartner(int id)
         {
-            var partnerFromStore = _partnerService.GetById(id);
+            var partnerFromStore = await _partnerService.GetById(id);
 
             if (partnerFromStore != null)
             {
-                _partnerService.DeleteById(id);
+                await _partnerService.DeleteById(id);
             }
             return Ok();
         }
