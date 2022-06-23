@@ -14,12 +14,22 @@ public class OrderRepository : IRepository<Order>
 
     public async Task<List<Order>> GetAll()
     {
-        return await _context.Orders.ToListAsync();
+        return await _context.Orders
+            .Include(o => o.Customer)
+            .Include(o => o.Devices)
+                .ThenInclude(d => d.Product)
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task<Order> Get(int id)
     {
-        return await _context.Orders.FirstAsync(order => order.Id == id);
+        return await _context.Orders
+            .Include(o => o.Customer)
+            .Include(o => o.Devices)
+                .ThenInclude(d => d.Product)
+            .AsNoTracking()
+            .FirstAsync(order => order.Id == id);
     }
 
     public async Task Delete(int id)
