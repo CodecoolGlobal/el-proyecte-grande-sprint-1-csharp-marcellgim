@@ -21,7 +21,8 @@ namespace BpRobotics.Services
         }
         public async Task<PartnerViewDto> NewPartner(PartnerCreateDto newPartnerDto)
         {
-            var entity = await _partnerRepository.Add(newPartnerDto.ToPartnerEntity());
+            var entity = newPartnerDto.ToPartnerEntity();
+            await _partnerRepository.Add(entity);
             return entity.ToPartnerViewDto();
         }
 

@@ -1,33 +1,48 @@
 ﻿using BpRobotics.Data.Entity;
-
+using Microsoft.EntityFrameworkCore;
 namespace BpRobotics.Data.Repositories;
 
 public class ProductRepository : IRepository<Product>
 {
-    private readonly IBpRoboticsDataStorage _storage;
+    private readonly BpRoboticsContext _context;
 
-    public ProductRepository(IBpRoboticsDataStorage storage)
+    public ProductRepository(BpRoboticsContext context)
     {
-        _storage = storage;
+        _context = context;
     }
 
-    public List<Product> GetAll() => _storage.Products.ToList();
-
-    public Product Get(int id) => _storage.Products.First(user => user.Id == id);
-
-    public void Delete(int id)
+    public async Task<List<Product>> GetAll()
     {
-        _storage.Products.Remove(Get(id));
+         return await _context.Products.ToListAsync();
     }
 
-    public void Add(Product entity)
+    public async Task<Product> Get(int id)
     {
-        _storage.Products.Add(entity);
+        return await _context.Products.FirstAsync(user => user.ID == id);
+    } 
+
+    public async Task Delete(int id)
+    {
+        _context.Products.Remove(Get(id).Result);
+        await _context.SaveChangesAsync();
     }
 
-    public void Update(int id, Product entity)
+    public async Task Add(Product newProduct)
     {
-        // TODO override properties
-        var userToUpdate = Get(id);
+        _context.Products.Add(newProduct);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<Product> Update(Product updatedProduct)
+    {
+        Product product = await _context.Products.FirstAsync(product => product.ID == updatedProduct.ID);
+        product.Warranty = updatedProduct.Warranty;
+        product.Name = updatedProduct.Name;
+        product.ServiceInterval = updatedProduct.ServiceInterval;
+        product.ShortDescription = updatedProduct.ShortDescription;
+        product.ImageFileName = updatedProduct.ImageFileName;
+        product.LongDescription = updatedProduct.LongDescription;
+        await _context.SaveChangesAsync();
+        return product;
     }
 }

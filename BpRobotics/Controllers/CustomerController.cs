@@ -1,6 +1,6 @@
-﻿using BpRobotics.Data.Entity;
-using BpRobotics.Data.Repositories;
-using Microsoft.AspNetCore.Http;
+﻿using BpRobotics.Core.Model.CustomerDTOs;
+using BpRobotics.Data.Entity;
+using BpRobotics.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BpRobotics.Controllers
@@ -9,35 +9,36 @@ namespace BpRobotics.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly IRepository<Customer> _customerRepository;
+        private readonly CustomerService _customerService;
         private readonly ILogger<CustomerController> _logger;
 
-        public CustomerController(IRepository<Customer> customerRepository, ILogger<CustomerController> logger)
+        public CustomerController(CustomerService customerService, ILogger<CustomerController> logger)
         {
-            _customerRepository = customerRepository;
+            _customerService = customerService;
             _logger = logger;
         }
 
         [HttpGet("customers")]
-        public ActionResult<List<Customer>> GetAllCustomers()
+        public async Task<ActionResult<List<CustomerDto>>> GetAllCustomers()
         {
             try
             {
-                return Ok(_customerRepository.GetAll().OrderBy(customer => customer.Id));
+                var customers = await _customerService.ListCustomers();
+                return Ok(customers.OrderBy(customer => customer.Id));
             }
             catch (Exception ex)
             {
                 _logger.LogError("Customers could not get.", ex);
-                return StatusCode(500, "Something went wrong with your request.");
+                return BadRequest();
             }
         }
 
-        [HttpGet("customers/{id}")]
-        public ActionResult<Customer> GetCustomerById([FromRoute] int id)
+        [HttpGet("customers/{id}", Name = "GetCustomerById")]
+        public async Task<ActionResult<CustomerDetailedDto>> GetCustomerById([FromRoute] int id)
         {
             try
             {
-                return Ok(_customerRepository.Get(id));
+                return Ok(await _customerService.GetById(id));
             }
             catch (Exception ex)
             {
@@ -47,11 +48,11 @@ namespace BpRobotics.Controllers
         }
 
         [HttpDelete("customers/{id}")]
-        public ActionResult DeleteCustomerById([FromRoute] int id)
+        public async Task<ActionResult> DeleteCustomerById([FromRoute] int id)
         {
             try
             {
-                _customerRepository.Delete(id);
+                await _customerService.DeleteById(id);
             }
             catch (Exception ex)
             {
@@ -63,11 +64,12 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPut("customers/{id}")]
-        public ActionResult UpdateCustomerById([FromRoute] int id, [FromBody] Customer customer)
+        public async Task<ActionResult> UpdateCustomerById([FromRoute] int id, [FromBody] CustomerUpdateDto customer)
         {
             try
             {
-                _customerRepository.Update(id, customer);
+                customer.Id = id;
+                await _customerService.UpdateUser(customer);
             }
             catch (Exception ex)
             {
@@ -79,22 +81,20 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost("customers")]
-        public ActionResult<Customer> AddNewCustomer([FromBody] Customer customer)
+        public async Task<ActionResult<CustomerDetailedDto>> AddNewCustomer([FromBody] CreateCustomerDto customer)
         {
-            var newId = _customerRepository.GetAll().OrderBy(c => c.Id).Last().Id + 1;
-            customer.Id = newId;
-
             try
             {
-                _customerRepository.Add(customer);
+                var newCustomer = await _customerService.NewCustomer(customer);
+                
+                return CreatedAtRoute(nameof(GetCustomerById), new { id = newCustomer.Id }, newCustomer);
             }
             catch (Exception ex)
             {
                 _logger.LogError("Something went wrong with adding new customer.", ex);
-                return StatusCode(500, "Something went wrong with your request.");
+                return BadRequest();
             }
 
-            return CreatedAtRoute(nameof(GetCustomerById), customer);
         }
     }
 }

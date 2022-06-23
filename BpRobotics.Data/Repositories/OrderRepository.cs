@@ -1,41 +1,54 @@
 ﻿using BpRobotics.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BpRobotics.Data.Repositories;
 
 public class OrderRepository : IRepository<Order>
 {
-    private readonly IBpRoboticsDataStorage _storage;
+    private readonly BpRoboticsContext _context;
 
-    public OrderRepository(IBpRoboticsDataStorage storage)
+    public OrderRepository(BpRoboticsContext context)
     {
-        _storage = storage;
+        _context = context;
     }
 
-    public List<Order> GetAll() => _storage.Orders.ToList();
-
-    public Order Get(int id) => _storage.Orders.First(user => user.Id == id);
-
-    public void Delete(int id)
+    public async Task<List<Order>> GetAll()
     {
-        _storage.Orders.Remove(Get(id));
+        return await _context.Orders
+            .Include(o => o.Customer)
+            .Include(o => o.Devices)
+                .ThenInclude(d => d.Product)
+            .AsNoTracking()
+            .ToListAsync();
     }
 
-    public void Add(Order entity)
+    public async Task<Order> Get(int id)
     {
-        _storage.Orders.Add(entity);
+        return await _context.Orders
+            .Include(o => o.Customer)
+            .Include(o => o.Devices)
+                .ThenInclude(d => d.Product)
+            .AsNoTracking()
+            .FirstAsync(order => order.Id == id);
     }
 
-    public void Update(int id, Order entity)
+    public async Task Delete(int id)
     {
-        var orderToUpdate = Get(id);
+        var order = await Get(id);
+        _context.Orders.Remove(order);
+        await _context.SaveChangesAsync();
+    }
 
-        Delete(id);
+    public async Task Add(Order order)
+    {
+        await _context.Orders.AddAsync(order);
+        await _context.SaveChangesAsync();
+    }
 
-        if (_storage.Orders.Any(order => order.Id == entity.Id))
-        {
-            Add(orderToUpdate);
-            throw new Exception($"Attempting to update Order ID from {id} to {entity.Id}, but a Order with ID: {entity.Id} already exists!");
-        }
-        else Add(entity);
+    public async Task<Order> Update(Order order)
+    {
+        _context.Orders.Update(order);
+        await _context.SaveChangesAsync();
+        return order;
     }
 }

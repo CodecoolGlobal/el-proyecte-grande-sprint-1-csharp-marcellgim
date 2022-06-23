@@ -19,11 +19,10 @@ namespace BpRobotics.Data.Repositories
             Context = context;
         }
 
-        public async Task<Partner> Add(Partner entity)
+        public async Task Add(Partner entity)
         {
             Context.Add(entity);
             await Context.SaveChangesAsync();
-            return entity;
         }
 
         public async Task Delete(int id)
