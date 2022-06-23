@@ -45,6 +45,8 @@ builder.Services.AddTransient<IRepository<Partner>, PartnerRepository>();
 builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<ProductService>();
 
+builder.Services.AddTransient<DataSeeder>();
+
 
 var app = builder.Build();
 
