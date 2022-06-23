@@ -38,21 +38,21 @@ namespace BpRobotics.Core.Extensions
             };
         }
 
-        public static CustomerDetailedDto ToCustomerDetailedView(this CustomerModel customer)
+        public static CustomerDetailedDto ToCustomerDetailedView(this CustomerUpdateDto updatedCustomer)
         {
             return new CustomerDetailedDto
             {
-                Id = customer.Id,
-                CompanyName = customer.CompanyName,
-                VatNumber = customer.VatNumber,
-                BillingZip = customer.BillingAddress.ZIP,
-                BillingCountry = customer.BillingAddress.Country,
-                BillingCity = customer.BillingAddress.City,
-                BillingAddress = customer.BillingAddress.Address,
-                ShippingZip = customer.ShippingAddress.ZIP,
-                ShippingCountry = customer.ShippingAddress.Country,
-                ShippingCity = customer.ShippingAddress.City,
-                ShippingAddress = customer.ShippingAddress.Address
+                Id = updatedCustomer.Id,
+                CompanyName = updatedCustomer.CompanyName,
+                VatNumber = updatedCustomer.VatNumber,
+                BillingZip = updatedCustomer.BillingZip,
+                BillingCountry = updatedCustomer.BillingCountry,
+                BillingCity = updatedCustomer.BillingCity,
+                BillingAddress = updatedCustomer.BillingAddress,
+                ShippingZip = updatedCustomer.ShippingZip,
+                ShippingCountry = updatedCustomer.ShippingCountry,
+                ShippingCity = updatedCustomer.ShippingCity,
+                ShippingAddress = updatedCustomer.ShippingAddress
             };
         }
 
@@ -83,25 +83,27 @@ namespace BpRobotics.Core.Extensions
             };
         }
 
-        public static Customer ToCustomerEntity(this CustomerModel customerModel)
+        public static Customer ToCustomerEntity(this CustomerUpdateDto updateCustomerDto)
         {
             return new Customer
             {
-                Id = customerModel.Id,
-                CompanyName = customerModel.CompanyName,
-                VatNumber = customerModel.VatNumber,
-                BillingAddress = customerModel.BillingAddress,
-                ShippingAddress = customerModel.ShippingAddress
-            };
-        }
-
-        public static CustomerModel ToCustomerModel(this CustomerUpdateDto updateCustomerDto)
-        {
-            return new CustomerModel
-            {
                 Id = updateCustomerDto.Id,
                 CompanyName = updateCustomerDto.CompanyName,
-                VatNumber = updateCustomerDto.VatNumber
+                VatNumber = updateCustomerDto.VatNumber,
+                BillingAddress = new Location
+                {
+                    Address = updateCustomerDto.BillingAddress,
+                    City = updateCustomerDto.BillingCity,
+                    Country = updateCustomerDto.BillingCountry,
+                    ZIP = updateCustomerDto.BillingZip
+                },
+                ShippingAddress = new Location
+                {
+                    Address = updateCustomerDto.ShippingAddress,
+                    City = updateCustomerDto.ShippingCity,
+                    Country = updateCustomerDto.ShippingCountry,
+                    ZIP = updateCustomerDto.ShippingZip
+                }
             };
         }
     }
