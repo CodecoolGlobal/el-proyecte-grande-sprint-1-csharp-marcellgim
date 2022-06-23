@@ -44,6 +44,9 @@ namespace BpRobotics.Controllers
             try
             {
                 var createdProduct = await _productService.NewProduct(newProduct);
+                var bytes = Convert.FromBase64String(newProduct.ImageData);
+                Stream stream = new MemoryStream(bytes);
+                await _productService.UploadFileToStorage(stream, newProduct.ImageFileName);
                 return CreatedAtRoute("GetProductById", new { id = createdProduct.ID }, newProduct);
             }
             catch (Exception)
