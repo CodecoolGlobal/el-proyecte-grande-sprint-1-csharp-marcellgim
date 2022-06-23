@@ -15,8 +15,6 @@ namespace BpRobotics.Core.Model.Devices
         [Required]
         public int ProductId { get; set; }
         [Required]
-        public int CustomerId { get; set; }
-        [Required]
         public int OrderId { get; set; }
     }
 }
