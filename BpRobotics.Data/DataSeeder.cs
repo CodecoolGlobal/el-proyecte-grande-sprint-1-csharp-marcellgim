@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BpRobotics.Data;
 
-public class SeedData
+public class DataSeeder
 {
     private readonly BpRoboticsContext _context;
 
-    public SeedData(BpRoboticsContext context)
+    public DataSeeder(BpRoboticsContext context)
     {
         _context = context;
     }
@@ -18,7 +18,8 @@ public class SeedData
 
         if (!_context.Users.Any())
         {
-            _context.Users.AddRange(
+            var users = new User[]
+            {
                 new()
                 {
                     FirstName = "Péter",
@@ -67,26 +68,30 @@ public class SeedData
                     HashedPassword = "1234",
                     Role = UserRole.Customer,
                 }
-            );
+            };
 
+            _context.Users.AddRange(users);
             _context.SaveChanges();
 
             _context.Partners.AddRange(
                 new()
                 {
                     CompanyName = "WeFixIt",
-                    PhoneNumber = "+36 69 420 1337"
+                    PhoneNumber = "+36 69 420 1337",
+                    User = users[2]
                 },
                 new()
                 {
                     CompanyName = "InstallersInc",
-                    PhoneNumber = "+36 44 999 999"
+                    PhoneNumber = "+36 44 999 999",
+                    User = users[3]
                 }
             );
 
             _context.SaveChanges();
 
-            _context.Customers.AddRange(
+            var customers = new Customer[]
+            {
                 new()
                 {
                     CompanyName = "Four Seasons",
@@ -105,6 +110,7 @@ public class SeedData
                         ZIP = 1097
                     },
                     VatNumber = 123456,
+                    User = users[4]
                 },
                 new()
                 {
@@ -124,19 +130,23 @@ public class SeedData
                         ZIP = 6400
                     },
                     VatNumber = 654321,
+                    User = users[5]
                 }
-            );
+            };
 
+            _context.Customers.AddRange(customers);
             _context.SaveChanges();
 
-            _context.Products.AddRange(
+            var products = new Product[]
+            {
                 new()
                 {
                     Name = "Smart Air",
                     ServiceInterval = 180,
                     Warranty = 730,
                     ShortDescription = "Smart air-conditioner",
-                    LongDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    LongDescription =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 },
                 new()
                 {
@@ -144,10 +154,76 @@ public class SeedData
                     ServiceInterval = 365,
                     Warranty = 1095,
                     ShortDescription = "Smart fridge",
-                    LongDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    LongDescription =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 }
-            );
+            };
 
+            _context.Products.AddRange(products);
+            _context.SaveChanges();
+
+            var orders = new Order[]
+            {
+                new()
+                {
+                    Date = DateTime.Now,
+                    Customer = customers[0],
+                },
+                new()
+                {
+                    Date = DateTime.Now,
+                    Customer = customers[1],
+                }
+            };
+
+            _context.Orders.AddRange(orders);
+            _context.SaveChanges();
+
+            var devices = new Device[]
+            {
+                new()
+                {
+                    Serial = "SN97687",
+                    Product = products[0],
+                    LastMaintenance = DateTime.Now,
+                    NextMaintenance = DateTime.Now,
+                    WarrantyUntil = DateTime.Now,
+                    Status = DeviceStatus.InstallPending,
+                    Order = orders[0]
+                },
+                new()
+                {
+                    Serial = "SN97687",
+                    Product = products[1],
+                    LastMaintenance = DateTime.Now,
+                    NextMaintenance = DateTime.Now,
+                    WarrantyUntil = DateTime.Now,
+                    Status = DeviceStatus.InstallPending,
+                    Order = orders[0]
+                },
+                new()
+                {
+                    Serial = "SN97687",
+                    Product = products[0],
+                    LastMaintenance = DateTime.Now,
+                    NextMaintenance = DateTime.Now,
+                    WarrantyUntil = DateTime.Now,
+                    Status = DeviceStatus.InstallPending,
+                    Order = orders[1]
+                },
+                new()
+                {
+                    Serial = "SN97687",
+                    Product = products[1],
+                    LastMaintenance = DateTime.Now,
+                    NextMaintenance = DateTime.Now,
+                    WarrantyUntil = DateTime.Now,
+                    Status = DeviceStatus.InstallPending,
+                    Order = orders[1]
+                }
+            };
+
+            _context.Devices.AddRange(devices);
             _context.SaveChanges();
         }
     }
