@@ -15,7 +15,5 @@ namespace BpRobotics.Data.Entity
         public string LastName { get; set; }
         [Required]
         public UserRole Role { get; set; }
-        public Customer? Customer { get; set; }
-        public Partner? Partner { get; set; }
     }
 }
