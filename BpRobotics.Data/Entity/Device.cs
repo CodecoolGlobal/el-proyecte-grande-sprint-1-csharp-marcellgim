@@ -10,5 +10,5 @@ public class Device
     public DateTime NextMaintenance { get; set; }
     public DateTime WarrantyUntil { get; set; }
     public DeviceStatus Status { get; set; }
-    public Customer Customer { get; set; }
+    public Order Order { get; set; }
 }

@@ -19,8 +19,6 @@ namespace BpRobotics.Core.Model.CustomerDTOs
         [Range(minimum: MinZipValue, maximum: MaxZipValue)]
         public int BillingZip { get; set; }
         [Required]
-        public int BillingLocationId { get; set; }
-        [Required]
         [StringLength(maximumLength:MaxStringLength)]
         public string BillingCountry { get; set; }
         [Required]
@@ -29,8 +27,6 @@ namespace BpRobotics.Core.Model.CustomerDTOs
         [Required]
         [StringLength(maximumLength:MaxStringLength)]
         public string BillingAddress { get; set; }
-        [Required]
-        public int ShippingLocationId { get; set; }
         [Required]
         [Range(minimum: MinZipValue, maximum: MaxZipValue)]
         public int ShippingZip { get; set; }

@@ -1,5 +1,5 @@
 using BpRobotics.Core.Extensions;
-using BpRobotics.Core.Model.Product;
+using BpRobotics.Core.Model.ProductDTOs;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using BpRobotics.Services;

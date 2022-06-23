@@ -1,4 +1,4 @@
-﻿using BpRobotics.Core.Model.User;
+﻿using BpRobotics.Core.Model.UserDTOs;
 using BpRobotics.Data.Entity;
 using BpRobotics.Services;
 using Microsoft.AspNetCore.Mvc;
