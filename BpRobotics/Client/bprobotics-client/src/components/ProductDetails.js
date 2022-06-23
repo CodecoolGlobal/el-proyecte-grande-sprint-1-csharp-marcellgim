@@ -29,7 +29,7 @@ function Products() {
       <CardMedia
         component="img"
 
-        image={`${process.env.REACT_APP_HOST_URL}/StaticFiles/images/${productDetailsData.img}`}
+        image={`https://bproboticsimages.blob.core.windows.net/images/${productDetailsData.imageFileName}`}
         alt={productDetailsData.name}
       />
       <CardContent>
