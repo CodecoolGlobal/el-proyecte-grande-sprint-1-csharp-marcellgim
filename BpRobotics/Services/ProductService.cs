@@ -1,4 +1,6 @@
-﻿using BpRobotics.Core.Extensions;
+﻿using Azure.Storage;
+using Azure.Storage.Blobs;
+using BpRobotics.Core.Extensions;
 using BpRobotics.Core.Model.ProductDTOs;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
@@ -36,4 +38,17 @@ public class ProductService
         return product.ToProductViewDto();
     }
 
+    public async Task<bool> UploadFileToStorage(Stream fileStream, string fileName)
+    {
+        Uri blobUri = new Uri("https://bproboticsimages.blob.core.windows.net/images/" + fileName);
+
+        StorageSharedKeyCredential storageCredentials =
+            new StorageSharedKeyCredential("bproboticsimages", "NrwNQKpO2kgMhilxZRFMvxGulhNZACUVfNOGiTo1hBs0featpzoL8skzudp5noKyWC5f3iOLR2F9+AStnS/k2A==");
+
+        BlobClient blobClient = new BlobClient(blobUri, storageCredentials);
+
+        await blobClient.UploadAsync(fileStream);
+
+        return await Task.FromResult(true);
+    }
 }
