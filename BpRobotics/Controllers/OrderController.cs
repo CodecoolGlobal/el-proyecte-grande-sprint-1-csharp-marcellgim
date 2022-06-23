@@ -35,7 +35,7 @@ namespace BpRobotics.Controllers
 
 
         [HttpGet("orders/{id}")]
-        public async Task<ActionResult<Order>> GetOrderById([FromRoute] int id)
+        public async Task<ActionResult<OrderViewDTO>> GetOrderById([FromRoute] int id)
         {
             try
             {
