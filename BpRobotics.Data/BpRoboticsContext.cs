@@ -14,18 +14,22 @@ namespace BpRobotics.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Partner> Partners { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Location> Locations { get; set; }
         public DbSet<Device> Devices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().ToTable("Customer");
+            modelBuilder.Entity<Customer>()
+                .ToTable("Customer")
+                .OwnsOne(e => e.BillingAddress);
+
+            modelBuilder.Entity<Customer>()
+                .OwnsOne(e => e.ShippingAddress);
+
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Order>().ToTable("Orders");
             modelBuilder.Entity<Partner>().ToTable("Partner");
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Device>().ToTable("Device");
-            modelBuilder.Entity<Location>().ToTable("Location");
         }
     }
 }
