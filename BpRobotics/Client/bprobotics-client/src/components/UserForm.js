@@ -9,14 +9,14 @@ function UserForm({ postData }) {
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [role, setRole] = useState(0);
+    const [role, setRole] = useState("Admin");
     const url = `${process.env.REACT_APP_HOST_URL}/api/users`
 
     const handleSubmit = (event) => {
         event.preventDefault();
         postData(url, {
             username: userName,
-            hashedpassword: password,
+            password: password,
             firstname: firstName,
             lastname: lastName,
             role: role
@@ -45,7 +45,7 @@ function UserForm({ postData }) {
         </Form.Label>
         <Form.Label>
             Role:
-            <Form.Select value={role} onChange={(e) => setRole(parseInt(e.target.value))}>
+            <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="Admin">Admin</option>
                 <option value="Partner">Partner</option>
                 <option value="Customer">Customer</option>
