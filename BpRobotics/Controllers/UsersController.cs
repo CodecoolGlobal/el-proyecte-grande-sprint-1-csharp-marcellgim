@@ -28,7 +28,7 @@ namespace BpRobotics.Controllers
             try
             {
                 var createdUser = await _userService.NewUser(newUser);
-                return CreatedAtRoute("GetUser",new {userId = createdUser.Id}, newUser);
+                return CreatedAtRoute("GetUser",new {userId = createdUser.Id}, createdUser);
             }
             catch (Exception e)
             {
