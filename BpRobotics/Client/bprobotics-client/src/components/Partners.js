@@ -36,7 +36,7 @@ function Partners() {
 
 
 	const handleSubmit = async (e) => {
-		e.preventDefault();
+		//e.preventDefault();
 		const newPartner = { "CompanyName" : postCompanyName, "PhoneNumber" : postPhoneNumber };
 		setIsPendingAdd(true);
 		try {
@@ -54,9 +54,9 @@ function Partners() {
 
 
 	const handleUpdate = async (e) => {
-			e.preventDefault();
-			const updatedPartner = { "CompanyName" : editCompanyName, "PhoneNumber" : editPhoneNumber };
-			setIsPendingUpdate(true);
+		//e.preventDefault();
+		const updatedPartner = { "CompanyName" : editCompanyName, "PhoneNumber" : editPhoneNumber };
+		setIsPendingUpdate(true);
 		try {
 			const response = await axiosInstance.put(`${url}/${idToUpdate}`, updatedPartner)
 			setPartnerData(partnerData.map(partner => partner.id === idToUpdate ? { ...response.data } : partner));
@@ -71,7 +71,7 @@ function Partners() {
 
 
 	const handleDelete = async (e) => {
-		e.preventDefault();
+		//e.preventDefault();
 		setIsPendingDelete(true);
 		try {
 			await axiosInstance.delete(`${url}/${idToDelete}`);
@@ -166,6 +166,32 @@ function Partners() {
 					selection: true,
 					filtering: true,
 					sorting: true
+
+				}}
+				editable={{
+
+					onRowAdd:(newRow)=> new Promise((resolve, reject) => {
+						
+						setPostCompanyName(newRow.companyName);
+						setPostPhoneNumber(newRow.phoneNumber);
+						handleSubmit();
+						resolve();
+					}),
+
+					onRowUpdate:(newRow, oldRow)=> new Promise((resolve, reject) => {
+
+						setEditCompanyName(newRow.companyName);
+						setEditPhoneNumber(newRow.phoneNumber);
+						setIdToUpdate(oldRow.id);
+						handleUpdate();
+						resolve();
+					}),
+
+					onRowDelete:(selectedRow)=>new Promise((resolve, reject)=>{
+					  setIdToDelete(selectedRow.id);
+					  handleDelete();
+					  resolve();
+				  })
 				}}
 				
 				columns={[

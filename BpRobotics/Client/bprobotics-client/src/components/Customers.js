@@ -19,24 +19,24 @@ function Customers() {
 			columns={[
 				{ title: 'Company Name', field: 'companyName' },
 				{ title: 'VAT Number', field: 'vatNumber', type: 'numeric' },
-				{ title: 'Billing Address',
-				field: 'billingAddress',
-				render: rowData => (<div>
-					{rowData.billingAddress.zip}{" "}
-					{rowData.billingAddress.country}{", "}
-					{rowData.billingAddress.city}{" "}
-					{rowData.billingAddress.address}
-				</div>)
-				},
-				{ title: 'Shipping Address',
-				field: 'shippingAddress', 
-				render: rowData => (<div>
-					{rowData.shippingAddress.zip}{" "}
-					{rowData.shippingAddress.country}{", "}
-					{rowData.shippingAddress.city}{" "}
-					{rowData.shippingAddress.address}
-				</div>)
-				}
+				// { title: 'Billing Address',
+				// field: 'billingAddress',
+				// render: rowData => (<div>
+				// 	{rowData.billingAddress.zip}{" "}
+				// 	{rowData.billingAddress.country}{", "}
+				// 	{rowData.billingAddress.city}{" "}
+				// 	{rowData.billingAddress.address}
+				// </div>)
+				// },
+				// { title: 'Shipping Address',
+				// field: 'shippingAddress', 
+				// render: rowData => (<div>
+				// 	{rowData.shippingAddress.zip}{" "}
+				// 	{rowData.shippingAddress.country}{", "}
+				// 	{rowData.shippingAddress.city}{" "}
+				// 	{rowData.shippingAddress.address}
+				// </div>)
+				// }
 			]}
 			data={customersData}
 			options={{

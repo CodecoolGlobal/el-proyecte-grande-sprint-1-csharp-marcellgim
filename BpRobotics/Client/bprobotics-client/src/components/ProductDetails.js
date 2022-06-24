@@ -28,7 +28,7 @@ function Products() {
 			<CardMedia
 				component="img"
 
-				image={`${process.env.REACT_APP_HOST_URL}/StaticFiles/images/${productDetailsData.img}`}
+				image={`${process.env.REACT_APP_HOST_URL}/MyStaticFiles/images/smart_fridge.jpg`}
 				alt={productDetailsData.name}
 			/>
 			<CardContent>
