@@ -14,24 +14,9 @@ function Users() {
                 return <Link to={`./${rowData.id}`}>{rowData.userName}</Link>
             }
         },
-        {title: "First Name", field: "firstName"},
-        {title: "Last Name", field: "lastName"},
-        {
-            title: "Role",
-            field: "role",
-            render: rowData => {
-                switch (rowData.role) {
-                    case 0:
-                        return "Admin"
-                    case 1:
-                        return "Partner"
-                    case 2:
-                        return "Customer"
-                    default:
-                        return "Undefined"
-                }
-            }
-        }
+        { title: "First Name", field: "firstName" },
+        { title: "Last Name", field: "lastName" },
+        { title: "Role", field: "role" }
     ]
 
     async function loadUsers() {
@@ -46,7 +31,7 @@ function Users() {
 
     return (
     <div>
-        <CreateModal FormComponent={UserForm} onCreate={loadUsers} />
+        <CreateModal typeName="User" FormComponent={UserForm} onCreate={loadUsers} />
         <MaterialTable
             title="List of users"
             data={userList} columns={columns}

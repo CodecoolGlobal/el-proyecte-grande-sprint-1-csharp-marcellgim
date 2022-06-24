@@ -17,6 +17,8 @@ namespace BpRobotics.Core.Extensions
             return new User
             {
                 UserName = userCreateData.UserName,
+                FirstName = userCreateData.FirstName,
+                LastName = userCreateData.LastName,
                 HashedPassword = userCreateData.Password,
                 Role = role
             };
