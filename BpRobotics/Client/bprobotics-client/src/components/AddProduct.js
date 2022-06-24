@@ -8,7 +8,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
-function AddProduct({onCreate}) {
+import axiosInstance from "../fetch/axiosInstance";
+function AddProduct({onCreate, handleClose}) {
   
   const [name, setName] = useState("");
   const [serviceInterval, setServiceInterval] = useState(0);
@@ -20,16 +21,19 @@ function AddProduct({onCreate}) {
   const [longDescription, setLongDescription] = useState("");
 
   let url = `${process.env.REACT_APP_HOST_URL}/api/products`;
-    async function handleSubmit() {
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
       const newProduct = {name, serviceInterval, warranty, imageFileName, shortDescription, longDescription, imageData};
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newProduct)
-    });
-    } 
+      try {
+        const response = await axiosInstance.post(url, newProduct)
+        setName('');
+      } catch (err) {
+        console.log(`Error: ${err.message}`);
+      }
+      handleClose();
+      onCreate();
+    }
     const fileToBase64 = (file, cb) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
