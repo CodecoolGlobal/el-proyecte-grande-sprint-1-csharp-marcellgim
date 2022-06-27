@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BpRobotics.Controllers
 {
     [ApiController]
-    [Route("partners")]
+    [Route("api/partners")]
     public class PartnersController : Controller
     {
         private readonly IPartnersService _partnerService;

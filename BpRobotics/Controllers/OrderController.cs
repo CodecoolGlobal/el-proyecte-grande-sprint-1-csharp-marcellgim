@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BpRobotics.Controllers
 {
-    [Route("api/")]
+    [Route("api/orders")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace BpRobotics.Controllers
             _logger = logger;
         }
 
-        [HttpGet("orders")]
+        [HttpGet]
         public async Task<ActionResult<List<OrderViewDTO>>> GetAllOrders()
         {
             try
@@ -34,7 +34,7 @@ namespace BpRobotics.Controllers
         }
 
 
-        [HttpGet("orders/{id}", Name = "GetOrderById")]
+        [HttpGet("{id}", Name = "GetOrderById")]
         public async Task<ActionResult<OrderViewDTO>> GetOrderById([FromRoute] int id)
         {
             try
@@ -48,7 +48,7 @@ namespace BpRobotics.Controllers
             }
         }
 
-        [HttpDelete("orders/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOrderById([FromRoute]int id)
         {
             try
@@ -63,7 +63,7 @@ namespace BpRobotics.Controllers
             }
         }
 
-        [HttpPost("orders")]
+        [HttpPost]
         public async Task<ActionResult> AddOrder([FromBody]OrderCreateDTO order)
         {
             try
@@ -78,7 +78,7 @@ namespace BpRobotics.Controllers
             }
         }
 
-        [HttpPut("orders/")]
+        [HttpPut]
         public async Task<ActionResult<OrderViewDTO>> UpdateOrderById([FromBody]OrderUpdateDTO order)
         {
             try

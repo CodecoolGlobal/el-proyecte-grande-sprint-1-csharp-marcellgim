@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BpRobotics.Controllers
 {
-    [Route("api")]
+    [Route("api/customers")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace BpRobotics.Controllers
             _logger = logger;
         }
 
-        [HttpGet("customers")]
+        [HttpGet]
         public async Task<ActionResult<List<CustomerDto>>> GetAllCustomers()
         {
             try
@@ -33,7 +33,7 @@ namespace BpRobotics.Controllers
             }
         }
 
-        [HttpGet("customers/{id}", Name = "GetCustomerById")]
+        [HttpGet("{id}", Name = "GetCustomerById")]
         public async Task<ActionResult<CustomerDetailedDto>> GetCustomerById([FromRoute] int id)
         {
             try
@@ -47,7 +47,7 @@ namespace BpRobotics.Controllers
             }
         }
 
-        [HttpDelete("customers/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCustomerById([FromRoute] int id)
         {
             try
@@ -63,7 +63,7 @@ namespace BpRobotics.Controllers
             return NoContent();
         }
 
-        [HttpPut("customers/{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCustomerById([FromRoute] int id, [FromBody] CustomerUpdateDto customer)
         {
             try
@@ -80,7 +80,7 @@ namespace BpRobotics.Controllers
             return NoContent();
         }
 
-        [HttpPost("customers")]
+        [HttpPost]
         public async Task<ActionResult<CustomerDetailedDto>> AddNewCustomer([FromBody] CreateCustomerDto customer)
         {
             try
