@@ -34,7 +34,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCustomerById")]
-        public async Task<ActionResult<CustomerDetailedDto>> GetCustomerById([FromRoute] int id)
+        public async Task<ActionResult<CustomerDetailedDto>> GetCustomerById(int id)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCustomerById([FromRoute] int id)
+        public async Task<ActionResult> DeleteCustomerById(int id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateCustomerById([FromRoute] int id, [FromBody] CustomerUpdateDto customer)
+        public async Task<ActionResult> UpdateCustomerById(int id, CustomerUpdateDto customer)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CustomerDetailedDto>> AddNewCustomer([FromBody] CreateCustomerDto customer)
+        public async Task<ActionResult<CustomerDetailedDto>> AddNewCustomer(CreateCustomerDto customer)
         {
             try
             {

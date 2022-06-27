@@ -38,7 +38,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductViewDto>> CreateProduct([FromBody] ProductCreateDto newProduct)
+        public async Task<ActionResult<ProductViewDto>> CreateProduct(ProductCreateDto newProduct)
         {
             try
             {

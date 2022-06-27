@@ -35,7 +35,7 @@ namespace BpRobotics.Controllers
 
 
         [HttpGet("{id}", Name = "GetOrderById")]
-        public async Task<ActionResult<OrderViewDTO>> GetOrderById([FromRoute] int id)
+        public async Task<ActionResult<OrderViewDTO>> GetOrderById(int id)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteOrderById([FromRoute]int id)
+        public async Task<ActionResult> DeleteOrderById(int id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddOrder([FromBody]OrderCreateDTO order)
+        public async Task<ActionResult> AddOrder(OrderCreateDTO order)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<OrderViewDTO>> UpdateOrderById([FromBody]OrderUpdateDTO order)
+        public async Task<ActionResult<OrderViewDTO>> UpdateOrderById(OrderUpdateDTO order)
         {
             try
             {
