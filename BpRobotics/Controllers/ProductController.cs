@@ -18,19 +18,18 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<List<ProductViewDto>>> GetAll()
         {
             var products = await _productService.ListProducts();
-            return Ok(products);
+            return products;
         }
 
         [HttpGet("{id}", Name = "GetProductById")]
-        public async Task<ActionResult> GetProductById(int id)
+        public async Task<ActionResult<ProductViewDto>> GetProductById(int id)
         {
             try
             {
-                var product = await _productService.GetById(id);
-                return Ok(product);
+                return await _productService.GetById(id);
             }
             catch (Exception)
             {
@@ -39,7 +38,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateProduct([FromBody] ProductCreateDto newProduct)
+        public async Task<ActionResult<ProductViewDto>> CreateProduct([FromBody] ProductCreateDto newProduct)
         {
             try
             {

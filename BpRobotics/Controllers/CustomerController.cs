@@ -24,7 +24,7 @@ namespace BpRobotics.Controllers
             try
             {
                 var customers = await _customerService.ListCustomers();
-                return Ok(customers.OrderBy(customer => customer.Id));
+                return customers;
             }
             catch (Exception ex)
             {
@@ -38,7 +38,7 @@ namespace BpRobotics.Controllers
         {
             try
             {
-                return Ok(await _customerService.GetById(id));
+                return await _customerService.GetById(id);
             }
             catch (Exception ex)
             {

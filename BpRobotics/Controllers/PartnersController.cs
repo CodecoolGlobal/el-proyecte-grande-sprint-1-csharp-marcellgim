@@ -25,7 +25,7 @@ namespace BpRobotics.Controllers
         {
             try
             {
-                return Ok(await _partnerService.ListPartners());
+                return await _partnerService.ListPartners();
             }
             catch (Exception ex)
             {

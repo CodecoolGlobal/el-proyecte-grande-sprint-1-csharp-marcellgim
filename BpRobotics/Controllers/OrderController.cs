@@ -24,7 +24,7 @@ namespace BpRobotics.Controllers
         {
             try
             {
-                return Ok(await _orderService.GetAll());
+                return await _orderService.GetAll();
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace BpRobotics.Controllers
         {
             try
             {
-                return Ok(await _orderService.Get(id));
+                return await _orderService.Get(id);
             }
             catch (Exception ex)
             {
