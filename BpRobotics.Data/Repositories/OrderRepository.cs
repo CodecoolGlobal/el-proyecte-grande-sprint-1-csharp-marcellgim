@@ -34,7 +34,7 @@ public class OrderRepository : IRepository<Order>
 
     public async Task Delete(int id)
     {
-        var order = await Get(id);
+        var order = await _context.Orders.SingleAsync(o => o.Id == id);
         _context.Orders.Remove(order);
         await _context.SaveChangesAsync();
     }
