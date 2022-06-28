@@ -21,7 +21,6 @@ public class ProductRepository : IRepository<Product>
     public async Task<Product> Get(int id)
     {
         return await _context.Products
-            .AsNoTracking()
             .SingleAsync(user => user.ID == id);
     } 
 
