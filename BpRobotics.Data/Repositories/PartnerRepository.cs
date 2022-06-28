@@ -12,40 +12,37 @@ namespace BpRobotics.Data.Repositories
     
     public class PartnerRepository : IRepository<Partner>
     {
-        public BpRoboticsContext Context { get; set; }
+        private readonly BpRoboticsContext _context;
 
         public PartnerRepository(BpRoboticsContext context)
         {
-            Context = context;
+            _context = context;
         }
 
         public async Task Add(Partner entity)
         {
-            Context.Add(entity);
-            await Context.SaveChangesAsync();
+            _context.Add(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            Partner partner = await Get(id);
-            if (partner != null)
-            {
-                Context.Partners.Remove(partner);
-                await Context.SaveChangesAsync();
-            }
-            
+            var partner = await Get(id);
+
+            _context.Partners.Remove(partner);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Partner> Get(int id)
         {
-            return await Context.Partners
+            return await _context.Partners
                 .AsNoTracking()
-                .FirstAsync(partner => partner.Id == id);
+                .SingleAsync(partner => partner.Id == id);
         }
 
         public async Task<List<Partner>> GetAll()
         {
-            return await Context.Partners
+            return await _context.Partners
                 .AsNoTracking()
                 .ToListAsync();
         }

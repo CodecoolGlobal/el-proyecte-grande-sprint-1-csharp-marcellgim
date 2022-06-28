@@ -29,7 +29,7 @@ public class OrderRepository : IRepository<Order>
             .Include(o => o.Devices)
                 .ThenInclude(d => d.Product)
             .AsNoTracking()
-            .FirstAsync(order => order.Id == id);
+            .SingleAsync(order => order.Id == id);
     }
 
     public async Task Delete(int id)

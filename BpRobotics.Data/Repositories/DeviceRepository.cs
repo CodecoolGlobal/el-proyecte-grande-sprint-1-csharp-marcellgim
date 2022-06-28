@@ -30,12 +30,16 @@ namespace BpRobotics.Data.Repositories
 
         public async Task<Device> Get(int id)
         {
-            return await _context.Devices.FirstAsync(order => order.Id == id);
+            return await _context.Devices
+                .AsNoTracking()
+                .SingleAsync(order => order.Id == id);
         }
 
         public async Task<List<Device>> GetAll()
         {
-            return await _context.Devices.ToListAsync();
+            return await _context.Devices
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Device> Update(Device device)
