@@ -35,6 +35,6 @@ public class UserRepository : IRepository<User>
         userToUpdate.FirstName = entity.FirstName;
         userToUpdate.LastName = entity.LastName;
         await _context.SaveChangesAsync();
-        return entity;
+        return userToUpdate;
     }
 }
