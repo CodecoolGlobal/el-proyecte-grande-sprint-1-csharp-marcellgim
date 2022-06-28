@@ -53,5 +53,20 @@ namespace BpRobotics.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            try
+            {
+                // TODO Implement with image file deletion
+                throw new NotImplementedException();
+                return NoContent();
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound($"Product with ID:{id} not found.");
+            }
+        }
     }
 }
