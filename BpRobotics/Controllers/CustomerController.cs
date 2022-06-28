@@ -2,6 +2,8 @@
 using BpRobotics.Data.Entity;
 using BpRobotics.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using InvalidOperationException = System.InvalidOperationException;
 
 namespace BpRobotics.Controllers
 {
@@ -21,16 +23,7 @@ namespace BpRobotics.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CustomerDto>>> GetAllCustomers()
         {
-            try
-            {
-                var customers = await _customerService.ListCustomers();
-                return customers;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Customers could not get.", ex);
-                return BadRequest();
-            }
+            return await _customerService.ListCustomers();
         }
 
         [HttpGet("{id}", Name = "GetCustomerById")]
@@ -40,10 +33,10 @@ namespace BpRobotics.Controllers
             {
                 return await _customerService.GetById(id);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
-                _logger.LogError($"Customers does not exists with id: {id}.", ex);
-                return NotFound();
+                _logger.LogError($"No customer found with id: {id}.", ex);
+                return NotFound($"Customer with ID:{id} not found.");
             }
         }
 
@@ -53,31 +46,29 @@ namespace BpRobotics.Controllers
             try
             {
                 await _customerService.DeleteById(id);
+                return NoContent();
+
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 _logger.LogError($"No customer found with id: {id}.", ex);
-                return NotFound();
+                return NotFound($"Customer with ID:{id} not found.");
             }
-
-            return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateCustomerById(int id, CustomerUpdateDto customer)
+        public async Task<ActionResult<CustomerDetailedDto>> UpdateCustomerById(int id, CustomerUpdateDto customer)
         {
             try
             {
                 customer.Id = id;
-                await _customerService.UpdateCustomer(customer);
+                return await _customerService.UpdateCustomer(customer);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
                 _logger.LogError($"No customer found with id: {id}.", ex);
-                return NotFound();
+                return BadRequest(ex.Message);
             }
-
-            return NoContent();
         }
 
         [HttpPost]
@@ -89,10 +80,10 @@ namespace BpRobotics.Controllers
                 
                 return CreatedAtRoute(nameof(GetCustomerById), new { id = newCustomer.Id }, newCustomer);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                _logger.LogError("Something went wrong with adding new customer.", ex);
-                return BadRequest();
+                _logger.LogError("Something went wrong with adding new customer.");
+                return BadRequest(ex.Message);
             }
 
         }

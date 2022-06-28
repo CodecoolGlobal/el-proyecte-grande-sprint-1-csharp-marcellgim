@@ -31,9 +31,9 @@ namespace BpRobotics.Controllers
             {
                 return await _productService.GetById(id);
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
-                return NotFound();
+                return NotFound($"Product with ID:{id} not found.");
             }
         }
 
@@ -48,9 +48,9 @@ namespace BpRobotics.Controllers
                 await _productService.UploadFileToStorage(stream, newProduct.ImageFileName);
                 return CreatedAtRoute("GetProductById", new { id = createdProduct.ID }, newProduct);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
     }

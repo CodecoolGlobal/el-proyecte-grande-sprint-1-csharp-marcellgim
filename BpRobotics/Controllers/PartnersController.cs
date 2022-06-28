@@ -4,11 +4,12 @@ using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using BpRobotics.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BpRobotics.Controllers
 {
     [ApiController]
-    [Route("api/partners")]
+    [Route("api/[controller]")]
     public class PartnersController : Controller
     {
         private readonly IPartnersService _partnerService;
@@ -23,61 +24,63 @@ namespace BpRobotics.Controllers
         [HttpGet]
         public async Task<ActionResult<List<PartnerViewDto>>> ListPartners()
         {
-            try
-            {
-                return await _partnerService.ListPartners();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogCritical(
-                    $"Exception while getting the list of partners.", ex);
-                return StatusCode(500, "A problem happened while handling your request.");
-            }
-            
+            return await _partnerService.ListPartners();
         }
 
         [HttpGet("{id}", Name = "GetPartnerById")]
         public async Task<ActionResult<PartnerViewDto>> GetPartnerById(int id)
         {
-            var partner = await _partnerService.GetById(id);
-            if (partner != null)
+            try
             {
-                return Ok(partner);
+                return await _partnerService.GetById(id);
             }
-            return NotFound($"Partner with ID:{id} not found.");
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogCritical($"No partner found with id: {id}.", ex);
+                return NotFound($"Partner with ID:{id} not found.");
+            }
         }
 
         [HttpPost]
-        //the parameter will be Partner model
         public async Task<ActionResult<PartnerViewDto>> AddNewPartner(PartnerCreateDto newPartnerDto)
         {
-            var newPartnerViewDto = await _partnerService.NewPartner(newPartnerDto);
-            return CreatedAtRoute("GetPartnerById", new { id = newPartnerViewDto.Id }, newPartnerViewDto);
+            try
+            {
+                var newPartnerViewDto = await _partnerService.NewPartner(newPartnerDto);
+                return CreatedAtRoute("GetPartnerById", new { id = newPartnerViewDto.Id }, newPartnerViewDto);
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest("Something went wrong adding new partner.");
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<PartnerViewDto>> UpdatePartner(PartnerUpdateDto updatedPartnerDto, int id)
         {
-            var partnerFromStore = await _partnerService.GetById(id);
-            
-            if (partnerFromStore != null)
+            try
             {
                 var updatedPartnerViewDto = await _partnerService.UpdatePartner(updatedPartnerDto);
-                return Ok(updatedPartnerViewDto);
+                return updatedPartnerViewDto;
             }
-            return NotFound();
+            catch (DbUpdateException)
+            {
+                return NotFound($"Partner with ID:{updatedPartnerDto.Id} not found.");
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePartner(int id)
         {
-            var partnerFromStore = await _partnerService.GetById(id);
-
-            if (partnerFromStore != null)
+            try
             {
                 await _partnerService.DeleteById(id);
+                return NoContent();
             }
-            return Ok();
+            catch (InvalidOperationException)
+            {
+                return NotFound($"Partner with ID:{id} not found.");
+            }
         }
     }
 }
