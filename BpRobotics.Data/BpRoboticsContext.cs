@@ -15,6 +15,7 @@ namespace BpRobotics.Data
         public DbSet<Partner> Partners { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Device> Devices { get; set; }
+        public DbSet<Service> Services { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +31,7 @@ namespace BpRobotics.Data
             modelBuilder.Entity<Partner>().ToTable("Partner");
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Device>().ToTable("Device");
+            modelBuilder.Entity<Service>().ToTable("Service");
         }
     }
 }
