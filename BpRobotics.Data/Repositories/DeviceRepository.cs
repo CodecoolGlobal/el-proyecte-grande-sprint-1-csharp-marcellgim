@@ -31,7 +31,6 @@ namespace BpRobotics.Data.Repositories
         public async Task<Device> Get(int id)
         {
             return await _context.Devices
-                .AsNoTracking()
                 .SingleAsync(order => order.Id == id);
         }
 
