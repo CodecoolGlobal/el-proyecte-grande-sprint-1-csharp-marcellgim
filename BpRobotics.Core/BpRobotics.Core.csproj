@@ -10,4 +10,8 @@
     <ProjectReference Include="..\BpRobotics.Data\BpRobotics.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\ServiceDTOs\" />
+  </ItemGroup>
+
 </Project>
