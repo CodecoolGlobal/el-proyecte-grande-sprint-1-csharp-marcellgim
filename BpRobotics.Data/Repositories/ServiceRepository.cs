@@ -20,7 +20,9 @@ public class ServiceRepository : IRepository<Service>
 
     public async Task<Service> Get(int id)
     {
-        return await _context.Services.SingleAsync(s => s.Id == id);
+        return await _context.Services
+            .Include(s => s.Partner)
+            .SingleAsync(s => s.Id == id);
     }
 
     public async Task Delete(int id)
@@ -36,8 +38,10 @@ public class ServiceRepository : IRepository<Service>
         await _context.SaveChangesAsync();
     }
 
-    public Task<Service> Update(Service entity)
+    public async Task<Service> Update(Service entity)
     {
-        throw new NotImplementedException();
+        _context.Services.Update(entity);
+        await _context.SaveChangesAsync();
+        return entity;
     }
 }

@@ -32,13 +32,37 @@ public class DeviceService
     public async Task<ServiceViewDTO> AddServiceToDevice(int deviceId, ServiceCreateDTO service)
     {
         var device = await _deviceRepository.Get(deviceId);
-        Partner? partner = (service.PartnerId != null) ? await _partnerRepository.Get((int)service.PartnerId) : null;
+        Partner? partner = service.PartnerId != null ? await _partnerRepository.Get((int)service.PartnerId) : null;
         
         var serviceEntity = service.ToServiceEntity();
         serviceEntity.Device = device;
-        serviceEntity.AssignedFor = partner;
+        serviceEntity.Partner = partner;
 
         await _serviceRepository.Add(serviceEntity);
         return serviceEntity.ToServiceView();
+    }
+
+    public async Task RemoveService(int serviceId)
+    {
+        await _serviceRepository.Delete(serviceId);
+    }
+
+    public async Task<ServiceViewDTO> UpdateService(ServiceUpdateDTO updatedService)
+    {
+        var serviceToUpdate = await _serviceRepository.Get(updatedService.Id);
+        if (updatedService.PartnerId != null)
+        {
+            var partner = await _partnerRepository.Get((int)updatedService.PartnerId);
+            serviceToUpdate.Partner = partner;
+        }
+
+        if (updatedService.DoneDate != null)
+        {
+            serviceToUpdate.DoneDate = (DateTime)updatedService.DoneDate;
+        }
+
+        serviceToUpdate.Status = Enum.Parse<ServiceStatus>(updatedService.Status);
+
+        return (await _serviceRepository.Update(serviceToUpdate)).ToServiceView();
     }
 }

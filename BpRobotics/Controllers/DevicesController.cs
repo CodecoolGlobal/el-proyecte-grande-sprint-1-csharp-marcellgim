@@ -17,7 +17,7 @@ namespace BpRobotics.Controllers
             _deviceService = deviceService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{deviceId}")]
         public async Task<ActionResult<DeviceViewDTO>> DeviceDetails(int deviceId)
         {
             try
@@ -49,11 +49,38 @@ namespace BpRobotics.Controllers
             try
             {
                 var newService = await _deviceService.AddServiceToDevice(deviceId, service);
-                return CreatedAtRoute("ShowService", new { id = newService.Device.Id ,serviceId = newService.Id}, newService);
+                return CreatedAtRoute("ShowService", new { id = deviceId, serviceId = newService.Id}, newService);
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{id}/services/{serviceId}")]
+        public async Task<ActionResult> RemoveService(int serviceId)
+        {
+            try
+            {
+                await _deviceService.RemoveService(serviceId);
+                return NoContent();
+            }
+            catch (InvalidOperationException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        [HttpPut("{id}/services/{serviceId}")]
+        public async Task<ActionResult<ServiceViewDTO>> UpdateService(ServiceUpdateDTO updateData)
+        {
+            try
+            {
+                return await _deviceService.UpdateService(updateData);
+            }
+            catch (InvalidOperationException e)
+            {
+                return NotFound(e.Message);
             }
         }
     }
