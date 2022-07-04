@@ -36,7 +36,6 @@ namespace BpRobotics.Data.Repositories
         public async Task<Partner> Get(int id)
         {
             return await _context.Partners
-                .AsNoTracking()
                 .SingleAsync(partner => partner.Id == id);
         }
 

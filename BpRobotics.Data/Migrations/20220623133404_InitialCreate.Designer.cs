@@ -439,7 +439,7 @@ namespace BpRobotics.Data.Migrations
 
             modelBuilder.Entity("BpRobotics.Data.Entity.Ticket", b =>
                 {
-                    b.HasOne("BpRobotics.Data.Entity.User", "AssignedFor")
+                    b.HasOne("BpRobotics.Data.Entity.User", "Partner")
                         .WithMany()
                         .HasForeignKey("AssignedForId");
 
@@ -449,7 +449,7 @@ namespace BpRobotics.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AssignedFor");
+                    b.Navigation("Partner");
 
                     b.Navigation("CreatedBy");
                 });
