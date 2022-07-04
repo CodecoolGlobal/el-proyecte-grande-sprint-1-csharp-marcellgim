@@ -21,8 +21,7 @@ public static class ServiceExtensions
         return new ServiceViewDTO
         {
             Id = serviceEntity.Id,
-            Device = serviceEntity.Device,
-            AssignedFor = serviceEntity.AssignedFor,
+            AssignedFor = serviceEntity.Partner?.ToPartnerViewDto(),
             RequestedDate = serviceEntity.RequestedDate,
             DoneDate = serviceEntity.DoneDate,
             Status = serviceEntity.Status.ToString(),

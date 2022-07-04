@@ -14,7 +14,8 @@ namespace BpRobotics.Core.Extensions
                 LastMaintenance = device.LastMaintenance.ToString(),
                 NextMaintenance = device.NextMaintenance.ToString(),
                 WarrantyUntil = device.WarrantyUntil.ToString(),
-                Status = device.Status,
+                Services = device.Services.Select(s => s.ToServiceView()).ToList(),
+                Status = device.Status.ToString(),
                 OrderId = device.Order.Id
             };
         }
