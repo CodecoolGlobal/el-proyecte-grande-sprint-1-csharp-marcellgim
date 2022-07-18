@@ -13,17 +13,20 @@ public class ProductRepository : IRepository<Product>
 
     public async Task<List<Product>> GetAll()
     {
-         return await _context.Products.ToListAsync();
+         return await _context.Products
+             .AsNoTracking()
+             .ToListAsync();
     }
 
     public async Task<Product> Get(int id)
     {
-        return await _context.Products.FirstAsync(user => user.ID == id);
+        return await _context.Products
+            .SingleAsync(user => user.ID == id);
     } 
 
     public async Task Delete(int id)
     {
-        _context.Products.Remove(Get(id).Result);
+        _context.Products.Remove(await Get(id));
         await _context.SaveChangesAsync();
     }
 
@@ -35,7 +38,7 @@ public class ProductRepository : IRepository<Product>
 
     public async Task<Product> Update(Product updatedProduct)
     {
-        Product product = await _context.Products.FirstAsync(product => product.ID == updatedProduct.ID);
+        Product product = await _context.Products.SingleAsync(product => product.ID == updatedProduct.ID);
         product.Warranty = updatedProduct.Warranty;
         product.Name = updatedProduct.Name;
         product.ServiceInterval = updatedProduct.ServiceInterval;

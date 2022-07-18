@@ -19,7 +19,8 @@ namespace BpRobotics.Data.Repositories
 
         public async Task<Customer> Get(int id)
         {
-            return await _context.Customers.FirstAsync(customer => customer.Id == id);
+            return await _context.Customers
+                .SingleAsync(customer => customer.Id == id);
         }
 
         public async Task Delete(int id)

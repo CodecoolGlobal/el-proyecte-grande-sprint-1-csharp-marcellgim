@@ -2,6 +2,7 @@
 using BpRobotics.Data.Entity;
 using BpRobotics.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BpRobotics.Controllers
 {
@@ -30,9 +31,9 @@ namespace BpRobotics.Controllers
                 var createdUser = await _userService.NewUser(newUser);
                 return CreatedAtRoute("GetUser",new {userId = createdUser.Id}, createdUser);
             }
-            catch (Exception e)
+            catch (DbUpdateException e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
         }
 
@@ -43,9 +44,9 @@ namespace BpRobotics.Controllers
             {
                 return await _userService.GetById(userId);
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
-                return NotFound();
+                return NotFound($"User with ID:{userId} not found.");
             }
         }
 
@@ -57,9 +58,9 @@ namespace BpRobotics.Controllers
                 await _userService.DeleteById(userId);
                 return NoContent();
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
-                return NotFound();
+                return NotFound($"User with ID:{userId} not found.");
             }
         }
 
@@ -70,9 +71,9 @@ namespace BpRobotics.Controllers
             {
                 return await _userService.UpdateUser(updatedUser);
             }
-            catch (Exception)
+            catch (DbUpdateException)
             {
-                return NotFound();
+                return NotFound($"User with ID:{updatedUser.Id} not found.");
             }
         }
     }

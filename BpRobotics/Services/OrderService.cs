@@ -25,19 +25,24 @@ namespace BpRobotics.Services
             var orderEntity = order.ToOrderEntity();
 
             var customer = await _customerRepository.Get(order.CustomerId);
+            orderEntity.Customer = customer;
+
+            await _orderRepository.Add(orderEntity);
+
             foreach (var productIDandQuant in order.ProductIdsAndQuantity)
             {
                 var product = await _productRepository.Get(productIDandQuant.Key);
                 for (int i = 0; i < productIDandQuant.Value; i++)
                 {
-                    var device = new Device { Product = product, Status = DeviceStatus.InstallPending };
+                    var device = new Device
+                    {
+                        Product = product,
+                        Order = orderEntity,
+                        Status = DeviceStatus.InstallPending
+                    };
                     await _deviceRepository.Add(device);
-                    orderEntity.Devices.Add(device);
                 }
             }
-
-            orderEntity.Customer = customer;
-            await _orderRepository.Add(orderEntity);
 
             return orderEntity.ToOrderView();
         }

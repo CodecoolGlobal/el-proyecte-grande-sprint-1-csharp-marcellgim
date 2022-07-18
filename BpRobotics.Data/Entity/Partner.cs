@@ -6,4 +6,5 @@ public class Partner
     public string CompanyName { get; set; }
     public string PhoneNumber { get; set; }
     public User? User { get; set; }
+    public List<Service> Services { get; set; }
 }
