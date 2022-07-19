@@ -19,7 +19,7 @@ function Partners() {
 
 	const [idToUpdate, setIdToUpdate] = useState('');
 
-	const url = `${process.env.REACT_APP_HOST_URL}/partners`;
+	const url = `${process.env.REACT_APP_HOST_URL}/api/partners`;
 
 	const { data, fetchError, isLoading } = useAxiosFetchGet(url);
 
