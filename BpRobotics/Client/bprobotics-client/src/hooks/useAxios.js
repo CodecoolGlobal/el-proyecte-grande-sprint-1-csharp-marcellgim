@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useAuth from "./useAuth";
 import axios from "../api/axiosInstance"
 
-function useIntercept() {
+function useAxios() {
     const { auth } = useAuth();
 
     useEffect(() => {
@@ -22,4 +22,4 @@ function useIntercept() {
     return axios;
 }
 
-export default useIntercept;
+export default useAxios;
