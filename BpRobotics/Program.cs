@@ -5,6 +5,7 @@ using BpRobotics.Data.Entity;
 using BpRobotics.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.EntityFrameworkCore.Design;
 
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

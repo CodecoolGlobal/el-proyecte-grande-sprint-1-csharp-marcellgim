@@ -1,178 +1,211 @@
 import { useState, useEffect } from "react";
 import MaterialTable from 'material-table';
 import '../App.css';
-
-
+import axiosInstance from "../fetch/axiosInstance";
+import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 
 
 function Partners() {
 
-    const [partnerData, setData] = useState([]);
-    const [companyName, setCompanyName] = useState();
-    const [phoneNumber, setPhoneNumber] = useState();
-    //const [isPending, setIsPending] = useState(false);
-    const [selectedRow, setSelectedRow] = useState();
-    const [dummy, setDummy] = useState();
-    const [dummy2, setDummy2] = useState();
-    const [dummy3, setDummy3] = useState();
-    const [dummy4, setDummy4] = useState();
-    const [currentId, setCurrentId] = useState();
+	const [partnerData, setPartnerData] = useState([]);
 
-  //GET FETCH 
-  useEffect(()=> {
-    fetch(`${process.env.REACT_APP_HOST_URL}/partners`)
-    .then(response => response.json())
-    .then(data=>{
-    console.log(data);
-    setData(data);
-    }).catch( err=> {
-    console.log("Error Reading data " + err);
-  })
-  },[dummy])
+	const [postCompanyName, setPostCompanyName] = useState('');
+	const [postPhoneNumber, setPostPhoneNumber] = useState('');
 
-  //POST FETCH 
-  useEffect(()=> {
-    console.log(companyName);
-    console.log(phoneNumber);
-    const newPartner = {companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_HOST_URL}/partners`, {
-      method: 'POST',
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newPartner)
-    }).then(() => {
-      console.log('New partner added');
-      setDummy(dummy=>(dummy + "1"));
-  })
-  },[dummy2])
+	const [editCompanyName, setEditCompanyName] = useState('');
+	const [editPhoneNumber, setEditPhoneNumber] = useState('');
 
-  //PUT FETCH 
-  useEffect(()=> {
-    console.log(companyName);
-    console.log(phoneNumber);
-    const newPartner = { companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_HOST_URL}/partners/${currentId}`, {
-      method: 'PUT',
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(newPartner)
-    }).then(() => {
-      console.log(`Partner with Id: ${currentId} updated`);
-      setDummy(dummy=>(dummy + "1"));
-  })
-  },[dummy4])
+	const [idToDelete, setIdToDelete] = useState('');
 
-  //DELETE FETCH 
-  useEffect(()=> {
-    const newPartner = {companyName, phoneNumber};
-    fetch(`${process.env.REACT_APP_HOST_URL}/partners/${currentId}`, {
-      method: 'DELETE',
-    }).then(() => {
-      console.log(`Partner with Id: ${currentId} deleted`);
-      setDummy(dummy=>(dummy + "1"));
-  })
-  },[dummy3])
+	const [idToUpdate, setIdToUpdate] = useState('');
+
+	const url = `${process.env.REACT_APP_HOST_URL}/api/partners`;
+
+	const { data, fetchError, isLoading } = useAxiosFetchGet(url);
+
+	//cosmetic
+	const [isPendingDelete, setIsPendingDelete] = useState(false);
+	const [isPendingAdd, setIsPendingAdd] = useState(false);
+	const [isPendingUpdate, setIsPendingUpdate] = useState(false);
+	const [selectedRow, setSelectedRow] = useState();
+
+	//set data state
+	useEffect(() => {
+		setPartnerData(data);
+	}, [data])
 
 
+	const handleSubmit = async (e) => {
+		//e.preventDefault();
+		const newPartner = { "CompanyName" : postCompanyName, "PhoneNumber" : postPhoneNumber };
+		setIsPendingAdd(true);
+		try {
+			const response = await axiosInstance.post(url, newPartner)
+			//response should send back the created object
+			const allPartners = [...partnerData, response.data]
+			setPartnerData(allPartners);
+			setPostCompanyName('');
+			setPostPhoneNumber('');
+		} catch (err) {
+			console.log(`Error: ${err.message}`);
+		}
+		setIsPendingAdd(false);
+	}
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const newPartner = { companyName, phoneNumber };
-    
-  //   setIsPending(true);
 
-  //   fetch(`${process.env.REACT_APP_URL}/partners`, {
-  //     method: 'POST',
-  //     headers: { "Content-type": "application/json" },
-  //     body: JSON.stringify(newPartner)
-  //   }).then(() => {
-  //     console.log('New partner added');
-  //     setIsPending(false);
-  //     setDummy(dummy=>(dummy + "1"));
-  //   })
-  // }
+	const handleUpdate = async (e) => {
+		//e.preventDefault();
+		const updatedPartner = { "CompanyName" : editCompanyName, "PhoneNumber" : editPhoneNumber };
+		setIsPendingUpdate(true);
+		try {
+			const response = await axiosInstance.put(`${url}/${idToUpdate}`, updatedPartner)
+			setPartnerData(partnerData.map(partner => partner.id === idToUpdate ? { ...response.data } : partner));
+			setEditCompanyName('');
+			setEditPhoneNumber('');
+			setIdToUpdate('');
+		} catch (err) {
+			console.log(`Error: ${err.message}`);
+		}
+		setIsPendingUpdate(false);
+	}
+
+
+	const handleDelete = async (e) => {
+		//e.preventDefault();
+		setIsPendingDelete(true);
+		try {
+			await axiosInstance.delete(`${url}/${idToDelete}`);
+			const allPartners = partnerData.filter(partner => partner.id !== idToDelete);
+			setPartnerData(allPartners);
+			setIdToDelete('');
+		} catch (err) {
+			console.log(`Error: ${err.message}`);
+		}
+		setIsPendingDelete(true);
+	}
 
 
 
-  return (
-      <>
-      {/* <div className="create">
-          <h2>Add new Partner</h2>
-          <form onSubmit={handleSubmit}>
-              <label>Company name:</label>
-              <input 
-                type="text" 
-                required 
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-              />
-              <label>Phone number:</label>
-              <input 
-                type="text" 
-                required
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)} />
-              { !isPending && <button>Add partner</button> }
-              { isPending && <button>Adding partner...</button> }
-          </form>
-          
-      </div> */}
-      <div style={{ maxWidth: '100%' }}>
-      <MaterialTable
-        onRowClick={(evt, selectedRow) =>
-          setSelectedRow(selectedRow.tableData.id)
-        }
-        options={{
-          rowStyle: rowData => ({
-            backgroundColor:
-              selectedRow === rowData.tableData.id ? "#EEE" : "#FFF"
-          }),
-          tableLayout: "fixed",
-          selection: true,
-          filtering: true,
-          sorting: true
-        }}
-        
-        columns={[
-          { title: 'Id', field: 'id' },
-          { title: 'Company name', field: 'companyName' },
-          { title: 'Mobile number', field: 'phoneNumber' },
-        ]}
-        editable={{
-          onRowAdd:(newRow)=> new Promise((resolve, reject) => {
-              
-              setCompanyName(newRow.companyName);
-              setPhoneNumber(`${newRow.phoneNumber}`);
-              
-              setTimeout(()=>{
-              resolve()
-              setDummy2(dummy=>(dummy + "1"));
-            }
-              , 1000)
-          }),
-          onRowUpdate:(newRow, oldRow)=> new Promise((resolve, reject) => {
-              setCompanyName(newRow.companyName);
-              setPhoneNumber(newRow.phoneNumber);
-              setCurrentId(oldRow.id);
-              setTimeout(()=>{
-                resolve()
-                setDummy4(dummy=>(dummy + "1"));
-              }
-                , 1000)
-          }),
-          onRowDelete:(selectedRow)=>new Promise((resolve, reject)=>{
-            setCurrentId(selectedRow.id);
-            setTimeout(()=>{
-              resolve()
-              setDummy3(dummy=>(dummy + "1"));
-            }
-              , 1000)
-        })
-        }}
-        data={partnerData}
-        title="Partners"
-      />
-    </div>
-    </>
-  );
+	return (
+		<>
+			<div className="create">
+				<h2>Add new Partner</h2>
+				<form onSubmit={handleSubmit}>
+					<label>Company name:</label>
+					<input 
+						type="text" 
+						required 
+						value={postCompanyName}
+						onChange={(e) => setPostCompanyName(e.target.value)}
+					/>
+					<label>Phone number:</label>
+					<input 
+						type="text" 
+						required
+						value={postPhoneNumber}
+						onChange={(e) => setPostPhoneNumber(e.target.value)} />
+					{ !isPendingAdd && <button>Add partner</button> }
+					{ isPendingAdd && <button>Adding partner...</button> }
+				</form>
+			</div>
+			<div className="create">
+				<h2>Update Partner</h2>
+				<form onSubmit={handleUpdate}>
+					<label>Id:</label>
+					<input 
+						type="text" 
+						required 
+						value={idToUpdate}
+						onChange={(e) => setIdToUpdate(e.target.value)}
+					/>
+					<label>Company name:</label>
+					<input 
+						type="text" 
+						required 
+						value={editCompanyName}
+						onChange={(e) => setEditCompanyName(e.target.value)}
+					/>
+					<label>Phone number:</label>
+					<input 
+						type="text" 
+						required
+						value={editPhoneNumber}
+						onChange={(e) => setEditPhoneNumber(e.target.value)} />
+					{ !isPendingUpdate && <button>Update partner</button> }
+					{ isPendingUpdate && <button>Updating partner...</button> }
+				</form>
+			</div>
+			<div className="create">
+				<h2>Delete Partner</h2>
+				<form onSubmit={handleDelete}>
+					<label>Id:</label>
+					<input 
+						type="text" 
+						required 
+						value={idToDelete}
+						onChange={(e) => setIdToDelete(e.target.value)}
+					/>
+					{ !isPendingDelete && <button>Delete partner</button> }
+					{ isPendingDelete && <button>Deleting partner...</button> }
+				</form>
+			</div>
+			<div style={{ maxWidth: '100%' }}>
+				{isLoading && <h1>LOADING</h1>}
+				{fetchError && <p style={{color: "red"}}>{fetchError}</p>}
+				{!isLoading && !fetchError && 
+				<MaterialTable
+				onRowClick={(evt, selectedRow) =>
+					setSelectedRow(selectedRow.tableData.id)
+				}
+				options={{
+					rowStyle: rowData => ({
+					backgroundColor:
+						selectedRow === rowData.tableData.id ? "#EEE" : "#FFF"
+					}),
+					tableLayout: "fixed",
+					selection: true,
+					filtering: true,
+					sorting: true
+
+				}}
+				editable={{
+
+					onRowAdd:(newRow)=> new Promise((resolve, reject) => {
+						
+						setPostCompanyName(newRow.companyName);
+						setPostPhoneNumber(newRow.phoneNumber);
+						handleSubmit();
+						resolve();
+					}),
+
+					onRowUpdate:(newRow, oldRow)=> new Promise((resolve, reject) => {
+
+						setEditCompanyName(newRow.companyName);
+						setEditPhoneNumber(newRow.phoneNumber);
+						setIdToUpdate(oldRow.id);
+						handleUpdate();
+						resolve();
+					}),
+
+					onRowDelete:(selectedRow)=>new Promise((resolve, reject)=>{
+					  	setIdToDelete(selectedRow.id);
+					  	handleDelete();
+					  	resolve();
+				  })
+				}}
+				
+				columns={[
+					{ title: 'Id', field: 'id' },
+					{ title: 'Company name', field: 'companyName' },
+					{ title: 'Mobile number', field: 'phoneNumber' },
+				]}
+				data={partnerData}
+				title="Partners"
+				/>
+				}
+			</div>
+		</>
+	);
 }
 
 export default Partners;

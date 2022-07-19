@@ -1,13 +1,17 @@
 import MaterialTable from "material-table";
 import { useEffect, useState } from "react";
+import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 
 function Customers() {
-  const url = `${process.env.REACT_APP_HOST_URL}/api/customers`;
-  const [customersData, setCustomersData] = useState([]);
-  
-  useEffect(() => {
-    ApiGet(url).then(dataFromApi => setCustomersData(dataFromApi));
-  }, [url]);
+
+	const url = `${process.env.REACT_APP_HOST_URL}/api/customers`;
+	const { data } = useAxiosFetchGet(url);
+
+	const [customersData, setCustomersData] = useState([]);
+	
+	useEffect(() => {
+		setCustomersData(data);
+	}, [data]);
 
   return (
     <MaterialTable
@@ -23,11 +27,6 @@ function Customers() {
       }}
     />
   )
-}
-
-async function ApiGet(url) {
-  const response = await fetch(url);
-  return response.ok ? await response.json() : null;
 }
 
 export default Customers;
