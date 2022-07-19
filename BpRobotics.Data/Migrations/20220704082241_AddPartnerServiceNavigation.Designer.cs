@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BpRobotics.Data.Migrations
 {
     [DbContext(typeof(BpRoboticsContext))]
-    [Migration("20220623133404_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220704082241_AddPartnerServiceNavigation")]
+    partial class AddPartnerServiceNavigation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,9 +75,6 @@ namespace BpRobotics.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TicketId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("WarrantyUntil")
                         .HasColumnType("datetime2");
 
@@ -86,8 +83,6 @@ namespace BpRobotics.Data.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductID");
-
-                    b.HasIndex("TicketId");
 
                     b.ToTable("Device", (string)null);
                 });
@@ -181,13 +176,13 @@ namespace BpRobotics.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("DeviceId")
+                    b.Property<int>("DeviceId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DoneDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RelatedTicketId")
+                    b.Property<int?>("PartnerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RequestedDate")
@@ -203,79 +198,9 @@ namespace BpRobotics.Data.Migrations
 
                     b.HasIndex("DeviceId");
 
-                    b.HasIndex("RelatedTicketId");
+                    b.HasIndex("PartnerId");
 
-                    b.ToTable("Service");
-                });
-
-            modelBuilder.Entity("BpRobotics.Data.Entity.Ticket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AssignedForId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignedForId");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("Ticket");
-                });
-
-            modelBuilder.Entity("BpRobotics.Data.Entity.TicketComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TicketId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("TicketComment");
+                    b.ToTable("Service", (string)null);
                 });
 
             modelBuilder.Entity("BpRobotics.Data.Entity.User", b =>
@@ -395,10 +320,6 @@ namespace BpRobotics.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BpRobotics.Data.Entity.Ticket", null)
-                        .WithMany("Devices")
-                        .HasForeignKey("TicketId");
-
                     b.Navigation("Order");
 
                     b.Navigation("Product");
@@ -426,47 +347,17 @@ namespace BpRobotics.Data.Migrations
 
             modelBuilder.Entity("BpRobotics.Data.Entity.Service", b =>
                 {
-                    b.HasOne("BpRobotics.Data.Entity.Device", null)
+                    b.HasOne("BpRobotics.Data.Entity.Device", "Device")
                         .WithMany("Services")
-                        .HasForeignKey("DeviceId");
-
-                    b.HasOne("BpRobotics.Data.Entity.Ticket", "RelatedTicket")
-                        .WithMany()
-                        .HasForeignKey("RelatedTicketId");
-
-                    b.Navigation("RelatedTicket");
-                });
-
-            modelBuilder.Entity("BpRobotics.Data.Entity.Ticket", b =>
-                {
-                    b.HasOne("BpRobotics.Data.Entity.User", "Partner")
-                        .WithMany()
-                        .HasForeignKey("AssignedForId");
-
-                    b.HasOne("BpRobotics.Data.Entity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
+                        .HasForeignKey("DeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Partner");
+                    b.HasOne("BpRobotics.Data.Entity.Partner", null)
+                        .WithMany("Services")
+                        .HasForeignKey("PartnerId");
 
-                    b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("BpRobotics.Data.Entity.TicketComment", b =>
-                {
-                    b.HasOne("BpRobotics.Data.Entity.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BpRobotics.Data.Entity.Ticket", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("TicketId");
-
-                    b.Navigation("CreatedBy");
+                    b.Navigation("Device");
                 });
 
             modelBuilder.Entity("BpRobotics.Data.Entity.Device", b =>
@@ -479,11 +370,9 @@ namespace BpRobotics.Data.Migrations
                     b.Navigation("Devices");
                 });
 
-            modelBuilder.Entity("BpRobotics.Data.Entity.Ticket", b =>
+            modelBuilder.Entity("BpRobotics.Data.Entity.Partner", b =>
                 {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Devices");
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

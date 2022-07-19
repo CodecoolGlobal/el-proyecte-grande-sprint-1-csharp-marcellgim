@@ -4,10 +4,11 @@ using BpRobotics.Data.Repositories;
 using BpRobotics.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BpRobotics.Controllers
 {
-    [Route("api/")]
+    [Route("api/orders")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -19,76 +20,68 @@ namespace BpRobotics.Controllers
             _logger = logger;
         }
 
-        [HttpGet("orders")]
+        [HttpGet]
         public async Task<ActionResult<List<OrderViewDTO>>> GetAllOrders()
         {
-            try
-            {
-                return Ok(await _orderService.GetAll());
-            }
-            catch (Exception ex)
-            {
-                _logger.LogCritical("", ex);
-                return StatusCode(500, "A problem happened while handling your request.");
-            }
+            return await _orderService.GetAll();
         }
 
 
-        [HttpGet("orders/{id}", Name = "GetOrderById")]
-        public async Task<ActionResult<OrderViewDTO>> GetOrderById([FromRoute] int id)
+        [HttpGet("{id}", Name = "GetOrderById")]
+        public async Task<ActionResult<OrderViewDTO>> GetOrderById(int id)
         {
             try
             {
-                return Ok(await _orderService.Get(id));
+                return await _orderService.Get(id);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
-                _logger.LogCritical($"A problem happened while getting Order with id:{id}", ex);
-                return StatusCode(500, "A problem happened while handling your request.");
+                _logger.LogCritical($"No order found with id: {id}.", ex);
+                return NotFound($"Order with ID:{id} not found.");
             }
         }
 
-        [HttpDelete("orders/{id}")]
-        public async Task<ActionResult> DeleteOrderById([FromRoute]int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteOrderById(int id)
         {
             try
             {
                 await _orderService.Delete(id);
                 return NoContent();
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
-                _logger.LogCritical($"A problem happened while deleting Order with id:{id}", ex);
-                return StatusCode(500, "A problem happened while handling your request.");
+                _logger.LogCritical($"No order found with id: {id}.", ex);
+                return NotFound($"Order with ID:{id} not found.");
             }
         }
 
-        [HttpPost("orders")]
-        public async Task<ActionResult> AddOrder([FromBody]OrderCreateDTO order)
+        [HttpPost]
+        public async Task<ActionResult<OrderViewDTO>> AddOrder(OrderCreateDTO order)
         {
             try
             {
                 var newOrder = await _orderService.Add(order);
                 return CreatedAtRoute("GetOrderById", new {id = newOrder.Id}, newOrder);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                _logger.LogCritical("A problem happened while adding Order.", ex);
-                return StatusCode(500, "A problem happened while handling your request.");
+                _logger.LogCritical("A problem happened while adding Order.");
+                return BadRequest(ex.Message);
             }
         }
 
-        [HttpPut("orders/")]
-        public async Task<ActionResult<OrderViewDTO>> UpdateOrderById([FromBody]OrderUpdateDTO order)
+        [HttpPut]
+        public async Task<ActionResult<OrderViewDTO>> UpdateOrderById(OrderUpdateDTO order)
         {
             try
             {
                 return await _orderService.Update(order);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
                 _logger.LogCritical($"A problem happened while updating Order with id:{order.Id}", ex);
-                return StatusCode(500, "A problem happened while handling your request.");
+                return BadRequest(ex.Message);
             }
         }
     }

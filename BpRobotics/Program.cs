@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using BpRobotics.Data;
 using BpRobotics.Data.Repositories;
 using BpRobotics.Data.Entity;
@@ -26,7 +27,8 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(opt => opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -42,6 +44,7 @@ builder.Services.AddTransient<IRepository<Product>, ProductRepository>();
 builder.Services.AddTransient<IRepository<Customer>, CustomerRepository>();
 builder.Services.AddTransient<IRepository<Partner>, PartnerRepository>();
 builder.Services.AddTransient<IRepository<Device>, DeviceRepository>();
+builder.Services.AddTransient<IRepository<Service>, ServiceRepository>();
 
 // Add data logic services
 builder.Services.AddTransient<UserService>();
@@ -49,6 +52,7 @@ builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IPartnersService, PartnersService>();
 builder.Services.AddTransient<CustomerService>();
+builder.Services.AddTransient<DeviceService>();
 
 
 

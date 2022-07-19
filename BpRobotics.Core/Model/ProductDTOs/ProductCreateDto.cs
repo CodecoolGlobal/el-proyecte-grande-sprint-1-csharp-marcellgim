@@ -17,5 +17,6 @@ namespace BpRobotics.Core.Model.ProductDTOs
         public string ShortDescription { get; set; }
         [Required(ErrorMessage = "Long description is required")]
         public string LongDescription { get; set; }
+        public string? ImageData { get; set; }
     }
 }

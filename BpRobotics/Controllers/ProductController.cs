@@ -18,37 +18,54 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<List<ProductViewDto>>> GetAll()
         {
             var products = await _productService.ListProducts();
-            return Ok(products);
+            return products;
         }
 
         [HttpGet("{id}", Name = "GetProductById")]
-        public async Task<ActionResult> GetProductById(int id)
+        public async Task<ActionResult<ProductViewDto>> GetProductById(int id)
         {
             try
             {
-                var product = await _productService.GetById(id);
-                return Ok(product);
+                return await _productService.GetById(id);
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
-                return NotFound();
+                return NotFound($"Product with ID:{id} not found.");
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateProduct([FromBody] ProductCreateDto newProduct)
+        public async Task<ActionResult<ProductViewDto>> CreateProduct(ProductCreateDto newProduct)
         {
             try
             {
                 var createdProduct = await _productService.NewProduct(newProduct);
+                var bytes = Convert.FromBase64String(newProduct.ImageData);
+                Stream stream = new MemoryStream(bytes);
+                await _productService.UploadFileToStorage(stream, newProduct.ImageFileName);
                 return CreatedAtRoute("GetProductById", new { id = createdProduct.ID }, newProduct);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            try
+            {
+                // TODO Implement with image file deletion
+                throw new NotImplementedException();
+                return NoContent();
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound($"Product with ID:{id} not found.");
             }
         }
     }

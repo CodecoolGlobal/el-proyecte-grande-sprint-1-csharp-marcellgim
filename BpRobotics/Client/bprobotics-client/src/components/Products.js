@@ -3,6 +3,9 @@ import MaterialTable from 'material-table';
 import { useNavigate } from "react-router-dom";
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 
+import ProductModal from './ProductModal';
+import Button from '@mui/material/Button';
+
 function Products() {
 
 	let url = `${process.env.REACT_APP_HOST_URL}/api/products`;

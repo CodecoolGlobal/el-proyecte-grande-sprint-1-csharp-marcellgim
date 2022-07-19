@@ -28,25 +28,24 @@ function Products() {
 			<CardMedia
 				component="img"
 
-				image={`${process.env.REACT_APP_HOST_URL}/StaticFiles/images/${productDetailsData.img}`}
-				alt={productDetailsData.name}
-			/>
-			<CardContent>
-				<Typography gutterBottom variant="h3" component="div">
-					{productDetailsData.name}
-				</Typography>
-				<Typography gutterBottom variant="h6" component="div">
-					{productDetailsData.shortDescription}
-				</Typography>
-				<Typography variant="body2" color="text.secondary">
-					{productDetailsData.longDescription}
-				</Typography>
-			</CardContent>
-			<CardActions>
-				<Button size="small" onClick={() => navigate(-1)}>Go Back</Button>
-			</CardActions>
-		</Card>
-	);
+        image={`https://bproboticsimages.blob.core.windows.net/images/${productDetailsData.imageFileName}`}
+        alt={productDetailsData.name}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h3" component="div">
+        {productDetailsData.name}
+        </Typography>
+        <Typography gutterBottom variant="h6" component="div">
+        {productDetailsData.shortDescription}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+        {productDetailsData.longDescription}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={() => navigate(-1)}>Go Back</Button>
+      </CardActions>
+    </Card>);
 }
 
 export default Products;

@@ -29,12 +29,12 @@ public class OrderRepository : IRepository<Order>
             .Include(o => o.Devices)
                 .ThenInclude(d => d.Product)
             .AsNoTracking()
-            .FirstAsync(order => order.Id == id);
+            .SingleAsync(order => order.Id == id);
     }
 
     public async Task Delete(int id)
     {
-        var order = await Get(id);
+        var order = await _context.Orders.SingleAsync(o => o.Id == id);
         _context.Orders.Remove(order);
         await _context.SaveChangesAsync();
     }
