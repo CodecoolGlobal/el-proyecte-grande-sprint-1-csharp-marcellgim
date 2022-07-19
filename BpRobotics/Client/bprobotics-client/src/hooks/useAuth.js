@@ -33,7 +33,7 @@ function useAuth() {
 
     const logout = () => {
         setAuth(null);
-        localStorage.removeItem(auth);
+        localStorage.removeItem("auth");
         navigate("/");
     }
     return { auth, login, logout };
