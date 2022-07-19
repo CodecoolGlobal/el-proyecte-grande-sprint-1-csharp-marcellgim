@@ -38,5 +38,5 @@ public class UserRepository : IUserRepository
         return userToUpdate;
     }
 
-    public async Task<User> GetByUserName(string username) => await _context.Users.AsNoTracking().FirstAsync(user => user.UserName == username);
+    public async Task<User> GetByUserName(string username) => await _context.Users.AsNoTracking().FirstOrDefaultAsync(user => user.UserName == username);
 }
