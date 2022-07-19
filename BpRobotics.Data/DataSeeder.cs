@@ -25,7 +25,7 @@ public class DataSeeder
                     FirstName = "Péter",
                     LastName = "Király",
                     UserName = "MainAdmin",
-                    HashedPassword = "1234",
+                    HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                     Role = UserRole.Admin
                 },
                 new()
@@ -33,7 +33,7 @@ public class DataSeeder
                     FirstName = "Sutő",
                     LastName = "Károly",
                     UserName = "BossMan",
-                    HashedPassword = "1234",
+                    HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                     Role = UserRole.Admin
                 },
                 new()
@@ -41,7 +41,7 @@ public class DataSeeder
                     FirstName = "István",
                     LastName = "Takács",
                     UserName = "RepairMan",
-                    HashedPassword = "1234",
+                    HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                     Role = UserRole.Partner,
                 },
                 new()
@@ -49,7 +49,7 @@ public class DataSeeder
                     FirstName = "Anna",
                     LastName = "Partner",
                     UserName = "CreativeUsername",
-                    HashedPassword = "1234",
+                    HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                     Role = UserRole.Partner,
                 },
                 new()
@@ -57,7 +57,7 @@ public class DataSeeder
                     FirstName = "Lajos",
                     LastName = "Customer",
                     UserName = "EcseriFourSeasons",
-                    HashedPassword = "1234",
+                    HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                     Role = UserRole.Customer,
                 },
                 new()
@@ -65,7 +65,7 @@ public class DataSeeder
                     FirstName = "Huba",
                     LastName = "Hűtő",
                     UserName = "ILoveRefrigerators",
-                    HashedPassword = "1234",
+                    HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
                     Role = UserRole.Customer,
                 }
             };
