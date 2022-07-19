@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Options;
 
 namespace BpRobotics.Services.Authenticators
 {
@@ -13,9 +14,9 @@ namespace BpRobotics.Services.Authenticators
     {
         private readonly AuthenticationConfiguration _configuration;
 
-        public Authenticator(AuthenticationConfiguration configuration)
+        public Authenticator(IOptions<AuthenticationConfiguration> configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration.Value;
         }
 
         public string GenerateToken(string secretKey, string issuer, string audience, double expirationMinutes,

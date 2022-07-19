@@ -19,7 +19,7 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.Configure<AuthenticationConfiguration>(builder.Configuration.GetSection("Authentication"));
 
 builder.Services.AddCors(options =>
 {
@@ -38,12 +38,6 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-AuthenticationConfiguration authenticationConfiguration = new AuthenticationConfiguration();
-
-builder.Configuration.GetSection("Authentication").Bind(authenticationConfiguration);
-
-builder.Services.AddSingleton(authenticationConfiguration);
 
 // Add datastore service
 builder.Services.AddDbContext<BpRoboticsContext>(options =>
