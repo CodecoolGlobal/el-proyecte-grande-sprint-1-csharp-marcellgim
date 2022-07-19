@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
 import { Form, Button } from "react-bootstrap";
-import '../App.css';
+import '../CreateOrder.css';
 
 const AddOrder = () => {
     const customersUrl = `${process.env.REACT_APP_HOST_URL}/api/customers`;
