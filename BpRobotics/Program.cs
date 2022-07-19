@@ -5,7 +5,7 @@ using BpRobotics.Data.Entity;
 using BpRobotics.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
-
+using BpRobotics.Core.Model.AuthenticationModels;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -31,6 +31,12 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+AuthenticationConfiguration authenticationConfiguration = new AuthenticationConfiguration();
+
+builder.Configuration.GetSection("Authentication").Bind(authenticationConfiguration);
+
+builder.Services.AddSingleton(authenticationConfiguration);
 
 // Add datastore service
 builder.Services.AddDbContext<BpRoboticsContext>(options =>
