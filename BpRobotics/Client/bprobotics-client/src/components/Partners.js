@@ -188,9 +188,9 @@ function Partners() {
 					}),
 
 					onRowDelete:(selectedRow)=>new Promise((resolve, reject)=>{
-					  setIdToDelete(selectedRow.id);
-					  handleDelete();
-					  resolve();
+					  	setIdToDelete(selectedRow.id);
+					  	handleDelete();
+					  	resolve();
 				  })
 				}}
 				
