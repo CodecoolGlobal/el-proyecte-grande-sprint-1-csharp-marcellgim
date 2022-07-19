@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
+import { Form, Button } from "react-bootstrap"
 
 const AddOrder = () => {
     const customersUrl = `${process.env.REACT_APP_HOST_URL}/api/customers`;
@@ -9,9 +10,7 @@ const AddOrder = () => {
     const [customers, setCustomers] = useState();
     const [products, setProducts] = useState();
     const [orderDict, setOrderDict] = useState([]);
-    const [orderViewDict, setOrderViewDict] = useState([]);
-    const [chosenProduct, setChosenProduct] = useState('');
-    const [chosenQuantity, setChosenQuantity] = useState('');
+    const [orderViewDict, setOrderViewDict] = useState({});
 
     const { data: customerData } = useAxiosFetchGet(customersUrl);
     const { data: productsData } = useAxiosFetchGet(productsUrl);
@@ -26,16 +25,14 @@ const AddOrder = () => {
 
     const addToOrder = (e) => {
         e.preventDefault();
-
-        if (!chosenProduct) {
-            setChosenProduct(products[0].name);
-        }
-        
-        const oldValue = orderViewDict[chosenProduct] ? parseInt(orderViewDict[chosenProduct]) : 0;
-        const orderViewDictWithNew = orderViewDict;
-        orderViewDictWithNew[chosenProduct] =  oldValue + parseInt(chosenQuantity);
-        setOrderViewDict({...orderViewDictWithNew});
+        const newProduct = products.filter(product => !orderViewDict.hasOwnProperty(product.name))[0].name;
+        setOrderViewDict({...orderViewDict, [newProduct]: 1});
     };
+
+    const switchProduct = (e, key) => {
+        setOrderViewDict({...orderDict, [e.target.value]: orderViewDict[key]})
+        delete orderViewDict[key];
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,13 +48,13 @@ const AddOrder = () => {
         <>
             {customers?.length && products?.length
                 ? (
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor='customers'>Customer:</label>
-                        <select name='customer' id='customers'>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Label htmlFor='customers'>Customer:</Form.Label>
+                        <Form.Select name='customer' id='customers'>
                             {customers.map(customer => <option value={customer.id}>{customer.companyName}</option>)}
-                        </select>
+                        </Form.Select>
                         <br />
-                        <label htmlFor='orders'>Current order:</label>
+                        <Form.Label htmlFor='orders'>Current order:</Form.Label>
                         <table>
                             <thead>
                                 <tr>
@@ -66,38 +63,30 @@ const AddOrder = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Object.entries(orderViewDict).map(([key, value]) => (
+                                {Object.keys(orderViewDict).map(key => (
                                     <tr>
-                                        <td>{key}</td>
-                                        <td>{value}</td>
+                                        <td>
+                                        <Form.Select
+                                            id='products'
+                                            defaultValue={key}
+                                            onChange={(e) => switchProduct(e, key)} >
+                                            {products.map(product => <option key={product.id} value={product.name}>{product.name}</option>)}
+                                        </Form.Select>
+                                        </td>
+                                        <td>
+                                            <Form.Control type="number" value={orderViewDict[key]}
+                                             onInput={(e) => setOrderViewDict({...orderViewDict, [key]: e.target.value})}
+                                             min="1" step="1" />
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                         <br />
-                        <div>
-                            <p>Add to order</p>
-                            <label htmlFor='products'>Product:</label>
-                            <select
-                                id='products'
-                                onChange={(e) => setChosenProduct(e.target.value)} >
-                                {products.map(product => <option value={product.name}>{product.name}</option>)}
-                            </select>
-                            <br />
-                            <label htmlFor='quantity'>Quantity</label>
-                            <input
-                                id='quantity'
-                                type="number"
-                                onChange={(e) => setChosenQuantity(e.target.value)}
-                                value={chosenQuantity}
-                                step="1"
-                                min="1" />
-                            <br />
-                            <button onClick={addToOrder}>Add to Order</button>
-                        </div>
+                        <Button variant="primary" onClick={addToOrder}>+ Add to order</Button>
                         <br />
-                        <button onClick={handleSubmit}>Create Order</button>
-                    </form>
+                        <Button variant="primary" type="submit">Create Order</Button>
+                    </Form>
                 ) : <p>No customers or products available</p>
             }
         </>
