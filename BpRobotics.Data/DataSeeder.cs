@@ -30,7 +30,7 @@ public class DataSeeder
                 },
                 new()
                 {
-                    FirstName = "Sutő",
+                    FirstName = "Sütő",
                     LastName = "Károly",
                     UserName = "BossMan",
                     HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234"),
