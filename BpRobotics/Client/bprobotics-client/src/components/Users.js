@@ -19,8 +19,10 @@ function Users() {
         { title: "Role", field: "role" }
     ]
 
+    const url = `${process.env.REACT_APP_HOST_URL}/api/users`;
+    
     async function loadUsers() {
-        const response = await fetch(`${process.env.REACT_APP_HOST_URL}/api/users`);
+        const response = await fetch(url);
         const data = await response.json();
         setUserList(data);
     }

@@ -11,6 +11,8 @@ using BpRobotics.Services.PasswordHasher;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Design;
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

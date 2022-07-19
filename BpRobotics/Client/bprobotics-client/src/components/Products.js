@@ -14,21 +14,19 @@ function Products() {
     let path = productId.toString(); 
     navigate(path);
   }
-    const fetchProductData = async (url) => {
-        const res = await fetch(url);
-        const data = await res.json();
-        return data;
-      }
-      const getProductData = async (url) => {
-        const productDataFromApi = await fetchProductData(url);
-        setProductData(productDataFromApi);
-      }
-      useEffect(() => {
-        getProductData(url);
-      }, [url])
+
+    async function loadProducts() {
+      const response = await fetch(url);
+      const data = await response.json();
+      setProductData(data);
+  }
+
+  useEffect(() => {
+    loadProducts();
+  }, [])
     return ( <>
     <Button variant="primary" onClick={handleOpen}>New</Button>
-    <ProductModal show={show} setShow={setShow} onCreate={getProductData}></ProductModal>
+    <ProductModal show={show} setShow={setShow} onCreate={loadProducts}></ProductModal>
     <MaterialTable
         title="Products"
         columns={[
