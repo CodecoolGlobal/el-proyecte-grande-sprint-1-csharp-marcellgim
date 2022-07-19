@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
-import { Form, Button } from "react-bootstrap"
+import { Form, Button } from "react-bootstrap";
+import '../App.css';
 
 const AddOrder = () => {
     const customersUrl = `${process.env.REACT_APP_HOST_URL}/api/customers`;
@@ -25,12 +26,17 @@ const AddOrder = () => {
 
     const addToOrder = (e) => {
         e.preventDefault();
-        const newProduct = products.filter(product => !orderViewDict.hasOwnProperty(product.name))[0].name;
-        setOrderViewDict({...orderViewDict, [newProduct]: 1});
+        const newProduct = products.filter(product => !orderViewDict.hasOwnProperty(product.name));
+        
+        if (!newProduct?.length) {
+            return;
+        }
+
+        setOrderViewDict({ ...orderViewDict, [newProduct[0].name]: 1 });
     };
 
     const switchProduct = (e, key) => {
-        setOrderViewDict({...orderDict, [e.target.value]: orderViewDict[key]})
+        setOrderViewDict({ ...orderDict, [e.target.value]: orderViewDict[key] })
         delete orderViewDict[key];
     }
 
@@ -54,36 +60,38 @@ const AddOrder = () => {
                             {customers.map(customer => <option value={customer.id}>{customer.companyName}</option>)}
                         </Form.Select>
                         <br />
-                        <Form.Label htmlFor='orders'>Current order:</Form.Label>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.keys(orderViewDict).map(key => (
+                        <div className='inner-form-box'>
+                            <Form.Label htmlFor='orders'>Current order:</Form.Label>
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>
-                                        <Form.Select
-                                            id='products'
-                                            defaultValue={key}
-                                            onChange={(e) => switchProduct(e, key)} >
-                                            {products.map(product => <option key={product.id} value={product.name}>{product.name}</option>)}
-                                        </Form.Select>
-                                        </td>
-                                        <td>
-                                            <Form.Control type="number" value={orderViewDict[key]}
-                                             onInput={(e) => setOrderViewDict({...orderViewDict, [key]: e.target.value})}
-                                             min="1" step="1" />
-                                        </td>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <br />
-                        <Button variant="primary" onClick={addToOrder}>+ Add to order</Button>
+                                </thead>
+                                <tbody>
+                                    {Object.keys(orderViewDict).map(key => (
+                                        <tr>
+                                            <td>
+                                                <Form.Select
+                                                    id='products'
+                                                    defaultValue={key}
+                                                    onChange={(e) => switchProduct(e, key)} >
+                                                    {products.map(product => <option key={product.id} value={product.name}>{product.name}</option>)}
+                                                </Form.Select>
+                                            </td>
+                                            <td>
+                                                <Form.Control type="number" value={orderViewDict[key]}
+                                                    onInput={(e) => setOrderViewDict({ ...orderViewDict, [key]: e.target.value })}
+                                                    min="1" step="1" />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            <br />
+                            <Button variant="primary" onClick={addToOrder}>+ Add to order</Button>
+                        </div>
                         <br />
                         <Button variant="primary" type="submit">Create Order</Button>
                     </Form>
