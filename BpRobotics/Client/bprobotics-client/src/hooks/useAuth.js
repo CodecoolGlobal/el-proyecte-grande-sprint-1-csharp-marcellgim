@@ -19,16 +19,22 @@ function useAuth() {
     }, [auth])
 
     const login = async(username, password) => {
-        const response = await axios.post(AUTH_ENDPOINT + "/login", {username, password});
-        if (response.data) {
-            const decodedToken = jwtDecode(response.data.accessToken);
-            setAuth({
-                ...response.data,
-                role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-            });
-            navigate("/");
-        } else {
-            console.log(response.error);
+        try {
+            const response = await axios.post(AUTH_ENDPOINT + "/login", {username, password});
+            if (response.data && response.status === 200) {
+                const decodedToken = jwtDecode(response.data.accessToken);
+                setAuth({
+                    ...response.data,
+                    role: decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+                });
+                navigate("/");
+            }
+        } catch (error) {
+            if (error.response) {
+                console.log(error.toJSON());
+            } else {
+                throw new Error(error.toJSON())
+            }
         }
     }
 
