@@ -6,6 +6,11 @@ using BpRobotics.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using BpRobotics.Core.Model.AuthenticationModels;
+using BpRobotics.Services.Authenticators;
+using BpRobotics.Services.PasswordHasher;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -41,6 +46,23 @@ builder.Services.AddSingleton(authenticationConfiguration);
 // Add datastore service
 builder.Services.AddDbContext<BpRoboticsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Authentication services
+builder.Services.AddTransient<Authenticator>();
+builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters()
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationConfiguration.AccessTokenSecret)),
+        ValidIssuer = authenticationConfiguration.Issuer,
+        ValidAudience = authenticationConfiguration.Audience,
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 // Add data repository services
 builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -88,6 +110,8 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 app.UseCors(MyAllowSpecificOrigins);
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
