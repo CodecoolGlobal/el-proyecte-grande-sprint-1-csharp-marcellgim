@@ -30,7 +30,11 @@ public class UserService
     }
 
     public async Task<UserViewDto> GetById(int userId) => (await _userRepository.Get(userId)).ToUserView();
-    public async Task<UserLoginDto> GetLoginDtoByUserName(string username) => (await _userRepository.GetByUserName(username)).ToUserLoginDto();
+    public async Task<UserLoginDto> GetLoginDtoByUserName(string username)
+    {
+        return (await _userRepository.GetByUserName(username))?.ToUserLoginDto();
+
+    } 
 
     public async Task DeleteById(int userId) => await _userRepository.Delete(userId);
 
