@@ -1,9 +1,11 @@
 import './App.css';
 import { Outlet } from 'react-router-dom';
-import { Nav, Navbar, Container } from "react-bootstrap";
+import { Nav, Navbar, Container, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import useAuth from './hooks/useAuth';
 
 function App() {
+  const { logout } = useAuth();
   return (
     <div className="App">
       <header className="App-header">
@@ -34,6 +36,9 @@ function App() {
               <LinkContainer to="/login">
                 <Nav.Link>Login</Nav.Link>
               </LinkContainer>
+              <Navbar.Text>
+                <Nav.Link onClick={logout}>Logout</Nav.Link>
+              </Navbar.Text>
             </Nav>
             </Navbar.Collapse>
             </Container>
