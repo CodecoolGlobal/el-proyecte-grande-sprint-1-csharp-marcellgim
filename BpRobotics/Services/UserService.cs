@@ -8,9 +8,9 @@ namespace BpRobotics.Services;
 
 public class UserService
 {
-    private readonly IRepository<User> _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public UserService(IRepository<User> userRepository)
+    public UserService(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
@@ -30,6 +30,7 @@ public class UserService
     }
 
     public async Task<UserViewDto> GetById(int userId) => (await _userRepository.Get(userId)).ToUserView();
+    public async Task<UserLoginDto> GetLoginDtoByUserName(string username) => (await _userRepository.GetByUserName(username)).ToUserLoginDto();
 
     public async Task DeleteById(int userId) => await _userRepository.Delete(userId);
 
