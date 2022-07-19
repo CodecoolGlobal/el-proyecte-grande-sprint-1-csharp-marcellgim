@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BpRobotics.Data.Repositories;
 
-public class UserRepository : IRepository<User>
+public class UserRepository : IUserRepository
 {
     private readonly BpRoboticsContext _context;
 
@@ -37,4 +37,6 @@ public class UserRepository : IRepository<User>
         await _context.SaveChangesAsync();
         return userToUpdate;
     }
+
+    public async Task<User> GetByUserName(string username) => await _context.Users.AsNoTracking().FirstAsync(user => user.UserName == username);
 }
