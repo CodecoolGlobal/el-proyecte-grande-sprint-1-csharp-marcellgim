@@ -41,7 +41,7 @@ const useAxiosFetchGet = (dataUrl) => {
         return cleanUp;
     }, [dataUrl])
 
-    return { data, fetchError, isLoading };
+    return { data, setData, fetchError, isLoading };
 }
 
 export default useAxiosFetchGet
