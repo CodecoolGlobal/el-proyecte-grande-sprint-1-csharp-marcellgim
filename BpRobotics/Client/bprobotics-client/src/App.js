@@ -24,6 +24,9 @@ function App() {
               <LinkContainer to="/orders">
                 <Nav.Link>Orders</Nav.Link>
               </LinkContainer>
+              <LinkContainer to="/devices">
+                <Nav.Link>Devices</Nav.Link>
+              </LinkContainer>
               <LinkContainer to="/partners">
                 <Nav.Link>Partners</Nav.Link>
               </LinkContainer>
