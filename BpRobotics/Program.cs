@@ -37,6 +37,23 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BpRoboticsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Authentication services
+builder.Services.AddTransient<Authenticator>();
+builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters()
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Authentication:AccessTokenSecret"])),
+        ValidIssuer = builder.Configuration["Authentication:Audience"],
+        ValidAudience = builder.Configuration["Authentication:Issuer"],
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
 // Add data repository services
 builder.Services.AddTransient<IRepository<User>, UserRepository>();
 builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
