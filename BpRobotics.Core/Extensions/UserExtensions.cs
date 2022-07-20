@@ -46,14 +46,15 @@ namespace BpRobotics.Core.Extensions
             };
         }
 
-        public static UserLoginDto ToUserLoginDto(this User user)
+        public static UserLoginDto ToUserLoginDto(this User user, int? functionId = null)
         {
             return new UserLoginDto
             {
                 Id = user.Id,
                 Role = user.Role,
                 UserName = user.UserName,
-                HashedPassword = user.HashedPassword
+                HashedPassword = user.HashedPassword,
+                FunctionId = functionId
             };
         }
     }
