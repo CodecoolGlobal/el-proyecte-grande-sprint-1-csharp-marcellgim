@@ -23,7 +23,7 @@ function Orders() {
             </thead>
             <tbody>
                 {isLoading && <tr><td><LoadingSpin /></td></tr>}
-				{fetchError && <Alert variant='danger'>{fetchError}</Alert>}
+				{fetchError && <tr><td><Alert variant='danger'>{fetchError}</Alert></td></tr>}
                 {orders.map(order => (
                     <tr key={order.id}>
                         {columns.map((column, index) => (

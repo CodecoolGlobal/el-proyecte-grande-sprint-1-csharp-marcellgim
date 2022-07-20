@@ -28,7 +28,7 @@ function Devices() {
             </thead>
             <tbody>
                 {isLoading && <tr><td><LoadingSpin /></td></tr>}
-				{fetchError && <Alert variant='danger'>{fetchError}</Alert>}
+				{fetchError && <tr><td><Alert variant='danger'>{fetchError}</Alert></td></tr>}
                 {devices.map(device => <Device device={device} columns={columns} />)}
             </tbody>
         </Table>
