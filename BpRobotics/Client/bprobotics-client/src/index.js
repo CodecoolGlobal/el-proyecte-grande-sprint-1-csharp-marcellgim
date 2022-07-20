@@ -25,6 +25,8 @@ root.render(
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<ProductDetails />} />
           <Route path="partners" element={<Partners />} />
+          <Route path="partners/add" element={<AddPartner />} />
+          <Route path="partners/:id" element={<UpdatePartner />} />
           <Route path="customers" element={<Customers />} />
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />

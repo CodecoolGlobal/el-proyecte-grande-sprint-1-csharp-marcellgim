@@ -43,23 +43,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BpRoboticsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Authentication services
-builder.Services.AddTransient<Authenticator>();
-builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
-{
-    o.TokenValidationParameters = new TokenValidationParameters()
-    {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:AccessTokenSecret"])),
-        ValidIssuer = builder.Configuration["Jwt:Audience"],
-        ValidAudience = builder.Configuration["Jwt:Issuer"],
-        ValidateIssuerSigningKey = true,
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ClockSkew = TimeSpan.Zero
-    };
-});
-
 // Add data repository services
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
@@ -68,6 +51,23 @@ builder.Services.AddTransient<IRepository<Customer>, CustomerRepository>();
 builder.Services.AddTransient<IRepository<Partner>, PartnerRepository>();
 builder.Services.AddTransient<IRepository<Device>, DeviceRepository>();
 builder.Services.AddTransient<IRepository<Service>, ServiceRepository>();
+
+// Authentication services
+builder.Services.AddTransient<Authenticator>();
+builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters()
+    {
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Authentication:AccessTokenSecret"])),
+        ValidIssuer = builder.Configuration["Authentication:Audience"],
+        ValidAudience = builder.Configuration["Authentication:Issuer"],
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 // Add data logic services
 builder.Services.AddTransient<UserService>();

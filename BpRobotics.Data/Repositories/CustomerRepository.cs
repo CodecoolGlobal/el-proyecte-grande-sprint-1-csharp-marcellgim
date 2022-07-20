@@ -14,12 +14,16 @@ namespace BpRobotics.Data.Repositories
 
         public async Task<List<Customer>> GetAll()
         {
-            return await _context.Customers.AsNoTracking().ToListAsync();
+            return await _context.Customers
+                .Include(c => c.User)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Customer> Get(int id)
         {
             return await _context.Customers
+                .Include(c => c.User)
                 .SingleAsync(customer => customer.Id == id);
         }
 

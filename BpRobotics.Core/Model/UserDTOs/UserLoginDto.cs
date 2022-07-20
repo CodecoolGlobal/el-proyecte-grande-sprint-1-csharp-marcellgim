@@ -18,5 +18,6 @@ namespace BpRobotics.Core.Model.UserDTOs
         public string HashedPassword { get; set; }
         [Required]
         public UserRole Role { get; set; }
+        public int? FunctionId { get; set; }
     }
 }
