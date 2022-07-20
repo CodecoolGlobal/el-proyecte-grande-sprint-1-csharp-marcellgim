@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import MaterialTable from 'material-table';
 import '../App.css';
 import axiosInstance from "../fetch/axiosInstance";
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
@@ -8,8 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Button from 'react-bootstrap/Button';
 import LoadingSpin from "react-loading-spin";
-import AddPartner from "./AddPartner";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 

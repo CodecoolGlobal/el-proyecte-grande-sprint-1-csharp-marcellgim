@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../fetch/axiosInstance";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import '../App.css';
 import Button from 'react-bootstrap/Button';
