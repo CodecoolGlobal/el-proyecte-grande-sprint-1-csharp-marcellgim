@@ -17,7 +17,7 @@ function Orders() {
 		<div style={{ maxWidth: '100%' }}>
 			<MaterialTable
 			columns={[
-				{ title: 'Date', field: 'date' },
+				{ title: 'Date', field: 'date', type: 'date', dateSetting: { locale: 'hu-HU' } },
 				{ title: 'Company Name', field: 'customerCompanyName' },
 				{ title: 'Address', field: 'address' },
 				//{ title: 'Devices', field: 'devices', render: (rowData) => <div>{[...(rowData.devices)].map(device =><><div>{device},</div><br/></>)}</div>}
