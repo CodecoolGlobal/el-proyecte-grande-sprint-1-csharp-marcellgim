@@ -50,9 +50,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     o.TokenValidationParameters = new TokenValidationParameters()
     {
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:AccessTokenSecret"])),
-        ValidIssuer = builder.Configuration["Jwt:Audience"],
-        ValidAudience = builder.Configuration["Jwt:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Authentication:AccessTokenSecret"])),
+        ValidIssuer = builder.Configuration["Authentication:Audience"],
+        ValidAudience = builder.Configuration["Authentication:Issuer"],
         ValidateIssuerSigningKey = true,
         ValidateIssuer = true,
         ValidateAudience = true,

@@ -12,6 +12,8 @@ import UserDetails from './components/UserDetails';
 import Orders from './components/Orders';
 import ProductDetails from './components/ProductDetails';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AddPartner from './components/AddPartner';
+import UpdatePartner from './components/UpdatePartner';
 import Login from './components/Login';
 
 
@@ -24,6 +26,8 @@ root.render(
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<ProductDetails />} />
           <Route path="partners" element={<Partners />} />
+          <Route path="partners/add" element={<AddPartner />} />
+          <Route path="partners/:id" element={<UpdatePartner />} />
           <Route path="customers" element={<Customers />} />
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
