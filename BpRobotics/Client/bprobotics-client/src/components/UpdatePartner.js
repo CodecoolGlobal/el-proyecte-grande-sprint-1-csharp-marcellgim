@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import axiosInstance from "../fetch/axiosInstance";
 import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import '../App.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import useAxios from '../hooks/useAxios';
 
 function UpdatePartner() {
-
+    const axiosInstance = useAxios();
     let navigate = useNavigate();
     const location = useLocation();
     const partner = location.state;

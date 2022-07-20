@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import '../App.css';
-import axiosInstance from "../fetch/axiosInstance";
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,16 +7,17 @@ import { faTrash, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Button from 'react-bootstrap/Button';
 import LoadingSpin from "react-loading-spin";
 import { useNavigate } from "react-router-dom";
+import useAxios from "../hooks/useAxios";
 
 
 
 function Partners() {
-
+	const axiosInstance = useAxios();
 	let navigate = useNavigate();
 
 	const [partnerData, setPartnerData] = useState([]);
 
-	const url = `${process.env.REACT_APP_HOST_URL}/api/partners`;
+	const url = "/api/partners";
 
 	const { data, fetchError, isLoading } = useAxiosFetchGet(url);
 

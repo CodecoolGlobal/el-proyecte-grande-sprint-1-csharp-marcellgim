@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../fetch/axiosInstance";
 import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import '../App.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import useAxios from '../hooks/useAxios';
 
 function AddPartner() {
-
+    const axiosInstance = useAxios();
     const url = `${process.env.REACT_APP_HOST_URL}/api/partners`;
     const [isPendingAdd, setIsPendingAdd] = useState(false);
 
