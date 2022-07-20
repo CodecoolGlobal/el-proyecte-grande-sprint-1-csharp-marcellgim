@@ -12,6 +12,7 @@ import UserDetails from './components/UserDetails';
 import Orders from './components/Orders';
 import ProductDetails from './components/ProductDetails';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './components/Login';
 import AddOrder from './components/AddOrder';
 
 
@@ -28,6 +29,7 @@ root.render(
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
           <Route path="users/:id" element={<UserDetails />} />
+          <Route path="login" element={<Login />} />
           <Route path="add-order" element={<AddOrder />} />
         </Route>
       </Routes>
