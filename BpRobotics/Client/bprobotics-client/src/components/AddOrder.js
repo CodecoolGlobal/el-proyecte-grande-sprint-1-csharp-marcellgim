@@ -18,11 +18,8 @@ const AddOrder = () => {
 
     useEffect(() => {
         setCustomers(customerData);
-    }, [customerData]);
-
-    useEffect(() => {
         setProducts(productsData);
-    }, [productsData]);
+    }, [customerData, productsData]);
 
     const addToOrder = (e) => {
         e.preventDefault();
