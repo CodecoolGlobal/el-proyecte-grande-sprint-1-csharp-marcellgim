@@ -38,7 +38,7 @@ root.render(
               </RequireAuth>
             }
           />
-          <Route path="users/:id" element={<UserDetails />} />
+          <Route path="users/:id" element={<RequireAuth allowedRoles={[]}><UserDetails /></RequireAuth>} />
           <Route path="login" element={<Login />} />
         </Route>
       </Routes>
