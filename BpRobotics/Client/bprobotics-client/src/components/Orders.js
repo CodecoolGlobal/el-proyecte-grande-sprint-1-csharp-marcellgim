@@ -6,12 +6,12 @@ function Orders() {
 
 	const url = "/api/orders";
 	const { data: orders, isLoading, fetchError } = useAxiosFetchGet(url);
-	const render = (input) => input; // Default render 
+	const render = (input) => input; // Default render
 	const columns= [
 		{ title: 'Date', field: 'date', render: (date) => new Date(date).toLocaleString()},
 		{ title: 'Company Name', field: 'customerCompanyName', render },
 		{ title: 'Address', field: 'address', render },
-		{ title: 'Devices', field: 'devices', render: (devices) => <div>{Object.keys(devices).map(device => <div>{device}: {devices[device]}</div>)}</div>}
+		{ title: 'Devices', field: 'devices', render: (devices) => <div>{Object.keys(devices).map((device, index) => <div key={index}>{device}: {devices[device]}</div>)}</div>}
 	];
 
 	return ( 
@@ -22,12 +22,12 @@ function Orders() {
                 </tr>
             </thead>
             <tbody>
-                {isLoading && <h1><LoadingSpin /></h1>}
+                {isLoading && <tr><td><LoadingSpin /></td></tr>}
 				{fetchError && <Alert variant='danger'>{fetchError}</Alert>}
                 {orders.map(order => (
                     <tr key={order.id}>
                         {columns.map((column, index) => (
-							<th key={index}>{column.render(order[column.field])}</th>
+							<td key={index}>{column.render(order[column.field])}</td>
 						))}
                     </tr>
 				))}
