@@ -45,7 +45,8 @@ namespace BpRobotics.Services.Authenticators
             {
                 new Claim("id", user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("functionId", user.FunctionId.ToString() ?? "")
             };
 
             return GenerateToken(
