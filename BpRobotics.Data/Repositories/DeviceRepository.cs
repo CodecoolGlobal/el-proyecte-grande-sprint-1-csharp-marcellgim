@@ -44,6 +44,8 @@ namespace BpRobotics.Data.Repositories
                 .Include(d => d.Order)
                     .ThenInclude(o => o.Customer)
                 .Include(d => d.Product)
+                .Include(d => d.Services)
+                    .ThenInclude(s => s.Partner)
                 .OrderBy(d => d.Order.Customer.Id)
                 .AsNoTracking()
                 .ToListAsync();
