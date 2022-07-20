@@ -1,16 +1,18 @@
 import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
 import UserForm from './UserForm';
 import CreateModal from './CreateModal';
+import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Table, Button } from 'react-bootstrap';
+import LoadingSpin from "react-loading-spin";
+import { Table, Button, Alert } from 'react-bootstrap';
 import useAxios from '../hooks/useAxios';
 
 const USERS_URL = "/api/users"
 
 function Users() {
     const axios = useAxios();
-    const { data: users, setData: setUsers, isLoading } = useAxiosFetchGet(USERS_URL);
+    const { data: users, setData: setUsers, isLoading, fetchError } = useAxiosFetchGet(USERS_URL);
     const columns = ["Username", "First Name", "Last Name", "Role"]
     
     const postData = async (data) => {
@@ -23,8 +25,6 @@ function Users() {
         await axios.delete(USERS_URL + `/${userId}`)
     }
 
-    if (isLoading) return (<h1>Loading...</h1>)
-
     return (
     <>
         <CreateModal typeName="user"><UserForm postData={postData} /></CreateModal>
@@ -35,9 +35,11 @@ function Users() {
                 </tr>
             </thead>
             <tbody>
+                {isLoading && <h1><LoadingSpin /></h1>}
+				{fetchError && <Alert variant='danger'>{fetchError}</Alert>}
                 {users.map(user => (
                     <tr key={user.id}>
-                        <td>{user.userName}</td>
+                        <td><Link to={user.id.toString()} state={user}>{user.userName}</Link></td>
                         <td>{user.firstName}</td>
                         <td>{user.lastName}</td>
                         <td>{user.role}</td>
