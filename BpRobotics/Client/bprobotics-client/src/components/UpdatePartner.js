@@ -1,31 +1,25 @@
 import React from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axiosInstance from "../fetch/axiosInstance";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import '../App.css';
-import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 function UpdatePartner() {
 
     let navigate = useNavigate();
+    const location = useLocation();
+    const partner = location.state;
     const { id } = useParams();
 
     const url = `${process.env.REACT_APP_HOST_URL}/api/partners/${id}`;
 
-    const [companyName, setCompanyName] = useState('')
-    const [companyPhoneNumber, setCompanyPhoneNumber] = useState('')
+    const [companyName, setCompanyName] = useState(partner.companyName)
+    const [companyPhoneNumber, setCompanyPhoneNumber] = useState(partner.phoneNumber)
 
     const [isPendingUpdate, setIsPendingUpdate] = useState(false);
-
-    const { data, fetchError, isLoading } = useAxiosFetchGet(url);
-
-    useEffect(() => {
-        setCompanyName(data.companyName);
-        setCompanyPhoneNumber(data.phoneNumber);
-    }, [data])
 
 
     const handleUpdate = async (e) => {
@@ -45,8 +39,6 @@ function UpdatePartner() {
 
     return (
         <>
-            {isLoading && <h1><LoadingSpin /></h1>}
-            {fetchError && <p style={{ color: "red" }}>{fetchError}</p>}
             {companyName &&
                 <Form onSubmit={(e) => { handleUpdate(e) }}>
                     <Form.Group className="mb-3" controlId="formBasicText">

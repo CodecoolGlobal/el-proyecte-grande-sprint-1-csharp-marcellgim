@@ -42,6 +42,10 @@ function Partners() {
 		setTimeout(() => { setIsPendingDelete(false) }, 1500);
 	}
 
+	const goToUpdate = (id, partner) => {
+		navigate(`/partners/${id}`, {state: partner})
+	}
+
 
 
 	return (
@@ -75,7 +79,7 @@ function Partners() {
 										<td>
 											{!isPendingDelete ?
 												<>
-													<Button onClick={() => { navigate(`/partners/${partner.id}`) }}>
+													<Button onClick={() => { goToUpdate(partner.id, partner) }}>
 														<FontAwesomeIcon icon={faEdit} />
 													</Button>
 													<Button onClick={() => { handleDelete(partner.id) }}>
