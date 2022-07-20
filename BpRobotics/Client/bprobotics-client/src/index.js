@@ -16,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AddPartner from './components/AddPartner';
 import UpdatePartner from './components/UpdatePartner';
 import Login from './components/Login';
+import Devices from './components/Devices';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -32,6 +33,9 @@ root.render(
           <Route path="customers" element={<Customers />} />
           <Route path="orders"
             element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Orders /></RequireAuth>}
+          />
+          <Route path="devices"
+            element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Devices /></RequireAuth>}
           />
           <Route path="users"
             element={<RequireAuth allowedRoles={["Admin"]}><Users /></RequireAuth>
