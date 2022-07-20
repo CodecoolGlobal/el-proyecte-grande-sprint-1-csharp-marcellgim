@@ -36,12 +36,14 @@ namespace BpRobotics.Data.Repositories
         public async Task<Partner> Get(int id)
         {
             return await _context.Partners
+                .Include(p => p.User)
                 .SingleAsync(partner => partner.Id == id);
         }
 
         public async Task<List<Partner>> GetAll()
         {
             return await _context.Partners
+                .Include(p => p.User)
                 .AsNoTracking()
                 .ToListAsync();
         }
