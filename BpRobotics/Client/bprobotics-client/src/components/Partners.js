@@ -26,7 +26,6 @@ function Partners() {
 	//cosmetic
 	const [isPendingDelete, setIsPendingDelete] = useState(false);
 
-
 	//set data state
 	useEffect(() => {
 		setPartnerData(data);
@@ -58,13 +57,11 @@ function Partners() {
 							<thead>
 								<tr>
 									<th>
-										<td>
 											<>
 												<Button onClick={() => { navigate("/partners/add") }}>
 													<FontAwesomeIcon icon={faPlus} />
 												</Button>
 											</>
-										</td>
 									</th>
 									<th>Company Name</th>
 									<th>Phone Number</th>
@@ -106,61 +103,3 @@ function Partners() {
 }
 
 export default Partners;
-
-
-
-
-
-
-
-
-
-{/* <MaterialTable
-				onRowClick={(evt, selectedRow) =>
-					setSelectedRow(selectedRow.tableData.id)
-				}
-				options={{
-					rowStyle: rowData => ({
-					backgroundColor:
-						selectedRow === rowData.tableData.id ? "#EEE" : "#FFF"
-					}),
-					tableLayout: "fixed",
-					selection: true,
-					filtering: true,
-					sorting: true
-
-				}}
-				editable={{
-
-					onRowAdd:(newRow)=> new Promise((resolve, reject) => {
-						
-						setPostCompanyName(newRow.companyName);
-						setPostPhoneNumber(newRow.phoneNumber);
-						handleSubmit();
-						resolve();
-					}),
-
-					onRowUpdate:(newRow, oldRow)=> new Promise((resolve, reject) => {
-
-						setEditCompanyName(newRow.companyName);
-						setEditPhoneNumber(newRow.phoneNumber);
-						setIdToUpdate(oldRow.id);
-						handleUpdate();
-						resolve();
-					}),
-
-					onRowDelete:(selectedRow)=>new Promise((resolve, reject)=>{
-					  	setIdToDelete(selectedRow.id);
-					  	handleDelete();
-					  	resolve();
-				  })
-				}}
-				
-				columns={[
-					{ title: 'Id', field: 'id' },
-					{ title: 'Company name', field: 'companyName' },
-					{ title: 'Mobile number', field: 'phoneNumber' },
-				]}
-				data={partnerData}
-				title="Partners"
-				/> */}
