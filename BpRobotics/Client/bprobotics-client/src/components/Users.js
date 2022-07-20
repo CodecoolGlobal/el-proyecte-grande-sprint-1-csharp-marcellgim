@@ -1,7 +1,9 @@
 import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
 import UserForm from './UserForm';
 import CreateModal from './CreateModal';
-import { Table } from 'react-bootstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Table, Button } from 'react-bootstrap';
 import useAxios from '../hooks/useAxios';
 
 const USERS_URL = "/api/users"
@@ -16,12 +18,17 @@ function Users() {
         setUsers([...users, response.data]);
     }
 
+    const deleteUser = async (userId) => {
+        setUsers(users.filter(user => user.id !== userId))
+        await axios.delete(USERS_URL + `/${userId}`)
+    }
+
     if (isLoading) return (<h1>Loading...</h1>)
 
     return (
     <>
         <CreateModal typeName="user"><UserForm postData={postData} /></CreateModal>
-        <Table>
+        <Table striped="columns">
             <thead>
                 <tr>
                 {columns.map((heading, index) => <th key={index}>{heading}</th>)}
@@ -34,6 +41,7 @@ function Users() {
                         <td>{user.firstName}</td>
                         <td>{user.lastName}</td>
                         <td>{user.role}</td>
+                        <td><Button onClick={() => deleteUser(user.id)} variant="danger"><FontAwesomeIcon icon={faTrash} /></Button></td>
                     </tr>
                 ))}
             </tbody>
