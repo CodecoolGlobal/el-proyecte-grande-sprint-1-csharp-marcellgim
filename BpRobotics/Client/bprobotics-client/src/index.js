@@ -11,6 +11,7 @@ import Users from './components/Users';
 import UserDetails from './components/UserDetails';
 import Orders from './components/Orders';
 import ProductDetails from './components/ProductDetails';
+import RequireAuth from "./components/RequireAuth";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddPartner from './components/AddPartner';
 import UpdatePartner from './components/UpdatePartner';
@@ -30,7 +31,13 @@ root.render(
           <Route path="partners/:id" element={<UpdatePartner />} />
           <Route path="customers" element={<Customers />} />
           <Route path="orders" element={<Orders />} />
-          <Route path="users" element={<Users />} />
+          <Route path="users"
+            element={
+              <RequireAuth allowedRoles={["Admin"]}>
+                <Users />
+              </RequireAuth>
+            }
+          />
           <Route path="users/:id" element={<UserDetails />} />
           <Route path="login" element={<Login />} />
         </Route>
