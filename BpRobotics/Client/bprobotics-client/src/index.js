@@ -14,6 +14,7 @@ import ProductDetails from './components/ProductDetails';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddPartner from './components/AddPartner';
 import UpdatePartner from './components/UpdatePartner';
+import Login from './components/Login';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,6 +32,7 @@ root.render(
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
           <Route path="users/:id" element={<UserDetails />} />
+          <Route path="login" element={<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
