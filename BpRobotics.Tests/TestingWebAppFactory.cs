@@ -32,7 +32,7 @@ namespace BpRobotics.Tests
                     options.UseInternalServiceProvider(serviceProvider);
                 });
 
-                services.AddTransient<IRepository<User>, UserRepository>();
+                services.AddTransient<IUserRepository, UserRepository>();
                 services.AddTransient<IRepository<Order>, OrderRepository>();
                 services.AddTransient<IRepository<Product>, ProductRepository>();
                 services.AddTransient<IRepository<Customer>, CustomerRepository>();
