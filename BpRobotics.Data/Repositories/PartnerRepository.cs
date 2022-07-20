@@ -51,6 +51,7 @@ namespace BpRobotics.Data.Repositories
             var partnerToUpdate = await Get(entity.Id);
             partnerToUpdate.PhoneNumber = entity.PhoneNumber;
             partnerToUpdate.CompanyName = entity.CompanyName;
+            _context.SaveChanges();
             return partnerToUpdate;
         }
     }
