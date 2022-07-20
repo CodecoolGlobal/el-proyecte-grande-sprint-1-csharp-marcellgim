@@ -82,24 +82,6 @@ public class DataSeeder
                 },
                 new()
                 {
-                    CompanyName = "3WeFixIt",
-                    PhoneNumber = "+36 69 420 1337",
-                    User = users[2]
-                },
-                new()
-                {
-                    CompanyName = "2WeFixIt",
-                    PhoneNumber = "+36 69 420 1337",
-                    User = users[2]
-                },
-                new()
-                {
-                    CompanyName = "1WeFixIt",
-                    PhoneNumber = "+36 69 420 1337",
-                    User = users[2]
-                },
-                new()
-                {
                     CompanyName = "InstallersInc",
                     PhoneNumber = "+36 44 999 999",
                     User = users[3]
