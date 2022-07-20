@@ -12,6 +12,8 @@ import UserDetails from './components/UserDetails';
 import Orders from './components/Orders';
 import ProductDetails from './components/ProductDetails';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AddPartner from './components/AddPartner';
+import UpdatePartner from './components/UpdatePartner';
 import Login from './components/Login';
 import AddOrder from './components/AddOrder';
 
