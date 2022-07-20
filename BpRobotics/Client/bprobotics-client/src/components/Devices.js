@@ -1,6 +1,7 @@
 import { Table, Alert } from "react-bootstrap";
 import LoadingSpin from "react-loading-spin";
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
+import Device from "./Device";
 
 const DEVICES_ENDPOINT = "/api/devices";
 
@@ -28,13 +29,7 @@ function Devices() {
             <tbody>
                 {isLoading && <tr><td><LoadingSpin /></td></tr>}
 				{fetchError && <Alert variant='danger'>{fetchError}</Alert>}
-                {devices.map(device => (
-                    <tr key={device.id}>
-                        {columns.map((column, index) => (
-							<td key={index}>{column.render(device[column.field])}</td>
-						))}
-                    </tr>
-				))}
+                {devices.map(device => <Device device={device} columns={columns} />)}
             </tbody>
         </Table>
     );
