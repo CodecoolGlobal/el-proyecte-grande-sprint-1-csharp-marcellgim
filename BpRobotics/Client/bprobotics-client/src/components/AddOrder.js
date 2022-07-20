@@ -10,7 +10,7 @@ const AddOrder = () => {
 
     const [customers, setCustomers] = useState();
     const [products, setProducts] = useState();
-    const [orderDict, setOrderDict] = useState([]);
+    const [orderDict, setOrderDict] = useState({});
     const [orderViewDict, setOrderViewDict] = useState({});
 
     const { data: customerData } = useAxiosFetchGet(customersUrl);
@@ -24,12 +24,14 @@ const AddOrder = () => {
     const addToOrder = (e) => {
         e.preventDefault();
         const newProduct = products.filter(product => !orderViewDict.hasOwnProperty(product.name));
-        
+
         if (!newProduct?.length) {
             return;
         }
 
         setOrderViewDict({ ...orderViewDict, [newProduct[0].name]: 1 });
+
+        setOrderDict({ ...orderDict, [newProduct[0].id.toString()]: 1});
     };
 
     const switchProduct = (e, key) => {
