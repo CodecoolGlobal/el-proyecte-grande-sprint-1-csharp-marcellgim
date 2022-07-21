@@ -21,10 +21,10 @@ function App() {
                 <Nav className="me-auto">
                   {auth && (auth.role === "Admin" || auth.role === "Partner") && <LinkContainer to="/customers">
                     <Nav.Link>Customers</Nav.Link>
-                                  </LinkContainer>}
-{auth && auth.role === "Customer" && <LinkContainer to="/profile">
-    <Nav.Link>Profile</Nav.Link>
-    </LinkContainer>}
+                  </LinkContainer>}
+                  {auth && auth.role === "Customer" && <LinkContainer to="/profile">
+                    <Nav.Link>Profile</Nav.Link>
+                  </LinkContainer>}
                   {auth && (auth.role === "Admin" || auth.role === "Customer") && <LinkContainer to="/orders">
                     <Nav.Link>Orders</Nav.Link>
                   </LinkContainer>}
@@ -43,9 +43,9 @@ function App() {
                   {!auth && <LinkContainer to="/login">
                     <Nav.Link>Login</Nav.Link>
                   </LinkContainer>}
-                  {auth && <Navbar.Text>
+                  {auth && <LinkContainer to="/">
                     <Nav.Link onClick={logout}>Logout</Nav.Link>
-                  </Navbar.Text>}
+                  </LinkContainer>}
                 </Nav>
               </Navbar.Collapse>
             </Container>
