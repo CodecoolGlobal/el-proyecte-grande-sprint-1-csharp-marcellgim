@@ -4,6 +4,7 @@ namespace BpRobotics.Services
 {
     public interface IOrderService
     {
+        Task<List<OrderViewDTO>> GetAll(int customerId);
         Task<List<OrderViewDTO>> GetAll();
         Task<OrderViewDTO> Get(int id);
         Task<OrderViewDTO> Add(OrderCreateDTO order);

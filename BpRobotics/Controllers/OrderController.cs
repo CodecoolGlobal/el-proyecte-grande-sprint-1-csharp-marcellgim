@@ -23,7 +23,21 @@ namespace BpRobotics.Controllers
         [HttpGet]
         public async Task<ActionResult<List<OrderViewDTO>>> GetAllOrders()
         {
-            return await _orderService.GetAll();
+            try
+            {
+                var identity = HttpContext.User;
+                if (identity != null)
+                {
+                    var isCustomer = int.TryParse(identity.FindFirst("functionId")?.Value, out int customerId);
+                    return isCustomer ? await _orderService.GetAll(customerId) : await _orderService.GetAll();
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+            return Unauthorized();
         }
 
 

@@ -57,6 +57,13 @@ namespace BpRobotics.Services
             return (await _orderRepository.Get(id)).ToOrderView();
         }
 
+        public async Task<List<OrderViewDTO>> GetAll(int customerId)
+        {
+            return (await _orderRepository.GetAll()).Where(order => order.Customer.Id == customerId)
+            .Select(o => o.ToOrderView())
+            .ToList();
+        }
+
         public async Task<List<OrderViewDTO>> GetAll()
         {
             return (await _orderRepository.GetAll()).Select(o => o.ToOrderView()).ToList();
