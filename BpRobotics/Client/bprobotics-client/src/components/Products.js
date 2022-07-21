@@ -41,10 +41,10 @@ function Products() {
   const renderProduct = (product) => {
     return (
       <Tr>
-        <Td className="clickable"><img onClick={() => routeChange(product.id)} src={`https://bproboticsimages.blob.core.windows.net/images/${product.imageFileName}`} alt="" width="100" /></Td>
-        <Td>{product.name}</Td>
-        <Td>{product.shortDescription}</Td>
-        {isAdmin && <Td><Button onClick={() => deleteProduct(product.id)} variant="danger"><FontAwesomeIcon icon={faTrash} /></Button></Td>}
+        <Td className="clickable bordered"><img onClick={() => routeChange(product.id)} src={`https://bproboticsimages.blob.core.windows.net/images/${product.imageFileName}`} alt="" width="100" /></Td>
+        <Td className="bordered"><strong>{product.name}</strong></Td>
+        <Td className="bordered">{product.shortDescription}</Td>
+        {isAdmin && <Td className="bordered"><Button onClick={() => deleteProduct(product.id)} variant="danger"><FontAwesomeIcon icon={faTrash} /></Button></Td>}
 
       </Tr>
     )
@@ -54,10 +54,10 @@ function Products() {
     <Table>
       <Thead>
         <Tr>
-          <Th></Th>
-          <Th>Name</Th>
-          <Th>Description</Th>
-          {isAdmin && <Th>Delete</Th>}
+          <Th className="bordered"></Th>
+          <Th className="bordered">Name</Th>
+          <Th className="bordered">Description</Th>
+          {isAdmin && <Th className="bordered">Delete</Th>}
         </Tr>
       </Thead>
       <Tbody>
