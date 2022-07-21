@@ -7,4 +7,6 @@ public class Partner
     public string PhoneNumber { get; set; }
     public User? User { get; set; }
     public List<Service> Services { get; set; }
+    public bool IsDeleted { get; set; }
+
 }

@@ -4,6 +4,7 @@ using BpRobotics.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BpRobotics.Data.Migrations
 {
     [DbContext(typeof(BpRoboticsContext))]
-    partial class BpRoboticsContextModelSnapshot : ModelSnapshot
+    [Migration("20220721133222_SoftDelete")]
+    partial class SoftDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,9 +279,6 @@ namespace BpRobotics.Data.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<bool>("IsDeleted")
-                                .HasColumnType("bit");
-
                             b1.Property<int>("ZIP")
                                 .HasColumnType("int");
 
@@ -307,9 +306,6 @@ namespace BpRobotics.Data.Migrations
                             b1.Property<string>("Country")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
-
-                            b1.Property<bool>("IsDeleted")
-                                .HasColumnType("bit");
 
                             b1.Property<int>("ZIP")
                                 .HasColumnType("int");

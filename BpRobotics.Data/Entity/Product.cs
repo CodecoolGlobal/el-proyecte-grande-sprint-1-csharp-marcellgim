@@ -11,4 +11,6 @@ public class Product
     public int Warranty { get; set; }
     public string ShortDescription { get; set; }
     public string LongDescription { get; set; }
+
+    public bool IsDeleted { get; set; }
 }

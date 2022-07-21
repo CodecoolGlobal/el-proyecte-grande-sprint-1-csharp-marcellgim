@@ -17,7 +17,7 @@ function ProductModal({ onCreate, show, setShow }) {
                     <Modal.Title>Add product</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AddProduct onCreate={onCreate()} handleClose={handleClose}></AddProduct>
+                    <AddProduct onCreate={onCreate} handleClose={handleClose}></AddProduct>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={handleClose}>
