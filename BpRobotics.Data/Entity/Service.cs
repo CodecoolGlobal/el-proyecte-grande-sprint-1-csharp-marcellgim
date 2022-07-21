@@ -9,4 +9,6 @@ public class Service
     public DateTime? DoneDate { get; set; }
     public ServiceType Type { get; set; }
     public ServiceStatus Status { get; set; }
+    public bool IsDeleted { get; set; }
+
 }
