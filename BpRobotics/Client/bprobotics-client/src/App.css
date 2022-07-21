@@ -21,3 +21,8 @@ form {
 .clickable {
   cursor: pointer;
 }
+
+.bordered {
+  border-width: 10px;
+  border-color: white;
+}
