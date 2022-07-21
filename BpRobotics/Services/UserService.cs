@@ -37,23 +37,8 @@ public class UserService
     public async Task<UserLoginDto> GetLoginDtoByUserName(string username)
     {
         var user = await _userRepository.GetByUserName(username);
-        int? functionId;
-        
-        if (user.Role == UserRole.Customer)
-        {
-            var customers = await _customerRepository.GetAll();
-            functionId = customers.Single(customer => customer.User.Id == user.Id)?.Id;
-        }
-        else if (user.Role == UserRole.Partner)
-        {
-            var partners = await _partnerRepository.GetAll();
-            functionId = partners.Single(partner => partner.User.Id == user.Id)?.Id;
-        }
-        else
-        {
-            functionId = null;
-        }
-        
+        var functionId = await GetFunctionId(user);
+
         return user.ToUserLoginDto(functionId);
     } 
 
@@ -62,5 +47,22 @@ public class UserService
     public async Task<UserViewDto> UpdateUser(UserUpdateDto updatedUser)
     {
         return (await _userRepository.Update(updatedUser.ToUserEntity())).ToUserView();
+    }
+
+    private async Task<int?> GetFunctionId(User user)
+    {
+        if (user.Role == UserRole.Customer)
+        {
+            var customers = await _customerRepository.GetAll();
+            return customers.Single(customer => customer.User.Id == user.Id)?.Id;
+        }
+        
+        if (user.Role == UserRole.Partner)
+        {
+            var partners = await _partnerRepository.GetAll();
+            return partners.Single(partner => partner.User.Id == user.Id)?.Id;
+        }
+     
+        return null;
     }
 }

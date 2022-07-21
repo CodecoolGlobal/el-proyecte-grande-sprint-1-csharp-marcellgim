@@ -11,10 +11,12 @@ import Users from './components/Users';
 import UserDetails from './components/UserDetails';
 import Orders from './components/Orders';
 import ProductDetails from './components/ProductDetails';
+import RequireAuth from "./components/RequireAuth";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddPartner from './components/AddPartner';
 import UpdatePartner from './components/UpdatePartner';
 import Login from './components/Login';
+import Devices from './components/Devices';
 import AddOrder from './components/AddOrder';
 
 
@@ -30,9 +32,17 @@ root.render(
           <Route path="partners/add" element={<AddPartner />} />
           <Route path="partners/:id" element={<UpdatePartner />} />
           <Route path="customers" element={<Customers />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="users" element={<Users />} />
-          <Route path="users/:id" element={<UserDetails />} />
+          <Route path="orders"
+            element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Orders /></RequireAuth>}
+          />
+          <Route path="devices"
+            element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Devices /></RequireAuth>}
+          />
+          <Route path="users"
+            element={<RequireAuth allowedRoles={["Admin"]}><Users /></RequireAuth>
+            }
+          />
+          <Route path="users/:id" element={<RequireAuth allowedRoles={[]}><UserDetails /></RequireAuth>} />
           <Route path="login" element={<Login />} />
           <Route path="add-order" element={<AddOrder />} />
         </Route>

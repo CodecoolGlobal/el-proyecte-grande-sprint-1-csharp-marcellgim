@@ -19,6 +19,19 @@ public class DeviceService
         _serviceRepository = serviceRepository;
     }
 
+    public async Task<List<DeviceViewDTO>> GetDevices()
+    {
+        return (await _deviceRepository.GetAll()).Select(d => d.ToDeviceView()).ToList();
+    }
+
+    public async Task<List<DeviceViewDTO>> GetDevices(int customerId)
+    {
+        return (await _deviceRepository.GetAll())
+            .Where(device => device.Order.Customer.Id == customerId)
+            .Select(device => device.ToDeviceView())
+            .ToList();
+    }
+
     public async Task<DeviceViewDTO> GetById(int deviceId)
     {
         return (await _deviceRepository.Get(deviceId)).ToDeviceView();
