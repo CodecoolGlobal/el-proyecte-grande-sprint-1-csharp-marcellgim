@@ -41,6 +41,12 @@ namespace BpRobotics.Data.Repositories
         public async Task<List<Device>> GetAll()
         {
             return await _context.Devices
+                .Include(d => d.Order)
+                    .ThenInclude(o => o.Customer)
+                .Include(d => d.Product)
+                .Include(d => d.Services)
+                    .ThenInclude(s => s.Partner)
+                .OrderBy(d => d.Order.Customer.Id)
                 .AsNoTracking()
                 .ToListAsync();
         }
