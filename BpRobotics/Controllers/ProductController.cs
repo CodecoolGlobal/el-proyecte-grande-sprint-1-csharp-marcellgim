@@ -4,6 +4,8 @@ using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using BpRobotics.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace BpRobotics.Controllers
 {
@@ -37,6 +39,7 @@ namespace BpRobotics.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<ProductViewDto>> CreateProduct(ProductCreateDto newProduct)
         {
@@ -53,7 +56,7 @@ namespace BpRobotics.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
