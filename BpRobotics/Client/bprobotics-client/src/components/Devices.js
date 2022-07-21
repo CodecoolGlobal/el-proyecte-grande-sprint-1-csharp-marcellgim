@@ -5,12 +5,14 @@ import Device from "./Device";
 import CreateModal from "./CreateModal";
 import ServiceForm from "./ServiceForm";
 import useAxios from "../hooks/useAxios";
+import useAuth from "../hooks/useAuth";
 
 
 const DEVICES_ENDPOINT = "/api/devices";
 
 function Devices() {
     const { data: devices, setData: setDevices, isLoading, fetchError } = useAxiosFetchGet(DEVICES_ENDPOINT);
+    const { auth } = useAuth();
     const axios = useAxios();
     const render = (input) => input; // Default render
     const dateRender = (date) => new Date(date).toLocaleDateString();
@@ -48,7 +50,7 @@ function Devices() {
                 {devices.map(device => (
                     <>
                         <Device device={device} columns={columns}>
-                            <CreateModal typeName="service"><ServiceForm deviceId={device.id} postData={postData} /></CreateModal>
+                            {auth?.role === "Admin" && <CreateModal typeName="service"><ServiceForm deviceId={device.id} postData={postData} /></CreateModal>}
                         </Device>
                     </>
                 ))}

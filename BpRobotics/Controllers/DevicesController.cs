@@ -67,6 +67,7 @@ namespace BpRobotics.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("{deviceId}/services")]
         public async Task<ActionResult<ServiceViewDTO>> AddService(int deviceId, ServiceCreateDTO service)
         {
