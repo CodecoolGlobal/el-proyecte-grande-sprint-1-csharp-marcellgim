@@ -18,8 +18,11 @@ const AddOrder = () => {
 
     useEffect(() => {
         setCustomers(customerData);
+    }, [customerData]);
+
+    useEffect(() => {
         setProducts(productsData);
-    }, [customerData, productsData]);
+    }, [productsData]);
 
     const addToOrder = (e) => {
         e.preventDefault();
@@ -31,12 +34,16 @@ const AddOrder = () => {
 
         setOrderViewDict({ ...orderViewDict, [newProduct[0].name]: 1 });
 
-        setOrderDict({ ...orderDict, [newProduct[0].id.toString()]: 1});
+        setOrderDict({ ...orderDict, [newProduct[0].id]: 1 });
     };
 
     const switchProduct = (e, key) => {
-        setOrderViewDict({ ...orderDict, [e.target.value]: orderViewDict[key] })
+        const prevValue = orderViewDict[key];
         delete orderViewDict[key];
+        setOrderViewDict({ ...orderViewDict, [e.target.value]: prevValue })
+        
+        delete orderDict[products.filter(p => p.name === key)[0].id];
+        setOrderDict({...orderDict, [products.filter(p => p.name === e.target.value)[0].id]: prevValue});
     }
 
     const handleSubmit = async (e) => {
@@ -81,7 +88,11 @@ const AddOrder = () => {
                                             </td>
                                             <td>
                                                 <Form.Control type="number" value={orderViewDict[key]}
-                                                    onInput={(e) => setOrderViewDict({ ...orderViewDict, [key]: e.target.value })}
+                                                    id={products.filter(p => p.name === key)[0]?.id}
+                                                    onInput={(e) => {
+                                                        setOrderViewDict({ ...orderViewDict, [key]: +e.target.value });
+                                                        setOrderDict({ ...orderDict, [+e.target.id]: +e.target.value });
+                                                    }}
                                                     min="1" step="1" />
                                             </td>
                                         </tr>
