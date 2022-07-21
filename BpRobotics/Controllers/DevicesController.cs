@@ -82,6 +82,7 @@ namespace BpRobotics.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}/services/{serviceId}")]
         public async Task<ActionResult> RemoveService(int serviceId)
         {
