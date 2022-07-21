@@ -32,6 +32,11 @@ public class ProductService
         return productEntity;
     }
 
+    public async Task DeleteProduct(int productId)
+    {
+        await _productRepository.Delete(productId);
+    }
+
     public async Task<ProductViewDto> GetById(int productId)
     {
         var product = await _productRepository.Get(productId);
