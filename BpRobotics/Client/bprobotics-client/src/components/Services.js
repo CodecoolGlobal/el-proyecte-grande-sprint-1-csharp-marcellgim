@@ -33,7 +33,6 @@ function Services({ services }) {
                             {columns.map((column, index) => (
                                 <td key={index}>{column.render(service[column.field])}</td>
                             ))}
-                            <td><Button variant="danger"><FontAwesomeIcon icon={faTrash} /></Button></td>
                         </tr>
                     </>
 				))}
