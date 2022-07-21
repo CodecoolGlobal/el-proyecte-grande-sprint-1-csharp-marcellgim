@@ -32,7 +32,7 @@ function AddProduct({onCreate, handleClose}) {
         console.log(`Error: ${err.message}`);
       }
       handleClose();
-      onCreate();
+      onCreate(newProduct);
     }
     const fileToBase64 = (file, cb) => {
       const reader = new FileReader()

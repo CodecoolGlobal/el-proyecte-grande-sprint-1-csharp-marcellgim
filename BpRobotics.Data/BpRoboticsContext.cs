@@ -19,6 +19,9 @@ namespace BpRobotics.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            
             modelBuilder.Entity<Customer>()
                 .ToTable("Customer")
                 .OwnsOne(e => e.BillingAddress);
@@ -32,6 +35,44 @@ namespace BpRobotics.Data
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Device>().ToTable("Device");
             modelBuilder.Entity<Service>().ToTable("Service");
+            modelBuilder.Entity<Product>().HasQueryFilter(m => !m.IsDeleted);
+            modelBuilder.Entity<User>().HasQueryFilter(m => !m.IsDeleted);
+            modelBuilder.Entity<Customer>().HasQueryFilter(m => !m.IsDeleted);
+            modelBuilder.Entity<Order>().HasQueryFilter(m => !m.IsDeleted);
+            modelBuilder.Entity<Device>().HasQueryFilter(m => !m.IsDeleted);
+            modelBuilder.Entity<Service>().HasQueryFilter(m => !m.IsDeleted);
+            modelBuilder.Entity<Partner>().HasQueryFilter(m => !m.IsDeleted);
+
+
+        }
+
+        public override int SaveChanges()
+        {
+            UpdateSoftDeleteStatuses();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            UpdateSoftDeleteStatuses();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void UpdateSoftDeleteStatuses()
+        {
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.CurrentValues["IsDeleted"] = false;
+                        break;
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["IsDeleted"] = true;
+                        break;
+                }
+            }
         }
     }
 }

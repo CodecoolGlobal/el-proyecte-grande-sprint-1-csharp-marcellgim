@@ -15,5 +15,7 @@ namespace BpRobotics.Data.Entity
         public string LastName { get; set; }
         [Required]
         public UserRole Role { get; set; }
+        public bool IsDeleted { get; set; }
+
     }
 }

@@ -144,7 +144,7 @@ public class DataSeeder
                     Name = "Smart Air",
                     ServiceInterval = 180,
                     Warranty = 730,
-                    ShortDescription = "Smart air-conditioner",
+                    ShortDescription = "Unlike conventional air conditioners, our Smart ACs allow you to maintain your home temperature using a smartphone.",
                     LongDescription =
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     ImageFileName = "smart_ac.jpg"
@@ -154,10 +154,20 @@ public class DataSeeder
                     Name = "Smart Fridge",
                     ServiceInterval = 365,
                     Warranty = 1095,
-                    ShortDescription = "Smart fridge",
+                    ShortDescription = "Our smart fridge is more than a fridge. Keep your family organized, prep meals, entertain in the kitchen, control your smart devices, and more.",
                     LongDescription =
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                     ImageFileName= "smart_fridge.jpg"
+                },
+                new()
+                {
+                    Name = "Smart Oven",
+                    ServiceInterval = 730,
+                    Warranty = 1460,
+                    ShortDescription = "Our Smart Oven offers incredible versatility and precision, giving you greater control of your toasting, roasting, air frying and more.",
+                    LongDescription =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    ImageFileName= "smart_oven.jpg"
                 }
             };
 
