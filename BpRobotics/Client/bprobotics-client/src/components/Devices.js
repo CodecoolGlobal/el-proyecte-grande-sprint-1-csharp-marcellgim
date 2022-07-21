@@ -2,11 +2,16 @@ import { Table, Alert } from "react-bootstrap";
 import LoadingSpin from "react-loading-spin";
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 import Device from "./Device";
+import CreateModal from "./CreateModal";
+import ServiceForm from "./ServiceForm";
+import useAxios from "../hooks/useAxios";
+
 
 const DEVICES_ENDPOINT = "/api/devices";
 
 function Devices() {
-    const { data: devices, isLoading, fetchError } = useAxiosFetchGet(DEVICES_ENDPOINT);
+    const { data: devices, setData: setDevices, isLoading, fetchError } = useAxiosFetchGet(DEVICES_ENDPOINT);
+    const axios = useAxios();
     const render = (input) => input; // Default render
     const dateRender = (date) => new Date(date).toLocaleDateString();
 
@@ -19,6 +24,17 @@ function Devices() {
         { title: "Device Status", field: "status", render}
     ]
 
+    const postData = async (deviceId, data) => {
+        const response = await axios.post(DEVICES_ENDPOINT + `/${deviceId}/services`, data);
+        const newState = devices.map(device => {
+            if (device.id === deviceId) {
+                device.services = [...device.services, response.data];
+            }
+            return device;
+        })
+        setDevices([...newState]);
+    }
+
     return (
         <Table striped="columns">
             <thead>
@@ -29,7 +45,13 @@ function Devices() {
             <tbody>
                 {isLoading && <tr><td><LoadingSpin /></td></tr>}
 				{fetchError && <tr><td><Alert variant='danger'>{fetchError}</Alert></td></tr>}
-                {devices.map(device => <Device device={device} columns={columns} />)}
+                {devices.map(device => (
+                    <>
+                        <Device device={device} columns={columns}>
+                            <CreateModal typeName="service"><ServiceForm deviceId={device.id} postData={postData} /></CreateModal>
+                        </Device>
+                    </>
+                ))}
             </tbody>
         </Table>
     );
