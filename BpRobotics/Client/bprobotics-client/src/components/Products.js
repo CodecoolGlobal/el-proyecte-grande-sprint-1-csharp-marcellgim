@@ -10,16 +10,18 @@ import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import useAxios from '../hooks/useAxios';
-
+import useAuth from "../hooks/useAuth";
 
 
 function Products() {
   const axios = useAxios();
+  const auth = useAuth();
 
     let url = `${process.env.REACT_APP_HOST_URL}/api/products`;
     const [productData, setProductData] = useState([]);
     const [show, setShow] = useState(false);
     const handleOpen = () => setShow(true);
+    const isAdmin = auth.auth?.role=="Admin";
     
     let navigate = useNavigate(); 
   function routeChange(productId){ 
@@ -45,7 +47,7 @@ function Products() {
         <Td className="clickable"><img onClick={() => routeChange(product.id)} src={`https://bproboticsimages.blob.core.windows.net/images/${product.imageFileName}`} alt="" width="100" /></Td>
         <Td>{product.name}</Td>
         <Td>{product.shortDescription}</Td>
-        <Td><Button onClick={() => deleteProduct(product.id)} variant="danger"><FontAwesomeIcon icon={faTrash} /></Button></Td>
+        {isAdmin && <Td><Button onClick={() => deleteProduct(product.id)} variant="danger"><FontAwesomeIcon icon={faTrash} /></Button></Td>}
 
       </Tr>
     )
@@ -58,7 +60,7 @@ function Products() {
           <Th></Th>
           <Th>Name</Th>
           <Th>Description</Th>
-          <Th>Delete</Th>
+          {isAdmin && <Th>Delete</Th>}
         </Tr>
       </Thead>
       <Tbody>
@@ -69,8 +71,8 @@ function Products() {
     {isLoading && <h1><LoadingSpin /></h1>}
 				{fetchError && <Alert variant='danger'>{fetchError}</Alert>}
     <br></br>
-    <Button variant="secondary" onClick={handleOpen}>New product</Button>
-
+    
+    {isAdmin && <Button variant="secondary" onClick={handleOpen}>New product</Button>}
       </> );
 }
 
