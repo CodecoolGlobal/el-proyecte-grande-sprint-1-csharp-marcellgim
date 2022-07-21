@@ -3,6 +3,7 @@ using BpRobotics.Core.Model;
 using BpRobotics.Data.Entity;
 using BpRobotics.Data.Repositories;
 using BpRobotics.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,12 +22,14 @@ namespace BpRobotics.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<List<PartnerViewDto>>> ListPartners()
         {
             return await _partnerService.ListPartners();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}", Name = "GetPartnerById")]
         public async Task<ActionResult<PartnerViewDto>> GetPartnerById(int id)
         {
@@ -41,6 +44,7 @@ namespace BpRobotics.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<PartnerViewDto>> AddNewPartner(PartnerCreateDto newPartnerDto)
         {
@@ -55,6 +59,7 @@ namespace BpRobotics.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<PartnerViewDto>> UpdatePartner(PartnerUpdateDto updatedPartnerDto, int id)
         {
@@ -69,6 +74,7 @@ namespace BpRobotics.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePartner(int id)
         {
