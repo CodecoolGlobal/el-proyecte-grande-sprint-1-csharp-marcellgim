@@ -8,10 +8,11 @@ import Button from 'react-bootstrap/Button';
 import LoadingSpin from "react-loading-spin";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
-
+import useAuth from '../hooks/useAuth';
 
 
 function Partners() {
+	const { auth } = useAuth();
 	const axiosInstance = useAxios();
 	let navigate = useNavigate();
 
@@ -59,11 +60,11 @@ function Partners() {
 							<thead>
 								<tr>
 									<th>
-											<>
+											{ auth?.role === "Admin" && <>
 												<Button onClick={() => { navigate("/partners/add") }}>
 													<FontAwesomeIcon icon={faPlus} />
 												</Button>
-											</>
+											</>}
 									</th>
 									<th>Company Name</th>
 									<th>Phone Number</th>
@@ -77,7 +78,8 @@ function Partners() {
 										<td>{partner.phoneNumber}</td>
 
 										<td>
-											{!isPendingDelete ?
+											{ auth?.role === "Admin" &&
+												(!isPendingDelete ?
 												<>
 													<Button onClick={() => { goToUpdate(partner.id, partner) }}>
 														<FontAwesomeIcon icon={faEdit} />
@@ -91,7 +93,7 @@ function Partners() {
 													width="6px"
 													primaryColor="yellow"
 													size="30px"
-												/></>}
+												/></>)}
 										</td>
 									</tr>
 								)}
