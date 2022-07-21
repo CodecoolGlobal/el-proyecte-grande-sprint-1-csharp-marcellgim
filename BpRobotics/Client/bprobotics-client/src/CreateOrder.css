@@ -1,0 +1,23 @@
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-select {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content !important;
+}
+
+.inner-form-box {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    border: 1px black solid;
+    padding: 10px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}

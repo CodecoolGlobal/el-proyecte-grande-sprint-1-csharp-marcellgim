@@ -1,103 +1,124 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
+import { Form, Button, Alert } from "react-bootstrap";
+import '../CreateOrder.css';
+import useAuth from '../hooks/useAuth';
+import jwtDecode from "jwt-decode";
+import axios from "../fetch/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 const AddOrder = () => {
+    const { auth } = useAuth();
+    const navigate = useNavigate();
+
     const customersUrl = `${process.env.REACT_APP_HOST_URL}/api/customers`;
     const ordersUrl = `${process.env.REACT_APP_HOST_URL}/api/orders`;
     const productsUrl = `${process.env.REACT_APP_HOST_URL}/api/products`;
 
-    const [customers, setCustomers] = useState();
-    const [products, setProducts] = useState();
-    const [orderDict, setOrderDict] = useState([]);
-    const [orderViewDict, setOrderViewDict] = useState([]);
-    const [chosenProduct, setChosenProduct] = useState('');
-    const [chosenQuantity, setChosenQuantity] = useState('');
+    const [errorMessage, setErrorMessage] = useState();
+    const [orderDict, setOrderDict] = useState({});
+    const [orderViewDict, setOrderViewDict] = useState({});
+    const [chosenCustomerId, setChosenCustomerId] = useState((auth.role === "Customer") ? jwtDecode(auth.accessToken)["functionId"] : null);
 
-    const { data: customerData } = useAxiosFetchGet(customersUrl);
-    const { data: productsData } = useAxiosFetchGet(productsUrl);
-
-    useEffect(() => {
-        setCustomers(customerData);
-    }, [customerData]);
-
-    useEffect(() => {
-        setProducts(productsData);
-    }, [productsData]);
+    const { data: customers } = useAxiosFetchGet(customersUrl);
+    const { data: products } = useAxiosFetchGet(productsUrl);
 
     const addToOrder = (e) => {
         e.preventDefault();
+        const newProduct = products.filter(product => !orderViewDict.hasOwnProperty(product.name));
 
-        if (!chosenProduct) {
-            setChosenProduct(products[0].name);
+        if (!newProduct?.length) {
+            return;
         }
-        
-        const oldValue = orderViewDict[chosenProduct] ? parseInt(orderViewDict[chosenProduct]) : 0;
-        const orderViewDictWithNew = orderViewDict;
-        orderViewDictWithNew[chosenProduct] =  oldValue + parseInt(chosenQuantity);
-        setOrderViewDict({...orderViewDictWithNew});
+
+        setOrderViewDict({ ...orderViewDict, [newProduct[0].name]: 1 });
+
+        setOrderDict({ ...orderDict, [newProduct[0].id]: 1 });
     };
+
+    const switchProduct = (e, key) => {
+        const prevValue = orderViewDict[key];
+
+        delete orderViewDict[key];
+        setOrderViewDict({ ...orderViewDict, [e.target.value]: prevValue })
+
+        delete orderDict[products.filter(p => p.name === key)[0].id];
+        setOrderDict({ ...orderDict, [products.filter(p => p.name === e.target.value)[0].id]: prevValue });
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
+            await axios.post(ordersUrl, {
+                "date": Date.now,
+                "customerId": chosenCustomerId,
+                "productIdsAndQuantity": orderDict
+            });
 
+            navigate("/orders");
         } catch (err) {
-            console.log(err);
+            setErrorMessage(err.message);
         }
     };
 
     return (
         <>
+            {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
             {customers?.length && products?.length
                 ? (
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor='customers'>Customer:</label>
-                        <select name='customer' id='customers'>
-                            {customers.map(customer => <option value={customer.id}>{customer.companyName}</option>)}
-                        </select>
+                    <Form onSubmit={handleSubmit}>
+                        {(auth.role === "Admin") ?
+                            <>
+                                <Form.Label htmlFor='customers'>Customer:</Form.Label>
+                                <Form.Select name='customer' id='customers'
+                                    onChange={(e) => setChosenCustomerId(e.target.value)}>
+                                    <option selected disabled>Choose a Customer</option>
+                                    {customers.map(customer => <option key={customer.id} value={customer.id}>{customer.companyName}</option>)}
+                                </Form.Select>
+                            </>
+                            :
+                            <></>}
                         <br />
-                        <label htmlFor='orders'>Current order:</label>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.entries(orderViewDict).map(([key, value]) => (
+                        <div className='inner-form-box'>
+                            <Form.Label htmlFor='orders'>Current order:</Form.Label>
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>{key}</td>
-                                        <td>{value}</td>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <br />
-                        <div>
-                            <p>Add to order</p>
-                            <label htmlFor='products'>Product:</label>
-                            <select
-                                id='products'
-                                onChange={(e) => setChosenProduct(e.target.value)} >
-                                {products.map(product => <option value={product.name}>{product.name}</option>)}
-                            </select>
+                                </thead>
+                                <tbody>
+                                    {Object.keys(orderViewDict).map(key => (
+                                        <tr>
+                                            <td>
+                                                <Form.Select
+                                                    id='products'
+                                                    defaultValue={key}
+                                                    onChange={(e) => switchProduct(e, key)} >
+                                                    {products.map(product => <option key={product.id} value={product.name}>{product.name}</option>)}
+                                                </Form.Select>
+                                            </td>
+                                            <td>
+                                                <Form.Control type="number" value={orderViewDict[key]}
+                                                    id={products.filter(p => p.name === key)[0]?.id}
+                                                    onInput={(e) => {
+                                                        setOrderViewDict({ ...orderViewDict, [key]: +e.target.value });
+                                                        setOrderDict({ ...orderDict, [+e.target.id]: +e.target.value });
+                                                    }}
+                                                    min="1" step="1" />
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                             <br />
-                            <label htmlFor='quantity'>Quantity</label>
-                            <input
-                                id='quantity'
-                                type="number"
-                                onChange={(e) => setChosenQuantity(e.target.value)}
-                                value={chosenQuantity}
-                                step="1"
-                                min="1" />
-                            <br />
-                            <button onClick={addToOrder}>Add to Order</button>
+                            <Button variant="primary" onClick={addToOrder}>+ Add to order</Button>
                         </div>
                         <br />
-                        <button onClick={handleSubmit}>Create Order</button>
-                    </form>
+                        <Button variant="primary" type="submit" disabled={Object.entries(orderDict).length === 0 || chosenCustomerId === null}>Create Order</Button>
+                    </Form>
                 ) : <p>No customers or products available</p>
             }
         </>
