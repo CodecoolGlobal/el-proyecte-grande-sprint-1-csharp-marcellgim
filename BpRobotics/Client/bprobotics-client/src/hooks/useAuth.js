@@ -24,7 +24,7 @@ function useAuth() {
             }
         } catch (error) {
             if (error.response) {
-                console.log(error.toJSON());
+                // TODO Flash error message
             } else {
                 throw new Error(error.toJSON())
             }
