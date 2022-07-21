@@ -1,4 +1,4 @@
-import { useState, useEffect, React } from 'react';
+import { useState, React } from 'react';
 import '../App.css';
 import { useNavigate } from "react-router-dom";
 import ProductModal from './ProductModal';
@@ -15,30 +15,27 @@ import useAuth from "../hooks/useAuth";
 
 function Products() {
   const axios = useAxios();
-  const auth = useAuth();
+  const {auth} = useAuth();
 
     let url = `${process.env.REACT_APP_HOST_URL}/api/products`;
-    const [productData, setProductData] = useState([]);
     const [show, setShow] = useState(false);
     const handleOpen = () => setShow(true);
-    const isAdmin = auth.auth?.role=="Admin";
+    const isAdmin = auth?.role === "Admin";
     
     let navigate = useNavigate(); 
   function routeChange(productId){ 
     let path = productId.toString(); 
     navigate(path);
   }
-	const { data, setData, fetchError, isLoading } = useAxiosFetchGet(url);
+	const { data: productData, setData: setProductData, fetchError, isLoading } = useAxiosFetchGet(url);
   
-  useEffect(() => {
-    setProductData(data);
-	}, [data])
+  
 
     const forceUpdate = (product) => {
-      setData([...data, product])
+      setProductData([...productData, product])
     }
     const deleteProduct = async (productId) => {
-      setData(data.filter(product => product.id !== productId))
+      setProductData(productData.filter(product => product.id !== productId))
       await axios.delete(url + `/${productId}`)
   }
   const renderProduct = (product) => {
