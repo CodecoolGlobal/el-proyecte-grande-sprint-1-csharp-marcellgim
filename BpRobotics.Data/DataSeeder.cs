@@ -14,7 +14,6 @@ public class DataSeeder
 
     public void Seed()
     {
-        _context.Database.EnsureDeleted();
         _context.Database.EnsureCreated();
 
         if (!_context.Users.Any())
