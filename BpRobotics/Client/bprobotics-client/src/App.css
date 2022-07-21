@@ -17,3 +17,7 @@ form {
   max-width: 400px;
   margin: auto;
 }
+
+.clickable {
+  cursor: pointer;
+}

@@ -1,6 +1,8 @@
-﻿using BpRobotics.Core.Model.Devices;
+﻿using System.Security.Claims;
+using BpRobotics.Core.Model.Devices;
 using BpRobotics.Core.Model.ServiceDTOs;
 using BpRobotics.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +17,21 @@ namespace BpRobotics.Controllers
         public DevicesController(DeviceService deviceService)
         {
             _deviceService = deviceService;
+        }
+
+
+        [Authorize(Roles = "Admin,Customer")]
+        [HttpGet]
+        public async Task<ActionResult<List<DeviceViewDTO>>> Devices()
+        {
+            var identity = HttpContext.User;
+            if (identity != null)
+            {
+                var isCustomer = int.TryParse(identity.FindFirst("functionId")?.Value, out int customerId);
+                return isCustomer ? await _deviceService.GetDevices(customerId) : await _deviceService.GetDevices();
+            }
+
+            return Unauthorized();
         }
 
         [HttpGet("{deviceId}")]

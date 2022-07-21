@@ -1,9 +1,9 @@
 import { useState } from "react";
-import axios from "../api/axiosInstance";
+import axios from "../fetch/axiosInstance";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-const AUTH_ENDPOINT = "/auth"
+const AUTH_ENDPOINT = "/api/auth"
 
 function useAuth() {
     const [auth, setAuth] = useState(JSON.parse(localStorage.getItem("auth")));

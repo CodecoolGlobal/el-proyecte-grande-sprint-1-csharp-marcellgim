@@ -45,7 +45,7 @@ namespace BpRobotics.Data
             return base.SaveChanges();
         }
 
-        public override Task SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
         {
             UpdateSoftDeleteStatuses();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

@@ -1,6 +1,7 @@
 ﻿using BpRobotics.Core.Model.UserDTOs;
 using BpRobotics.Data.Entity;
 using BpRobotics.Services;
+using BpRobotics.Services.PasswordHasher;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +12,12 @@ namespace BpRobotics.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly IPasswordHasher _hasher;
 
-        public UsersController(UserService userService)
+        public UsersController(UserService userService, IPasswordHasher hasher)
         {
             _userService = userService;
+            _hasher = hasher;
         }
 
         [HttpGet]
@@ -26,6 +29,7 @@ namespace BpRobotics.Controllers
         [HttpPost]
         public async Task<ActionResult<UserViewDto>> NewUser(UserCreateDto newUser)
         {
+            newUser.Password = _hasher.HashPassword(newUser.Password);
             try
             {
                 var createdUser = await _userService.NewUser(newUser);
