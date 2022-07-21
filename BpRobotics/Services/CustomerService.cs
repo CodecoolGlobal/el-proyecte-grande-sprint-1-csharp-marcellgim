@@ -14,10 +14,10 @@ namespace BpRobotics.Services
             _customerRepository = customerRepository;
         }
 
-        public async Task<List<CustomerDto>> ListCustomers()
+        public async Task<List<CustomerDetailedDto>> ListCustomers()
         {
             var customers = await _customerRepository.GetAll();
-            return customers.ToCustomerView();
+            return customers.ToCustomerDetailedView();
         }
 
         public async Task<CustomerDetailedDto> GetById(int customerId)

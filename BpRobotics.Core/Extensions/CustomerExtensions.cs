@@ -38,6 +38,11 @@ namespace BpRobotics.Core.Extensions
             };
         }
 
+        public static List<CustomerDetailedDto> ToCustomerDetailedView(this List<Customer> customers)
+        {
+            return customers.Select(ToCustomerDetailedView).ToList();
+        }
+
         public static CustomerDetailedDto ToCustomerDetailedView(this CustomerUpdateDto updatedCustomer)
         {
             return new CustomerDetailedDto

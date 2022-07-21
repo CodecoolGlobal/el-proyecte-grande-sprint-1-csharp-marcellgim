@@ -21,7 +21,7 @@ namespace BpRobotics.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CustomerDto>>> GetAllCustomers()
+        public async Task<ActionResult<List<CustomerDetailedDto>>> GetAllCustomers()
         {
             return await _customerService.ListCustomers();
         }
