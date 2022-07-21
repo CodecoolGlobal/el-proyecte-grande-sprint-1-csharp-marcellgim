@@ -3,38 +3,26 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
+function CreateModal({ typeName, children }) {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-function CreateModal({ typeName, FormComponent, onCreate }) {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const postData = async (url, data) => {
-        const response = await fetch(url,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-
-        if (response.status === 201) {
-            handleClose()
-            onCreate()
-        }
-    }
-
-    return (
+  return (
     <>
-        <Button variant="primary" onClick={handleShow}>New {typeName}</Button>
-        <Modal show={show} onHide={handleClose} size="lg">
+      <Button variant="primary" onClick={handleShow}><FontAwesomeIcon icon={faPlus} /></Button>
+      <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Enter new {typeName} details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-            <FormComponent postData={postData} />
+        <Modal.Body onSubmit={(e) => {
+          e.preventDefault();
+          handleClose();
+        }}>
+          { children }
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
@@ -43,7 +31,7 @@ function CreateModal({ typeName, FormComponent, onCreate }) {
         </Modal.Footer>
       </Modal>
     </>
-    );
+  );
 }
 
 export default CreateModal;

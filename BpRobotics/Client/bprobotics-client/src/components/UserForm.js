@@ -10,47 +10,44 @@ function UserForm({ postData }) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [role, setRole] = useState("Admin");
-    const url = `${process.env.REACT_APP_HOST_URL}/api/users`
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        postData(url, {
+        postData({
             username: userName,
             password: password,
             firstname: firstName,
             lastname: lastName,
             role: role
         });
-
-        event.currentTarget.reset()
     }
 
     return (
     <Form onSubmit={handleSubmit}>
-        <Form.Label>
-            Username:
+        <Form.Group className='mb-10'>
+            <Form.Label>Username:</Form.Label>
             <Form.Control type="text" onChange={(e) => setUserName(e.target.value)}/>
-        </Form.Label>
-        <Form.Label>
-            Password:
+        </Form.Group>
+        <Form.Group>
+            <Form.Label>Password:</Form.Label>
             <Form.Control type="password" onChange={(e) => setPassword(e.target.value)} />
-        </Form.Label>
-        <Form.Label>
-            First Name:
+        </Form.Group>
+        <Form.Group>
+            <Form.Label>First Name:</Form.Label>
             <Form.Control type="text" onChange={(e) => setFirstName(e.target.value)}/>
-        </Form.Label>
-        <Form.Label>
-            Last Name:
+        </Form.Group>
+        <Form.Group>
+            <Form.Label>Last Name:</Form.Label>
             <Form.Control type="text" onChange={(e) => setLastName(e.target.value)} />
-        </Form.Label>
-        <Form.Label>
-            Role:
+        </Form.Group>
+        <Form.Group>
+            <Form.Label>Role:</Form.Label>
             <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
                 <option value="Admin">Admin</option>
                 <option value="Partner">Partner</option>
                 <option value="Customer">Customer</option>
             </Form.Select>
-        </Form.Label>
+        </Form.Group>
         <Button variant="primary" type="submit" value="Create user">Create User</Button>
     </Form>
     );
