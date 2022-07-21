@@ -9,6 +9,7 @@ namespace BpRobotics.Core.Extensions
         {
             return new DeviceViewDTO
             {
+                Id = device.Id,
                 Serial = device.Serial,
                 ProductName = device.Product.Name,
                 LastMaintenance = device.LastMaintenance.ToString(),
