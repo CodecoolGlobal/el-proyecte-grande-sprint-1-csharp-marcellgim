@@ -10,6 +10,7 @@ namespace BpRobotics.Core.Model.Devices
 {
     public class DeviceViewDTO
     {
+        public  int Id { get; set; }
         public string? Serial { get; set; }
         public int ProductId { get; set; }
         public string ProductName { get; set; }
