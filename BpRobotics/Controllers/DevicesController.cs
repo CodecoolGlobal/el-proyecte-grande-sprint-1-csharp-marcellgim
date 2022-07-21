@@ -24,11 +24,18 @@ namespace BpRobotics.Controllers
         [HttpGet]
         public async Task<ActionResult<List<DeviceViewDTO>>> Devices()
         {
-            var identity = HttpContext.User;
-            if (identity != null)
+            try
             {
-                var isCustomer = int.TryParse(identity.FindFirst("functionId")?.Value, out int customerId);
-                return isCustomer ? await _deviceService.GetDevices(customerId) : await _deviceService.GetDevices();
+                var identity = HttpContext.User;
+                if (identity != null)
+                {
+                    var isCustomer = int.TryParse(identity.FindFirst("functionId")?.Value, out int customerId);
+                    return isCustomer ? await _deviceService.GetDevices(customerId) : await _deviceService.GetDevices();
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
             }
 
             return Unauthorized();
