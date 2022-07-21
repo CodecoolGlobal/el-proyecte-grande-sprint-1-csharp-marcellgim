@@ -2,8 +2,8 @@ import { useState, useEffect, React } from 'react';
 import '../App.css';
 import { useNavigate } from "react-router-dom";
 import ProductModal from './ProductModal';
-import { Button } from 'react-bootstrap';
-
+import { Button, Alert } from 'react-bootstrap';
+import LoadingSpin from "react-loading-spin";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
@@ -62,9 +62,12 @@ function Products() {
         </Tr>
       </Thead>
       <Tbody>
+      
         {productData.map(renderProduct)}
       </Tbody>
     </Table>
+    {isLoading && <h1><LoadingSpin /></h1>}
+				{fetchError && <Alert variant='danger'>{fetchError}</Alert>}
     <br></br>
     <Button variant="secondary" onClick={handleOpen}>New product</Button>
 
