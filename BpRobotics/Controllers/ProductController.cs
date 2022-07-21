@@ -59,8 +59,7 @@ namespace BpRobotics.Controllers
         {
             try
             {
-                // TODO Implement with image file deletion
-                throw new NotImplementedException();
+                await _productService.DeleteProduct(id);
                 return NoContent();
             }
             catch (InvalidOperationException)
