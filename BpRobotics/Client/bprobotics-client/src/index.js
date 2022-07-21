@@ -18,34 +18,41 @@ import UpdatePartner from './components/UpdatePartner';
 import Login from './components/Login';
 import Devices from './components/Devices';
 import CustomerDetails from './components/CustomerDetails';
+import AuthProvider from './context/AuthProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="products" element={<Products />} />
-          <Route path="products/:id" element={<ProductDetails />} />
-          <Route path="partners" element={<Partners />} />
-          <Route path="partners/add" element={<AddPartner />} />
-          <Route path="partners/:id" element={<UpdatePartner />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="customers/:id" element={<CustomerDetails />} />
-          <Route path="orders"
-            element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Orders /></RequireAuth>}
-          />
-          <Route path="devices"
-            element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Devices /></RequireAuth>}
-          />
-          <Route path="users"
-            element={<RequireAuth allowedRoles={["Admin"]}><Users /></RequireAuth>
-            }
-          />
-          <Route path="users/:id" element={<RequireAuth allowedRoles={[]}><UserDetails /></RequireAuth>} />
-          <Route path="login" element={<Login />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="products" element={<Products />} />
+            <Route path="products/:id" element={<ProductDetails />} />
+            <Route path="partners" element={<Partners />} />
+            <Route path="partners/add" 
+              element={<RequireAuth allowedRoles={["Admin"]}><AddPartner /></RequireAuth>} 
+            />
+            <Route path="partners/:id"
+              element={<RequireAuth allowedRoles={["Admin"]}><UpdatePartner /></RequireAuth>} 
+            />
+            <Route path="customers" element={<Customers />} />
+            <Route path="customers/:id" element={<CustomerDetails />} />
+            <Route path="orders"
+              element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Orders /></RequireAuth>}
+            />
+            <Route path="devices"
+              element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Devices /></RequireAuth>}
+            />
+            <Route path="users"
+              element={<RequireAuth allowedRoles={["Admin"]}><Users /></RequireAuth>
+              }
+            />
+            <Route path="users/:id" element={<RequireAuth allowedRoles={[]}><UserDetails /></RequireAuth>} />
+            <Route path="login" element={<Login />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
