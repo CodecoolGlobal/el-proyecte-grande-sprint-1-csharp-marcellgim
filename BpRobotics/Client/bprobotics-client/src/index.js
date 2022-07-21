@@ -44,7 +44,7 @@ root.render(
           />
           <Route path="users/:id" element={<RequireAuth allowedRoles={[]}><UserDetails /></RequireAuth>} />
           <Route path="login" element={<Login />} />
-          <Route path="add-order" element={<AddOrder />} />
+          <Route path="add-order" element={<RequireAuth allowedRoles={["Admin", "Customer"]}><AddOrder /></RequireAuth>} />
         </Route>
       </Routes>
     </BrowserRouter>
