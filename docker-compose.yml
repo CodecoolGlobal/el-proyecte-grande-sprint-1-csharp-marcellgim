@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  bprobotics:
+    image: ${DOCKER_REGISTRY-}bprobotics
+    build:
+      context: .
+      dockerfile: BpRobotics/Dockerfile
+    depends_on:
+        - db
+
+  db:
+    container_name: "bprobotics-db"
+    image: mcr.microsoft.com/mssql/server
+    ports:
+        - "1433:1433"
+    environment:
+        SA_PASSWORD: "Marci111012_"
+        ACCEPT_EULA: "Y"
+  client:
+    container_name: "bprobotics-client"
+    build:
+        context: ./BpRobotics/Client/bprobotics-client
+        dockerfile: Dockerfile
+    ports:
+        - "3000:3000"
+    environment:
+        PORT: 3000
+    depends_on:
+        - bprobotics

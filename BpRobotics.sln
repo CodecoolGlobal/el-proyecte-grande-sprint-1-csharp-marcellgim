@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BpRobotics.Tests", "BpRobot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BpRobotics.Data", "BpRobotics.Data\BpRobotics.Data.csproj", "{76DB0193-861C-486E-8023-ED10EC2D0CCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BpRobotics.Core", "BpRobotics.Core\BpRobotics.Core.csproj", "{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BpRobotics.Core", "BpRobotics.Core\BpRobotics.Core.csproj", "{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{400EB399-2811-43B5-A709-EA27E1ECDE15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AE45BB3-0BB0-4C3B-A537-EE721D488D8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{400EB399-2811-43B5-A709-EA27E1ECDE15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{400EB399-2811-43B5-A709-EA27E1ECDE15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{400EB399-2811-43B5-A709-EA27E1ECDE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{400EB399-2811-43B5-A709-EA27E1ECDE15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
