@@ -1,5 +1,5 @@
 steps:
-- name: 'docker/compose:3'
+- name: 'docker/compose:1.15.0'
   args: ['up', '-d']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['tag', 'workspace_app:latest', 'gcr.io/bprobotics-app/github.com/codecoolglobal/el-proyecte-grande-sprint-1-csharp-marcellgim:$SHORT_SHA']
