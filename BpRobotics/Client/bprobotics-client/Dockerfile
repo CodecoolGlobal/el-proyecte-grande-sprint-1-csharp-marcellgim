@@ -2,7 +2,7 @@
 
 FROM node:lts-alpine as build
 WORKDIR /app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", ".env*", "./"]
 RUN npm ci
 COPY . ./
 RUN npm run build

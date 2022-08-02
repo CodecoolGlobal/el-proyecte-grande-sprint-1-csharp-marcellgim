@@ -6,6 +6,11 @@ services:
     build:
       context: .
       dockerfile: BpRobotics/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443:443"
     depends_on:
         - db
     restart: on-failure
@@ -28,5 +33,6 @@ services:
         - "3000:3000"
     environment:
         PORT: 3000
+        REACT_APP_HOST_URL: "https://localhost:443"
     depends_on:
         - bprobotics
