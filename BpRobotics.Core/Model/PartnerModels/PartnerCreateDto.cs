@@ -5,5 +5,7 @@ namespace BpRobotics.Core.Model
     {
         public string CompanyName { get; set; }
         public string PhoneNumber { get; set; }
+
+        public int UserId { get; set; }
     }
 }
