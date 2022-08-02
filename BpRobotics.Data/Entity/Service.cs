@@ -1,6 +1,6 @@
 ﻿namespace BpRobotics.Data.Entity;
 
-public class Service
+public class Service : ISoftDelete
 {
     public int Id { get; set; }
     public Device Device { get; set; }
