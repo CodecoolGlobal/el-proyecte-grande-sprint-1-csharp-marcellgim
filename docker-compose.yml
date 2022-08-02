@@ -8,6 +8,7 @@ services:
       dockerfile: BpRobotics/Dockerfile
     depends_on:
         - db
+    restart: on-failure
 
   db:
     container_name: "bprobotics-db"
@@ -17,6 +18,7 @@ services:
     environment:
         SA_PASSWORD: "Marci111012_"
         ACCEPT_EULA: "Y"
+    restart: always
   client:
     container_name: "bprobotics-client"
     build:
