@@ -2,7 +2,7 @@ steps:
 # Run the app and dependencies in the background using docker-compose.
 # Warning: this won't be cleaned up, which might be an issue if you run it
 # with the local builder.
-- name: 'docker/compose:1.15.0'
+- name: 'docker/compose:1.19.0'
   args: ['up', '-d']
 
 # Push the new image to the registry.
