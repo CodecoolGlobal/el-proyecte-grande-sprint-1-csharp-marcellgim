@@ -10,11 +10,6 @@ import CountdownTimer from './components/CountdownTimer';
 function App() {
   const { auth, logout } = useAuth();
 
-  
-  //const TEN_MINUTES_IN_MS = 10 * 60 * 1000;
-  //const NOW_IN_MS = new Date().getTime();
-  //const dateTimeAfterTenMinutes = TEN_MINUTES_IN_MS + NOW_IN_MS;
-
   return (
     <div className="App">
       <header className="App-header">
