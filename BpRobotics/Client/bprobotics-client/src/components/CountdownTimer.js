@@ -8,14 +8,10 @@ import { useNavigate } from "react-router-dom";
 
 const ShowCounter = ({ minutes, seconds }) => {
     return (
-        <div className="show-counter">
-            <a
-                className="countdown-link"
-            >
+        <div className="show-counter countdown-link">
                 <DateTimeDisplay value={minutes} type={'Mins'} isDanger={false} />
                 <p>:</p>
                 <DateTimeDisplay value={seconds} type={'Seconds'} isDanger={false} />
-            </a>
         </div>
     );
 };
