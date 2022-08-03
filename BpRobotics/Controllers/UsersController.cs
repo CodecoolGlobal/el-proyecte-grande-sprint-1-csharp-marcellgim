@@ -35,7 +35,7 @@ namespace BpRobotics.Controllers
         [HttpGet("customers")]
         public async Task<ActionResult<List<UserViewDto>>> ListCustomerUsers()
         {
-            return await _userService.ListPartnerUsers();
+            return await _userService.ListCustomerUsers();
         }
 
         [HttpPost]
