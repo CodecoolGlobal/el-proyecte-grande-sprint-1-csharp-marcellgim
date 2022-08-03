@@ -63,7 +63,11 @@ form {
   font-size: 1.5rem;
 }
 
-.show-counter .countdown-link {
+.navbar-nav {
+  align-items: center;
+}
+
+.show-counter {
   display: flex;
   flex-direction: row;
   justify-content: center;
