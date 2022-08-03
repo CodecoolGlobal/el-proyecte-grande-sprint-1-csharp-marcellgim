@@ -21,7 +21,7 @@ namespace BpRobotics.Data.Repositories
 
         public async Task Add(Partner entity)
         {
-            _context.Add(entity);
+            _context.Partners.Add(entity);
             await _context.SaveChangesAsync();
         }
 

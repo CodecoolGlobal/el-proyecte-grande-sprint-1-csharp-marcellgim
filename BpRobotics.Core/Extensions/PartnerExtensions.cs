@@ -17,6 +17,7 @@ namespace BpRobotics.Core.Extensions
                 Id = partner.Id,
                 CompanyName = partner.CompanyName,
                 PhoneNumber = partner.PhoneNumber,
+                ConnectedUser = partner.User ==  null ? "" : $"{partner.User.FirstName} {partner.User.LastName}"
             };
         }
         public static List<PartnerViewDto> ToPartnerViewDto(this List<Partner> partners)
@@ -54,6 +55,7 @@ namespace BpRobotics.Core.Extensions
             {
                 CompanyName = partner.CompanyName,
                 PhoneNumber = partner.PhoneNumber,
+                UserId = partner.UserId,
             };
         }
 

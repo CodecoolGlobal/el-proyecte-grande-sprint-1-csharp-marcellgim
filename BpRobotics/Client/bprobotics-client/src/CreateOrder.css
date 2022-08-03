@@ -6,7 +6,7 @@ table {
 .form-select {
     margin-left: auto;
     margin-right: auto;
-    width: fit-content !important;
+    width: 100%;
 }
 
 .inner-form-box {
@@ -16,7 +16,7 @@ table {
     align-items: center;
     border: 1px black solid;
     padding: 10px;
-    width: fit-content;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
