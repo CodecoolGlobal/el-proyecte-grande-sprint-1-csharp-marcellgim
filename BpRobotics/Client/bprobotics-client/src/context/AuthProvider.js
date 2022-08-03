@@ -38,6 +38,15 @@ function AuthProvider({ children }) {
         localStorage.removeItem("auth");
         navigate("/");
     }
+    
+    const isTokenExpired = () => {
+        if (!auth) {
+            return true
+        }
+        const { exp } = jwtDecode(auth?.accessToken)
+
+        return (Date.now() < exp * 1000)
+    }
 
     const isTokenExpired = () => {
         if (!auth) {

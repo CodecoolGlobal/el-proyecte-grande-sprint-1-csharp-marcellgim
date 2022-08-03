@@ -4,9 +4,18 @@
   margin-bottom: 20px;
 }
 
+a {
+  color: #00b894 !important;
+}
 
-.App-link {
-  color: #61dafb;
+.btn.btn-primary {
+  background-color: #00b894;
+  border-color: #00b894;
+}
+
+.btn.btn-primary:disabled {
+  background-color: #00b894;
+  border-color: #00b894;
 }
 
 a.navbar-brand {
@@ -25,6 +34,16 @@ form {
 .bordered {
   border-width: 10px;
   border-color: white;
+}
+
+.content-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 50%
+}
 }
 
 .expired-notice {
