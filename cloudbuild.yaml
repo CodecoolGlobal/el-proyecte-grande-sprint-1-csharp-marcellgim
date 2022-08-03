@@ -5,8 +5,6 @@ steps:
 - name: 'docker/compose:1.19.0'
   args: ['up', '-d']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/bprobotics-app/github.com/codecoolglobal/el-proyecte-grande-sprint-1-csharp-marcellgim:$SHORT_SHA']
-- name: 'gcr.io/cloud-builders/docker'
   args: ['tag', 'workspace_app:latest', 'gcr.io/bprobotics-app/github.com/codecoolglobal/el-proyecte-grande-sprint-1-csharp-marcellgim:$SHORT_SHA']
 # Push the new image to the registry.
 images: ['gcr.io/bprobotics-app/github.com/codecoolglobal/el-proyecte-grande-sprint-1-csharp-marcellgim:$SHORT_SHA']
