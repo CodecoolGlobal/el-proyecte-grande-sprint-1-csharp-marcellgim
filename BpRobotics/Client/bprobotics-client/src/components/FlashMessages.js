@@ -9,6 +9,7 @@ function FlashMessages() {
 
     useEffect(() => {
         if (messages.length > 0) {
+            setShow(true);
             setCurrentMessages(messages);
             clearMessages();
         }
@@ -22,7 +23,7 @@ function FlashMessages() {
         <>
         {show && (currentMessages.length > 0) && 
             <Alert variant="danger" dismissible onClose={handleClose}>
-                {currentMessages.map((message, index) => (<p key={index}>{message}</p>))}
+                {currentMessages.map((message, index) => (<div key={index}>{message}</div>))}
             </Alert>
         }
         </>
