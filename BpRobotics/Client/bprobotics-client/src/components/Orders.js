@@ -1,5 +1,5 @@
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
-import { Table, Alert } from "react-bootstrap";
+import { Table, Alert, Card } from "react-bootstrap";
 import LoadingSpin from "react-loading-spin";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ function Orders() {
 	};
 
 	return (
-		<>
+		<Card body>
 			<button type="button" className="btn btn-primary" onClick={handleClick}>Create new Order</button>
 			<Table striped="columns">
 				<thead>
@@ -41,7 +41,7 @@ function Orders() {
 					))}
 				</tbody>
 			</Table>
-		</>
+		</Card>
 	)
 }
 

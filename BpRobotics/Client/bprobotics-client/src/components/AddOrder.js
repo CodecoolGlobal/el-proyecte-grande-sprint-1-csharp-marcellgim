@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Card } from "react-bootstrap";
 import '../CreateOrder.css';
 import useAuth from '../hooks/useAuth';
 import jwtDecode from "jwt-decode";
@@ -63,7 +63,7 @@ const AddOrder = () => {
     };
 
     return (
-        <>
+        <Card body>
             {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
             {customers?.length && products?.length
                 ? (
@@ -121,7 +121,7 @@ const AddOrder = () => {
                     </Form>
                 ) : <p>No customers or products available</p>
             }
-        </>
+        </Card>
     )
 }
 
