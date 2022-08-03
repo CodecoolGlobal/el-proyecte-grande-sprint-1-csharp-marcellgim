@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import LoadingSpin from "react-loading-spin";
-import { Table, Button, Alert } from 'react-bootstrap';
+import { Table, Button, Alert, Card } from 'react-bootstrap';
 import useAxios from '../hooks/useAxios';
 
 const USERS_URL = "/api/users"
@@ -26,7 +26,7 @@ function Users() {
     }
 
     return (
-    <>
+    <Card body>
         <CreateModal typeName="user"><UserForm postData={postData} /></CreateModal>
         <Table striped="columns">
             <thead>
@@ -48,7 +48,7 @@ function Users() {
                 ))}
             </tbody>
         </Table>
-    </>
+    </Card>
     );
 }
 

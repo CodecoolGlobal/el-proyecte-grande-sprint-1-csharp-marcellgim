@@ -1,8 +1,11 @@
 import './App.css';
 import { Outlet } from 'react-router-dom';
-import { Nav, Navbar, Container, Button } from "react-bootstrap";
+import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import useAuth from './hooks/useAuth';
+import FlashMessages from './components/FlashMessages';
+import CountdownTimer from './components/CountdownTimer';
+
 
 function App() {
   const { auth, logout } = useAuth();
@@ -46,13 +49,15 @@ function App() {
                   {auth && <LinkContainer to="/">
                     <Nav.Link onClick={logout}>Logout</Nav.Link>
                   </LinkContainer>}
+                  {auth && <Nav.Link><CountdownTimer /></Nav.Link>}
                 </Nav>
               </Navbar.Collapse>
             </Container>
           </Navbar>
         </Container>
       </header>
-      <Container>
+      <Container className='content-container'>
+        <FlashMessages />
         <Outlet />
       </Container>
     </div>

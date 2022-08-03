@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Table, Alert } from 'react-bootstrap';
+import { Table, Alert, Card } from 'react-bootstrap';
 import LoadingSpin from 'react-loading-spin';
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 import useAuth from '../hooks/useAuth';
@@ -22,6 +22,7 @@ function Customers() {
   let navigate = useNavigate();
 
   return (
+    <Card body>
     <Table striped="columns">
       <thead>
         <tr>
@@ -47,6 +48,7 @@ function Customers() {
         ))}
       </tbody>
     </Table>
+    </Card>
   );
 }
 
