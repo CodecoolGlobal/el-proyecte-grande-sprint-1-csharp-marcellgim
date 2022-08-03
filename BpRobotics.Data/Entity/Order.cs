@@ -1,6 +1,6 @@
 ﻿namespace BpRobotics.Data.Entity;
 
-public class Order
+public class Order : ISoftDelete
 {
     public int Id { get; set; }
     public DateTime Date { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace BpRobotics.Data.Entity;
 
-public class Customer
+public class Customer : ISoftDelete
 {
     public int Id { get; set; }
     public string CompanyName { get; set; } = string.Empty;

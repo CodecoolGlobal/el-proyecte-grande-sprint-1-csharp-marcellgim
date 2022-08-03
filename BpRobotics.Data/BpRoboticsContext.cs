@@ -1,5 +1,6 @@
 ﻿using BpRobotics.Data.Entity;
 using Microsoft.EntityFrameworkCore;
+using Z.EntityFramework.Plus;
 
 namespace BpRobotics.Data
 {
@@ -7,6 +8,8 @@ namespace BpRobotics.Data
     {
         public BpRoboticsContext(DbContextOptions<BpRoboticsContext> options) : base(options)
         {
+            QueryFilterManager.Filter<ISoftDelete>(q => q.Where(x => !x.IsDeleted));
+            QueryFilterManager.InitilizeGlobalFilter(this);
         }
 
         public DbSet<Customer> Customers { get; set; }
@@ -35,15 +38,6 @@ namespace BpRobotics.Data
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Device>().ToTable("Device");
             modelBuilder.Entity<Service>().ToTable("Service");
-            modelBuilder.Entity<Product>().HasQueryFilter(m => !m.IsDeleted);
-            modelBuilder.Entity<User>().HasQueryFilter(m => !m.IsDeleted);
-            modelBuilder.Entity<Customer>().HasQueryFilter(m => !m.IsDeleted);
-            modelBuilder.Entity<Order>().HasQueryFilter(m => !m.IsDeleted);
-            modelBuilder.Entity<Device>().HasQueryFilter(m => !m.IsDeleted);
-            modelBuilder.Entity<Service>().HasQueryFilter(m => !m.IsDeleted);
-            modelBuilder.Entity<Partner>().HasQueryFilter(m => !m.IsDeleted);
-
-
         }
 
         public override int SaveChanges()

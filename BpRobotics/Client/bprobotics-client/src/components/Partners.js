@@ -68,6 +68,7 @@ function Partners() {
 									</th>
 									<th>Company Name</th>
 									<th>Phone Number</th>
+									<th>Connected User</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -76,6 +77,8 @@ function Partners() {
 										<td>#</td>
 										<td>{partner.companyName}</td>
 										<td>{partner.phoneNumber}</td>
+										<td>{partner.connectedUser}</td>
+
 
 										<td>
 											{ auth?.role === "Admin" &&

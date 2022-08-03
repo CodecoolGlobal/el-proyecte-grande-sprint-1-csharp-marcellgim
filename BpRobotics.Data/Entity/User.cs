@@ -2,7 +2,7 @@
 
 namespace BpRobotics.Data.Entity
 {
-    public class User
+    public class User : ISoftDelete
     {
         public int Id { get; set; }
         [Required]
