@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  bprobotics:
+    image: ${DOCKER_REGISTRY-}bprobotics
+    build:
+      context: .
+      dockerfile: BpRobotics/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "44354:44354"
+    depends_on:
+        - db
+    restart: on-failure
+
+  db:
+    container_name: "bprobotics-db"
+    image: mcr.microsoft.com/mssql/server
+    ports:
+        - "1433:1433"
+    environment:
+        SA_PASSWORD: "Marci111012_"
+        ACCEPT_EULA: "Y"
+    restart: always
+  client:
+    container_name: "bprobotics-client"
+    build:
+        context: ./BpRobotics/Client/bprobotics-client
+        dockerfile: Dockerfile
+    ports:
+        - "3000:3000"
+    environment:
+        PORT: 3000
+        REACT_APP_HOST_URL: "https://localhost:443"
+    depends_on:
+        - bprobotics
