@@ -21,6 +21,7 @@ import CustomerDetails from './components/CustomerDetails';
 import AuthProvider from './context/AuthProvider';
 import Profile from './components/Profile';
 import AddOrder from './components/AddOrder';
+import Home from './components/Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -29,6 +30,7 @@ root.render(
       <AuthProvider>
         <Routes>
           <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetails />} />
             <Route path="partners" element={<Partners />} />
