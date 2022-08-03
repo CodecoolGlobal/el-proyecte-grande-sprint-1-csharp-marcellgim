@@ -32,17 +32,17 @@ root.render(
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetails />} />
             <Route path="partners" element={<Partners />} />
-            <Route path="partners/add" 
-              element={<RequireAuth allowedRoles={["Admin"]}><AddPartner /></RequireAuth>} 
+            <Route path="partners/add"
+              element={<RequireAuth allowedRoles={["Admin"]}><AddPartner /></RequireAuth>}
             />
             <Route path="partners/:id"
-              element={<RequireAuth allowedRoles={["Admin"]}><UpdatePartner /></RequireAuth>} 
+              element={<RequireAuth allowedRoles={["Admin"]}><UpdatePartner /></RequireAuth>}
             />
             <Route path="customers" element={<Customers />} />
-                        <Route path="customers/:id" element={<CustomerDetails />} />
-    <Route path="profile"
-element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
-/>
+            <Route path="customers/:id" element={<CustomerDetails />} />
+            <Route path="profile"
+              element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
+            />
             <Route path="orders"
               element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Orders /></RequireAuth>}
             />
