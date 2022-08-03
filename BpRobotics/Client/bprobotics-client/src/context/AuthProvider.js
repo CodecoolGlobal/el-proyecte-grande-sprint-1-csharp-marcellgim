@@ -48,6 +48,7 @@ function AuthProvider({ children }) {
         return (Date.now() < exp * 1000)
     }
 
+
     return (
         <AuthContext.Provider value={{ auth, login, logout, checkExpired: isTokenExpired }}>
             {children}
