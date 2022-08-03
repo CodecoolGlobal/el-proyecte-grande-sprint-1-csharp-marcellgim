@@ -4,8 +4,18 @@
   margin-bottom: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+a {
+  color: #00b894 !important;
+}
+
+.btn.btn-primary {
+  background-color: #00b894;
+  border-color: #00b894;
+}
+
+.btn.btn-primary:disabled {
+  background-color: #00b894;
+  border-color: #00b894;
 }
 
 a.navbar-brand {

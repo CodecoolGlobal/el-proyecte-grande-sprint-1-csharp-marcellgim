@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import '../App.css';
-import Button from 'react-bootstrap/Button';
+import { Button, Card } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import useAxios from '../hooks/useAxios';
 
@@ -35,6 +35,7 @@ function AddPartner() {
 
 
     return (
+        <Card body>
         <Form onSubmit={(e)=>{handleSubmit(e)}} className="form">
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label>Company name:</Form.Label>
@@ -59,6 +60,7 @@ function AddPartner() {
             {!isPendingAdd && <Button variant="primary" type="submit">Add partner</Button>}
             {isPendingAdd && <button><LoadingSpin /></button>}
         </Form>
+        </Card>
     )
 }
 
