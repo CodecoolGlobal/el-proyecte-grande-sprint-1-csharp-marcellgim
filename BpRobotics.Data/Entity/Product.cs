@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Product
+public class Product : ISoftDelete
 {
     public int ID { get; set; }
     public string Name { get; set; }

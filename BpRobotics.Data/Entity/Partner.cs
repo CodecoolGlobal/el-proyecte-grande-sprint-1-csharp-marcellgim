@@ -1,6 +1,6 @@
 ﻿namespace BpRobotics.Data.Entity;
 
-public class Partner
+public class Partner : ISoftDelete
 {
     public int Id { get; set; }
     public string CompanyName { get; set; }
