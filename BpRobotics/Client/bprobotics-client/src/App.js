@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import useAuth from './hooks/useAuth';
+import FlashMessages from './components/FlashMessages';
 
 function App() {
   const { auth, logout } = useAuth();
@@ -53,6 +54,7 @@ function App() {
         </Container>
       </header>
       <Container>
+        <FlashMessages />
         <Outlet />
       </Container>
     </div>

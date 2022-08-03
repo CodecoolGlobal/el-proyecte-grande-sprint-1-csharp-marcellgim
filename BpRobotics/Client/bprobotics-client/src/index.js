@@ -19,6 +19,7 @@ import Login from './components/Login';
 import Devices from './components/Devices';
 import CustomerDetails from './components/CustomerDetails';
 import AuthProvider from './context/AuthProvider';
+import FlashMessageProvider from './context/FlashMessageProvider';
 import Profile from './components/Profile';
 import AddOrder from './components/AddOrder';
 import Home from './components/Home';
@@ -27,6 +28,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <FlashMessageProvider>
       <AuthProvider>
         <Routes>
           <Route path="/" element={<App />}>
@@ -41,10 +43,10 @@ root.render(
               element={<RequireAuth allowedRoles={["Admin"]}><UpdatePartner /></RequireAuth>} 
             />
             <Route path="customers" element={<Customers />} />
-                        <Route path="customers/:id" element={<CustomerDetails />} />
-    <Route path="profile"
-element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
-/>
+            <Route path="customers/:id" element={<CustomerDetails />} />
+            <Route path="profile"
+              element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
+            />
             <Route path="orders"
               element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Orders /></RequireAuth>}
             />
@@ -61,6 +63,7 @@ element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
           </Route>
         </Routes>
       </AuthProvider>
+      </FlashMessageProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

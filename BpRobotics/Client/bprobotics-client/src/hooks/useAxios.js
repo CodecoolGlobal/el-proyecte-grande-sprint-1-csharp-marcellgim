@@ -1,9 +1,13 @@
 import { useEffect } from "react";
 import useAuth from "./useAuth";
+import useFlashMessages from "./useFlashMessages";
 import axios from "../fetch/axiosInstance"
+import { useNavigate } from "react-router-dom";
 
 function useAxios() {
     const { auth, logout } = useAuth();
+    const { flash } = useFlashMessages();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const requestIntercept = axios.interceptors.request.use(
@@ -20,13 +24,16 @@ function useAxios() {
                 return response;
             }, error => {
                 if (error.response.status === 401) {
+                    flash("Your session has expired")
                     logout();
                 }
                 else if (error.response.status === 403) {
-                    console.log("Forbidden")
+                    flash("You are not allowed to use this feature");
+                    navigate("/");
                 }
                 else {
-                    console.log("Something went horribly wrong")
+                    flash("Something went horribly wrong.");
+                    navigate("/");
                 }
                 return Promise.reject(error);
             }
