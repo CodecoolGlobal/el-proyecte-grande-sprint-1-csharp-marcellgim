@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "../fetch/axiosInstance";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -39,8 +39,16 @@ function AuthProvider({ children }) {
         navigate("/");
     }
 
+    const isTokenExpired = () => {
+        if (!auth) {
+            return true
+        }
+        const { exp } = jwtDecode(auth?.accessToken);
+        return (Date.now() < exp * 1000)
+    }
+
     return (
-        <AuthContext.Provider value={{ auth, login, logout }}>
+        <AuthContext.Provider value={{ auth, login, logout, checkExpired: isTokenExpired }}>
             {children}
         </AuthContext.Provider>
     );

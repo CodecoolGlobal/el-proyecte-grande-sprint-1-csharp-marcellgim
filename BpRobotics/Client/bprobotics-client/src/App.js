@@ -3,9 +3,16 @@ import { Outlet } from 'react-router-dom';
 import { Nav, Navbar, Container, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import useAuth from './hooks/useAuth';
+import CountdownTimer from './components/CountdownTimer';
+
 
 function App() {
   const { auth, logout } = useAuth();
+
+  
+  //const TEN_MINUTES_IN_MS = 10 * 60 * 1000;
+  //const NOW_IN_MS = new Date().getTime();
+  //const dateTimeAfterTenMinutes = TEN_MINUTES_IN_MS + NOW_IN_MS;
 
   return (
     <div className="App">
@@ -46,6 +53,7 @@ function App() {
                   {auth && <LinkContainer to="/">
                     <Nav.Link onClick={logout}>Logout</Nav.Link>
                   </LinkContainer>}
+                  {auth && <Nav.Link><CountdownTimer /></Nav.Link>}
                 </Nav>
               </Navbar.Collapse>
             </Container>
