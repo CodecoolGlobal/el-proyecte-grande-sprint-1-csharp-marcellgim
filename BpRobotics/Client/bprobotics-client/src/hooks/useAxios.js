@@ -3,7 +3,7 @@ import useAuth from "./useAuth";
 import axios from "../fetch/axiosInstance"
 
 function useAxios() {
-    const { auth } = useAuth();
+    const { auth, logout } = useAuth();
 
     useEffect(() => {
         const requestIntercept = axios.interceptors.request.use(
@@ -15,8 +15,26 @@ function useAxios() {
             }, error => Promise.reject(error)
         );
 
+        const responseIntercept = axios.interceptors.response.use(
+            response => {
+                return response;
+            }, error => {
+                if (error.response.status === 401) {
+                    logout();
+                }
+                else if (error.response.status === 403) {
+                    console.log("Forbidden")
+                }
+                else {
+                    console.log("Something went horribly wrong")
+                }
+                return Promise.reject(error);
+            }
+        )
+
         return () => {
             axios.interceptors.request.eject(requestIntercept);
+            axios.interceptors.response.eject(responseIntercept);
         }
     })
     return axios;
