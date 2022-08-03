@@ -37,5 +37,7 @@ namespace BpRobotics.Core.Model.CustomerDTOs
         [Required]
         [StringLength(maximumLength: MaxStringLength)]
         public string ShippingAddress { get; set; }
+        [Required]
+        public int UserId { get; set; }
     }
 }
