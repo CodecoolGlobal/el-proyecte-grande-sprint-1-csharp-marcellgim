@@ -53,7 +53,7 @@ function App() {
           </Navbar>
         </Container>
       </header>
-      <Container>
+      <Container className='content-container'>
         <FlashMessages />
         <Outlet />
       </Container>
