@@ -12,7 +12,7 @@ import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
 function AddPartner() {
     const axiosInstance = useAxios();
     const url = `${process.env.REACT_APP_HOST_URL}/api/partners`;
-    const usersUrl = `${process.env.REACT_APP_HOST_URL}/api/users`;
+    const usersUrl = `${process.env.REACT_APP_HOST_URL}/api/users/partners`;
 
     const { data: users } = useAxiosFetchGet(usersUrl);
 
