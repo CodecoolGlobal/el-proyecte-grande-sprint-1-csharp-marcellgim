@@ -2,7 +2,7 @@ import { useState, React } from 'react';
 import '../App.css';
 import { useNavigate } from "react-router-dom";
 import ProductModal from './ProductModal';
-import { Button, Alert } from 'react-bootstrap';
+import { Button, Alert, Card } from 'react-bootstrap';
 import LoadingSpin from "react-loading-spin";
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
@@ -49,7 +49,7 @@ function Products() {
       </Tr>
     )
   }
-    return ( <>
+    return ( <Card body>
     <ProductModal show={show} setShow={setShow} onCreate={forceUpdate}></ProductModal>
     <Table>
       <Thead>
@@ -70,7 +70,7 @@ function Products() {
     <br></br>
     
     {isAdmin && <Button variant="secondary" onClick={handleOpen}>New product</Button>}
-      </> );
+      </Card> );
 }
 
 export default Products;

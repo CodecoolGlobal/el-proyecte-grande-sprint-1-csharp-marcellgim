@@ -1,4 +1,4 @@
-import { Table, Alert } from "react-bootstrap";
+import { Table, Alert, Card } from "react-bootstrap";
 import LoadingSpin from "react-loading-spin";
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 import Device from "./Device";
@@ -38,24 +38,26 @@ function Devices() {
     }
 
     return (
-        <Table striped="columns">
-            <thead>
-                <tr>
-                    {columns.map((column, index) => <th key={index}>{column.title}</th>)}
-                </tr>
-            </thead>
-            <tbody>
-                {isLoading && <tr><td><LoadingSpin /></td></tr>}
-				{fetchError && <tr><td><Alert variant='danger'>{fetchError}</Alert></td></tr>}
-                {devices.map(device => (
-                    <>
-                        <Device device={device} columns={columns}>
-                            {auth?.role === "Admin" && <CreateModal typeName="service"><ServiceForm deviceId={device.id} postData={postData} /></CreateModal>}
-                        </Device>
-                    </>
-                ))}
-            </tbody>
-        </Table>
+        <Card body>
+            <Table striped="columns">
+                <thead>
+                    <tr>
+                        {columns.map((column, index) => <th key={index}>{column.title}</th>)}
+                    </tr>
+                </thead>
+                <tbody>
+                    {isLoading && <tr><td><LoadingSpin /></td></tr>}
+                    {fetchError && <tr><td><Alert variant='danger'>{fetchError}</Alert></td></tr>}
+                    {devices.map(device => (
+                        <>
+                            <Device device={device} columns={columns}>
+                                {auth?.role === "Admin" && <CreateModal typeName="service"><ServiceForm deviceId={device.id} postData={postData} /></CreateModal>}
+                            </Device>
+                        </>
+                    ))}
+                </tbody>
+            </Table>
+        </Card>
     );
 }
 

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import '../App.css';
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
-import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
-import Button from 'react-bootstrap/Button';
+import { Button, Table, Card } from 'react-bootstrap';
 import LoadingSpin from "react-loading-spin";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
@@ -50,7 +49,7 @@ function Partners() {
 
 
 	return (
-		<>
+		<Card body>
 			<div style={{ maxWidth: '100%' }}>
 				{isLoading && <h1><LoadingSpin /></h1>}
 				{fetchError && <p style={{ color: "red" }}>{fetchError}</p>}
@@ -102,7 +101,7 @@ function Partners() {
 					</>
 				}
 			</div>
-		</>
+		</Card>
 	);
 }
 
