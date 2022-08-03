@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import useFlashMessages from "../hooks/useFlashMessages";
+import { Card } from "react-bootstrap";
+import "../Card.css"
 
 function Home() {
-    const { logout, checkExpired } = useAuth();
+    const { auth, logout, checkExpired } = useAuth();
     const { flash } = useFlashMessages();
 
     useEffect(() => {
@@ -14,9 +16,13 @@ function Home() {
     })
 
     return (
-    <>
-        <h1>Placeholder</h1>
-    </>
+        <Card>
+            <Card.Body>
+                <Card.Title>Welcome to Bp Robotics</Card.Title>
+                <Card.Subtitle>Use the navbar above to access features.</Card.Subtitle>
+                <Card.Text>You are {!auth && "not "}logged in</Card.Text>
+            </Card.Body>
+        </Card>
     );
 }
 
