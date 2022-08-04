@@ -27,6 +27,7 @@ namespace BpRobotics.Core.Extensions
         {
             return new User
             {
+                UserName = userUpdateData.UserName,
                 Id = userUpdateData.Id,
                 FirstName = userUpdateData.FirstName,
                 LastName = userUpdateData.LastName,
