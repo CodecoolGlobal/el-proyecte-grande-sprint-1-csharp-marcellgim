@@ -22,8 +22,9 @@ public class UserService
     public async Task<List<UserViewDto>> ListPartnerUsers()
     {
         return (await _userRepository.GetAll())
+            .Where(user => user.Role == UserRole.Partner)
+            .Where(user => user.Partners?.Count==0)
             .Select(user => user.ToUserView())
-            .Where(user => user.Role == UserRole.Partner.ToString())
             .ToList();
     }
     public async Task<List<UserViewDto>> ListUsers()
