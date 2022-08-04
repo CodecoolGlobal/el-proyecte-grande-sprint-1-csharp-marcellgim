@@ -9,7 +9,7 @@ services:
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
+      - "80:80"
       - "443:443"
     depends_on:
         - db
@@ -33,6 +33,6 @@ services:
         - "3000:3000"
     environment:
         PORT: 3000
-        REACT_APP_HOST_URL: "https://localhost:443"
+        REACT_APP_HOST_URL: "http://localhost:80"
     depends_on:
         - bprobotics

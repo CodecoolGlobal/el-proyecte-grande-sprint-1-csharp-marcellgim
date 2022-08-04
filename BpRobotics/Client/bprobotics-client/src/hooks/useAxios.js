@@ -35,7 +35,7 @@ function useAxios() {
                     flash("Something went horribly wrong.");
                     navigate("/");
                 }
-                return Promise.reject(error);
+                return error.response;
             }
         )
 

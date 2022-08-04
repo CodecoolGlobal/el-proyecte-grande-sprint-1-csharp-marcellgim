@@ -26,7 +26,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000",
+            policy.WithOrigins("https://localhost:3000",
+                "http://10.44.17.178:3000",
                 "https://icy-mushroom-0411fdf0f.1.azurestaticapps.net")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
@@ -96,7 +97,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 
 app.UseStaticFiles(new StaticFileOptions
 {
