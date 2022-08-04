@@ -10,6 +10,25 @@ namespace BpRobotics.Data
         {
             QueryFilterManager.Filter<ISoftDelete>(q => q.Where(x => !x.IsDeleted));
             QueryFilterManager.InitilizeGlobalFilter(this);
+            UpdateDeviceStatuses();
+
+        }
+
+        private void UpdateDeviceStatuses()
+        {
+            // replace later with SQL jobs
+            foreach (var device in Devices)
+            {
+                if (device.WarrantyUntil < DateTime.Today)
+                {
+                    device.Status = DeviceStatus.WarrantyExpired;
+                }
+                else if (device.NextMaintenance < DateTime.Today)
+                {
+                    device.Status = DeviceStatus.MaintenanceNeeded;
+                }
+            }
+            this.SaveChanges();
         }
 
         public DbSet<Customer> Customers { get; set; }
