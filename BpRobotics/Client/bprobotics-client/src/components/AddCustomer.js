@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import '../App.css';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Form, Card } from 'react-bootstrap';
 import useAxios from '../hooks/useAxios';
 import useAxiosFetchGet from '../hooks/useAxiosFetchGet';
 
@@ -71,6 +70,7 @@ function AddCustomer() {
     }
 
     return (
+        <Card body>
         <Form onSubmit={(e) => { handleSubmit(e) }} className="form">
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label htmlFor='users'>User:</Form.Label>
@@ -196,6 +196,7 @@ function AddCustomer() {
             {!isPendingAdd && <Button variant="primary" type="submit">Add customer</Button>}
             {isPendingAdd && <button><LoadingSpin /></button>}
         </Form>
+        </Card>
     )
 }
 

@@ -12,9 +12,9 @@ namespace BpRobotics.Core.Extensions
                 Id = device.Id,
                 Serial = device.Serial,
                 ProductName = device.Product.Name,
-                LastMaintenance = device.LastMaintenance.ToString(),
-                NextMaintenance = device.NextMaintenance.ToString(),
-                WarrantyUntil = device.WarrantyUntil.ToString(),
+                LastMaintenance = device.LastMaintenance.Ticks == 0 ? "-" : device.LastMaintenance.ToString(),
+                NextMaintenance = device.NextMaintenance.Ticks == 0 ? "-" : device.NextMaintenance.ToString(),
+                WarrantyUntil = device.WarrantyUntil.Ticks == 0 ? "-" : device.WarrantyUntil.ToString(),
                 Services = device.Services.Select(s => s.ToServiceView()).ToList(),
                 Status = device.Status.ToString(),
                 OrderId = device.Order.Id

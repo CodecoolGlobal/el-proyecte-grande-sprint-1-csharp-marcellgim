@@ -12,7 +12,7 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<List<User>> GetAll() => await _context.Users.AsNoTracking().ToListAsync();
+    public async Task<List<User>> GetAll() => await _context.Users.Include(u=>u.Partners).AsNoTracking().ToListAsync();
 
     public async Task<User> Get(int id) => await _context.Users.AsNoTracking().FirstAsync(user => user.Id == id);
 

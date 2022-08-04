@@ -3,7 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useState } from "react";
 import LoadingSpin from "react-loading-spin";
 import '../App.css';
-import Button from 'react-bootstrap/Button';
+import { Button, Card } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import useAxios from '../hooks/useAxios';
 
@@ -38,7 +38,7 @@ function UpdatePartner() {
 
 
     return (
-        <>
+        <Card body>
             {companyName &&
                 <Form onSubmit={(e) => { handleUpdate(e) }}>
                     <Form.Group className="mb-3" controlId="formBasicText">
@@ -65,7 +65,7 @@ function UpdatePartner() {
                     {isPendingUpdate && <button><LoadingSpin /></button>}
                 </Form>
             }
-        </>
+        </Card>
     )
 }
 
