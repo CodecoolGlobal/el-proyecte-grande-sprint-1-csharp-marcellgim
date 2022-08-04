@@ -25,7 +25,7 @@ public static class ServiceExtensions
             RequestedDate = serviceEntity.RequestedDate,
             DoneDate = serviceEntity.DoneDate,
             Status = serviceEntity.Status.ToString(),
-            Type = serviceEntity.Type.ToString()
+            Type = serviceEntity.Type.ToString(),
         };
     }
 }

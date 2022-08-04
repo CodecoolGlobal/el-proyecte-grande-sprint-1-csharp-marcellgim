@@ -76,6 +76,7 @@ builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IPartnersService, PartnersService>();
 builder.Services.AddTransient<CustomerService>();
 builder.Services.AddTransient<DeviceService>();
+builder.Services.AddTransient<ServiceService>();
 
 
 
