@@ -55,5 +55,42 @@ namespace BpRobotics.Controllers
 
             return Ok(response);
         }
+
+        [Authorize]
+        [HttpPost("{userId}", Name = "changePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest pwRequest, int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                IEnumerable<string> errorMessages = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+
+                return BadRequest(new ErrorResponse(errorMessages));
+            }
+
+            UserLoginDto userLogin = await _userService.GetLoginDtoByUserName(pwRequest.UserName);
+
+            if (userLogin == null)
+            {
+                return Unauthorized("User does not exist");
+            }
+
+            bool isCorrectPassword = _passwordHasher.VerifyPassword(pwRequest.OldPassword, userLogin.HashedPassword);
+
+            if (!isCorrectPassword)
+            {
+                return Unauthorized("Incorrect password");
+            }
+
+            UserUpdateDto updatedUser = new UserUpdateDto();
+            updatedUser.Id = userId;
+            updatedUser.UserName = pwRequest.UserName;
+            updatedUser.Password = _passwordHasher.HashPassword(pwRequest.NewPassword);
+            updatedUser.FirstName = pwRequest.FirstName;
+            updatedUser.LastName = pwRequest.LastName;
+
+            var response = _userService.UpdateUser(updatedUser);
+
+            return Ok(response);
+        }
     }
 }
