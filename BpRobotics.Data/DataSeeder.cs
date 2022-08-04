@@ -1,5 +1,7 @@
 ﻿using BpRobotics.Data.Entity;
 using Microsoft.EntityFrameworkCore;
+using Z.EntityFramework.Plus;
+
 
 namespace BpRobotics.Data;
 
@@ -15,6 +17,9 @@ public class DataSeeder
     public void Seed()
     {
         _context.Database.EnsureCreated();
+
+
+        UpdateDeviceStatuses();
 
         if (!_context.Users.Any())
         {
@@ -238,5 +243,22 @@ public class DataSeeder
             _context.Devices.AddRange(devices);
             _context.SaveChanges();
         }
+    }
+
+    private void UpdateDeviceStatuses()
+    {
+        // replace later with SQL jobs
+        foreach (var device in _context.Devices)
+        {
+            if (device.WarrantyUntil < DateTime.Today && device.WarrantyUntil.Ticks!=0)
+            {
+                device.Status = DeviceStatus.WarrantyExpired;
+            }
+            else if (device.NextMaintenance < DateTime.Today && device.NextMaintenance.Ticks!=0)
+            {
+                device.Status = DeviceStatus.MaintenanceNeeded;
+            }
+        }
+        _context.SaveChanges();
     }
 }

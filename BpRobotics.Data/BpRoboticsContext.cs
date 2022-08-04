@@ -2,34 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Z.EntityFramework.Plus;
 
+
 namespace BpRobotics.Data
 {
     public class BpRoboticsContext : DbContext
     {
         public BpRoboticsContext(DbContextOptions<BpRoboticsContext> options) : base(options)
         {
-            QueryFilterManager.Filter<ISoftDelete>(q => q.Where(x => !x.IsDeleted));
-            QueryFilterManager.InitilizeGlobalFilter(this);
-            UpdateDeviceStatuses();
-
-        }
-
-        private void UpdateDeviceStatuses()
-        {
-            // replace later with SQL jobs
-            foreach (var device in Devices)
+            try
             {
-                if (device.WarrantyUntil < DateTime.Today)
-                {
-                    device.Status = DeviceStatus.WarrantyExpired;
-                }
-                else if (device.NextMaintenance < DateTime.Today)
-                {
-                    device.Status = DeviceStatus.MaintenanceNeeded;
-                }
+                QueryFilterManager.Filter<ISoftDelete>(q => q.Where(x => !x.IsDeleted));
+                QueryFilterManager.InitilizeGlobalFilter(this);
             }
-            this.SaveChanges();
+            catch (Exception)
+            {
+
+            }
+
         }
+
+
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -57,6 +49,7 @@ namespace BpRobotics.Data
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Device>().ToTable("Device");
             modelBuilder.Entity<Service>().ToTable("Service");
+
         }
 
         public override int SaveChanges()
