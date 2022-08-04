@@ -1,6 +1,4 @@
-import { Link } from 'react-router-dom';
-import { Table, Alert } from 'react-bootstrap';
-import LoadingSpin from 'react-loading-spin';
+import { Table } from 'react-bootstrap';
 import useAxiosFetchGet from "../hooks/useAxiosFetchGet";
 import { faPlay, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import useAxios from "../hooks/useAxios";
@@ -28,23 +26,16 @@ function ServicesView() {
     { title: "Status", field: "status", render}
   ];
 
-  const startService = async (id) => {
+  const changeServiceStatus = async (id, change) => {
 		try {
-			await axiosInstance.put(`${url}/${id}/start`);
-services.filter(service=>service.id===id)[0].status = "In progress";
-			setServices([...services]);
-		} catch (err) {
-			console.log(`Error: ${err.message}`);
-		}
-	}
-
-  const finishService = async (id) => {
-		try {
-			await axiosInstance.put(`${url}/${id}/finish`);
-services.filter(service=>service.id===id)[0].status = "Done";
-
-			setServices([...services]);
-		} catch (err) {
+			await axiosInstance.put(`${url}/${id}/${change}`);
+      services.filter(service=>service.id===id)[0].status = change === "start" ? "InProgress" : "Done";
+      if(change === "finish") {
+        services.filter(service=>service.id===id)[0].doneDate = new Date();
+      }
+      setServices([...services]);
+		} 
+    catch (err) {
 			console.log(`Error: ${err.message}`);
 		}
 	}
@@ -54,6 +45,8 @@ services.filter(service=>service.id===id)[0].status = "Done";
             <thead>
                 <tr>
                     {columns.map((column, index) => <th key={index}>{column.title}</th>)}
+                    <th>Start</th>
+                    <th>Finish</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,12 +56,16 @@ services.filter(service=>service.id===id)[0].status = "Done";
                             {columns.map((column, index) => (
                                 <td key={index}>{column.render(service[column.field])}</td>
                             ))}
-                            <Button onClick={() => { startService(service.id) }}>
+                            <td>
+                            <Button disabled={service.status!=="Planned"} onClick={() => { changeServiceStatus(service.id, "start") }}>
 														<FontAwesomeIcon icon={faPlay} />
 													</Button>
-													<Button onClick={() => { finishService(service.id) }}>
+                          </td>
+                          <td>
+													<Button disabled={service.status!=="InProgress"} onClick={() => { changeServiceStatus(service.id, "finish") }}>
 														<FontAwesomeIcon icon={faCircleCheck} />
 													</Button>
+                          </td>
                         </tr>
                     </>
 				))}

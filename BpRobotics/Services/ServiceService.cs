@@ -55,12 +55,17 @@ public class ServiceService
         {
             device.WarrantyUntil = DateTime.Today.AddDays(device.Product.Warranty);
             device.NextMaintenance = DateTime.Today.AddDays(device.Product.ServiceInterval);
+            device.Status = DeviceStatus.UpToDate;
             await _deviceRepository.Update(device);
         }
         else if (serviceToUpdate.Type == ServiceType.Maintenance)
         {
             device.LastMaintenance = DateTime.Today;
             device.NextMaintenance = DateTime.Today.AddDays(device.Product.ServiceInterval);
+            if (device.Status!=DeviceStatus.WarrantyExpired)
+            {
+                device.Status = DeviceStatus.UpToDate;
+            }
             await _deviceRepository.Update(device);
         }
 
