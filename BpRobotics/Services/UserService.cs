@@ -27,6 +27,15 @@ public class UserService
             .Select(user => user.ToUserView())
             .ToList();
     }
+
+    public async Task<List<UserViewDto>> ListCustomerUsers()
+    {
+        return (await _userRepository.GetAll())
+            .Select(user => user.ToUserView())
+            .Where(user => user.Role == UserRole.Customer.ToString())
+            .ToList();
+    }
+
     public async Task<List<UserViewDto>> ListUsers()
     {
         return (await _userRepository.GetAll())

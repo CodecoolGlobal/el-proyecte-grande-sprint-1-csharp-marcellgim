@@ -19,31 +19,39 @@ import Login from './components/Login';
 import Devices from './components/Devices';
 import CustomerDetails from './components/CustomerDetails';
 import AuthProvider from './context/AuthProvider';
+import FlashMessageProvider from './context/FlashMessageProvider';
 import Profile from './components/Profile';
 import AddOrder from './components/AddOrder';
+import AddCustomer from './components/AddCustomer';
+import Home from './components/Home';
 import ServicesView from './components/ServicesView';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <FlashMessageProvider>
       <AuthProvider>
         <Routes>
           <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
             <Route path="products/:id" element={<ProductDetails />} />
             <Route path="partners" element={<Partners />} />
-            <Route path="partners/add" 
-              element={<RequireAuth allowedRoles={["Admin"]}><AddPartner /></RequireAuth>} 
+            <Route path="partners/add"
+              element={<RequireAuth allowedRoles={["Admin"]}><AddPartner /></RequireAuth>}
             />
             <Route path="partners/:id"
-              element={<RequireAuth allowedRoles={["Admin"]}><UpdatePartner /></RequireAuth>} 
+              element={<RequireAuth allowedRoles={["Admin"]}><UpdatePartner /></RequireAuth>}
             />
             <Route path="customers" element={<Customers />} />
-                        <Route path="customers/:id" element={<CustomerDetails />} />
-    <Route path="profile"
-element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
-/>
+            <Route path="customers/add"
+              element={<RequireAuth allowedRoles={["Admin"]}><AddCustomer /></RequireAuth>}
+            />
+            <Route path="customers/:id" element={<CustomerDetails />} />
+            <Route path="profile"
+              element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
+            />
             <Route path="orders"
               element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Orders /></RequireAuth>}
             />
@@ -63,6 +71,7 @@ element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
           </Route>
         </Routes>
       </AuthProvider>
+      </FlashMessageProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
