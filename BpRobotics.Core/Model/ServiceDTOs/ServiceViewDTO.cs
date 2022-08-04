@@ -10,4 +10,8 @@ public class ServiceViewDTO
     public DateTime? DoneDate { get; set; }
     public string Type { get; set; }
     public string Status { get; set; }
+
+    public string Details { get; set; }
+
+    public Device Device { get; set; }
 }

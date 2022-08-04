@@ -17,7 +17,8 @@ namespace BpRobotics.Core.Extensions
                 WarrantyUntil = device.WarrantyUntil.Ticks == 0 ? "-" : device.WarrantyUntil.ToString(),
                 Services = device.Services.Select(s => s.ToServiceView()).ToList(),
                 Status = device.Status.ToString(),
-                OrderId = device.Order.Id
+                OrderId = device.Order.Id,
+                CustomerCompanyName = device.Order.Customer.CompanyName
             };
         }
 
