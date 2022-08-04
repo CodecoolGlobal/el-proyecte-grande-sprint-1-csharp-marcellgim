@@ -46,10 +46,13 @@ function App() {
                   {!auth && <LinkContainer to="/login">
                     <Nav.Link>Login</Nav.Link>
                   </LinkContainer>}
+                  {auth && <LinkContainer to="/userprofile">
+                    <Nav.Link>UserProfile</Nav.Link>
+                  </LinkContainer>}
                   {auth && <LinkContainer to="/">
                     <Nav.Link onClick={logout}>Logout</Nav.Link>
                   </LinkContainer>}
-                  {auth && <Nav.Link><CountdownTimer /></Nav.Link>}
+                  {auth && <CountdownTimer />}
                 </Nav>
               </Navbar.Collapse>
             </Container>
