@@ -2,15 +2,26 @@
 using Microsoft.EntityFrameworkCore;
 using Z.EntityFramework.Plus;
 
+
 namespace BpRobotics.Data
 {
     public class BpRoboticsContext : DbContext
     {
         public BpRoboticsContext(DbContextOptions<BpRoboticsContext> options) : base(options)
         {
-            QueryFilterManager.Filter<ISoftDelete>(q => q.Where(x => !x.IsDeleted));
-            QueryFilterManager.InitilizeGlobalFilter(this);
+            try
+            {
+                QueryFilterManager.Filter<ISoftDelete>(q => q.Where(x => !x.IsDeleted));
+                QueryFilterManager.InitilizeGlobalFilter(this);
+            }
+            catch (InvalidOperationException)
+            {
+
+            }
+
         }
+
+
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -38,6 +49,7 @@ namespace BpRobotics.Data
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Device>().ToTable("Device");
             modelBuilder.Entity<Service>().ToTable("Service");
+
         }
 
         public override int SaveChanges()

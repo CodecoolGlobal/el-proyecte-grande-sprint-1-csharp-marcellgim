@@ -14,6 +14,8 @@ public class ServiceRepository : IRepository<Service>
     public async Task<List<Service>> GetAll()
     {
         return await _context.Services
+            .Include(s => s.Partner)
+            .Include(s=>s.Device)
             .AsNoTracking()
             .ToListAsync();
     }
@@ -22,6 +24,8 @@ public class ServiceRepository : IRepository<Service>
     {
         return await _context.Services
             .Include(s => s.Partner)
+            .Include(s => s.Device)
+                .ThenInclude(d=>d.Product)
             .SingleAsync(s => s.Id == id);
     }
 

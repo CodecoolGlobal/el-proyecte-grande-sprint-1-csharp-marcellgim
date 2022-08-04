@@ -3,7 +3,7 @@
 public enum DeviceStatus
 {
     UpToDate,
-    MaintenanceNedded,
+    MaintenanceNeeded,
     WarrantyExpired,
     InstallPending
 }

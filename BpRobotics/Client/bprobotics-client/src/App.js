@@ -31,6 +31,9 @@ function App() {
                   {auth && (auth.role === "Admin" || auth.role === "Customer") && <LinkContainer to="/orders">
                     <Nav.Link>Orders</Nav.Link>
                   </LinkContainer>}
+                  {auth && (auth.role === "Admin" || auth.role === "Partner") && <LinkContainer to="/services">
+                    <Nav.Link>Services</Nav.Link>
+                  </LinkContainer>}
                   {auth && (auth.role === "Admin" || auth.role === "Customer") && <LinkContainer to="/devices">
                     <Nav.Link>Devices</Nav.Link>
                   </LinkContainer>}
