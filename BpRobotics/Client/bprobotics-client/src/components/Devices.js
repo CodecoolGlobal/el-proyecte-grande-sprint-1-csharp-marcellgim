@@ -24,7 +24,9 @@ function Devices() {
         { title: "Last Maintenance", field: "lastMaintenance", render: dateRender},
         { title: "Next Maintenance", field: "nextMaintenance", render: dateRender},
         { title: "Warranty Expires", field: "warrantyUntil", render: dateRender},
-        { title: "Device Status", field: "status", render}
+        { title: "Device Status", field: "status", render},
+        { title: "Customer", field: "customerCompanyName", render},
+        
     ]
 
     const postData = async (deviceId, data) => {
