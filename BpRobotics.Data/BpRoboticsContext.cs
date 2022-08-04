@@ -14,7 +14,7 @@ namespace BpRobotics.Data
                 QueryFilterManager.Filter<ISoftDelete>(q => q.Where(x => !x.IsDeleted));
                 QueryFilterManager.InitilizeGlobalFilter(this);
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
 
             }
