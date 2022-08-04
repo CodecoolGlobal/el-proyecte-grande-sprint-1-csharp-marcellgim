@@ -21,6 +21,7 @@ import CustomerDetails from './components/CustomerDetails';
 import AuthProvider from './context/AuthProvider';
 import Profile from './components/Profile';
 import AddOrder from './components/AddOrder';
+import ServicesView from './components/ServicesView';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -48,6 +49,9 @@ element={<RequireAuth allowedRoles={["Customer"]}><Profile /></RequireAuth>}
             />
             <Route path="devices"
               element={<RequireAuth allowedRoles={["Admin", "Customer"]}><Devices /></RequireAuth>}
+            />
+            <Route path="services"
+              element={<RequireAuth allowedRoles={["Admin", "Partner"]}><ServicesView /></RequireAuth>}
             />
             <Route path="users"
               element={<RequireAuth allowedRoles={["Admin"]}><Users /></RequireAuth>

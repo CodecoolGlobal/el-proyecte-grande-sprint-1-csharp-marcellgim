@@ -15,7 +15,8 @@ function Devices() {
     const { auth } = useAuth();
     const axios = useAxios();
     const render = (input) => input; // Default render
-    const dateRender = (date) => new Date(date).toLocaleDateString();
+    const dateRender = (date) => (date !== null) ? new Date(date).toLocaleDateString() : "-";
+
 
     const columns = [
         { title: "Serial Number", field: "serial", render: (serial) => serial ?? "-"},
