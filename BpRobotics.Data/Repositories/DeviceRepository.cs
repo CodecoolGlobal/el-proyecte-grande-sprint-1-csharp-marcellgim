@@ -32,6 +32,7 @@ namespace BpRobotics.Data.Repositories
         {
             return await _context.Devices
                 .Include(d => d.Order)
+                    .ThenInclude(o => o.Customer)
                 .Include(d => d.Product)
                 .Include(d => d.Services)
                     .ThenInclude(s => s.Partner)
