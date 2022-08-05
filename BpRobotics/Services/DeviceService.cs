@@ -78,4 +78,11 @@ public class DeviceService
 
         return (await _serviceRepository.Update(serviceToUpdate)).ToServiceView();
     }
+
+    public async Task UpdateSerial(int deviceId, string newSerial)
+    {
+        var deviceToUpdate = await _deviceRepository.Get(deviceId);
+        deviceToUpdate.Serial = newSerial;
+        await _deviceRepository.Update(deviceToUpdate);
+    }
 }

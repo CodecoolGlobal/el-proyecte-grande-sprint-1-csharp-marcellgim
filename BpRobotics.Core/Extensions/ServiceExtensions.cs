@@ -26,6 +26,8 @@ public static class ServiceExtensions
             DoneDate = serviceEntity.DoneDate,
             Status = serviceEntity.Status.ToString(),
             Type = serviceEntity.Type.ToString(),
+            Device = serviceEntity.Device,
+            Details = $"Requested by: {serviceEntity.Device.Order.Customer.CompanyName} Address: {serviceEntity.Device.Order.Customer.ShippingAddress.ToString()} Product: {serviceEntity.Device.Product.Name} Serial: {serviceEntity.Device.Serial ?? "No serial yet"}"
         };
     }
 }

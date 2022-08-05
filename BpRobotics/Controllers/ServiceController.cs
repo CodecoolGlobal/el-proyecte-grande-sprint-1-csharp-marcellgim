@@ -21,7 +21,7 @@ namespace BpRobotics.Controllers
         }
 
 
-        //[Authorize(Roles = "Partner, Admin")]
+        [Authorize(Roles = "Partner, Admin")]
         [HttpGet]
         public async Task<ActionResult<List<ServiceViewDTO>>> Services()
         {
@@ -72,5 +72,7 @@ namespace BpRobotics.Controllers
                 return BadRequest();
             }
         }
+
+        
     }
 }

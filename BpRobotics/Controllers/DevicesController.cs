@@ -109,5 +109,20 @@ namespace BpRobotics.Controllers
                 return NotFound(e.Message);
             }
         }
+
+        [Authorize(Roles = "Partner, Admin")]
+        [HttpPut("{deviceId}/UpdateSerial")]
+        public async Task<ActionResult> UpdateSerial(int deviceId, DeviceUpdateSerialDTO newSerial)
+        {
+            try
+            {
+                await _deviceService.UpdateSerial(deviceId, newSerial.Serial);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
