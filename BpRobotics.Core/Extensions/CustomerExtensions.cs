@@ -84,7 +84,8 @@ namespace BpRobotics.Core.Extensions
                 CompanyName = customer.CompanyName,
                 VatNumber = customer.VatNumber,
                 BillingAddress = billingLocation,
-                ShippingAddress = shippingLocation
+                ShippingAddress = shippingLocation,
+                UserId = customer.UserId
             };
         }
 

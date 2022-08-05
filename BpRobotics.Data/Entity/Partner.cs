@@ -9,6 +9,6 @@ public class Partner : ISoftDelete
     public List<Service> Services { get; set; }
     public bool IsDeleted { get; set; }
 
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
 
 }

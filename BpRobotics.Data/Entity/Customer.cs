@@ -8,6 +8,8 @@ public class Customer : ISoftDelete
     public Location BillingAddress { get; set; }
     public Location ShippingAddress { get; set; }
     public User? User { get; set; }
+
+    public int? UserId { get; set; }
     public bool IsDeleted { get; set; }
 
 }
