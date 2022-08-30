@@ -8,10 +8,11 @@ namespace BpRobotics.Services
     public class CustomerService
     {
         private readonly IRepository<Customer> _customerRepository;
-
-        public CustomerService(IRepository<Customer> customerRepository)
+        private readonly IUserRepository _userRepository;
+        public CustomerService(IRepository<Customer> customerRepository, IUserRepository userRepository)
         {
             _customerRepository = customerRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<List<CustomerDetailedDto>> ListCustomers()
@@ -29,6 +30,7 @@ namespace BpRobotics.Services
         public async Task<CustomerDetailedDto> NewCustomer(CreateCustomerDto newCustomerDto)
         {
             var customerEntity = newCustomerDto.ToCustomerEntity();
+            customerEntity.User = await _userRepository.Get(newCustomerDto.UserId);
             await _customerRepository.Add(customerEntity);
 
             return customerEntity.ToCustomerDetailedView();
