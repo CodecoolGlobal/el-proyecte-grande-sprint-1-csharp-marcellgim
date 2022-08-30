@@ -17,7 +17,7 @@ namespace BpRobotics.Data.Entity
         public UserRole Role { get; set; }
         public bool IsDeleted { get; set; }
 
-        public List<Partner>? Partners { get; set; }
-        public List<Customer>? Customers { get; set; }
+        public List<Partner> Partners { get; set; }
+        public List<Customer> Customers { get; set; }
     }
 }
